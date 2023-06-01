@@ -16,6 +16,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
     public void agregar(Venta elemento) {
         listaDeVentas.add(elemento);
     }
+
     @Override
     public boolean eliminar(int elemento) {
     }
@@ -31,11 +32,10 @@ public class EnvoltoriaVentas implements IABM<Venta> {
 
         return aux;
     }
-    public int buscarVenta(int nroTicket)
-    {
+
+    public int buscarVenta(int nroTicket) {
         int i = 0;
-        while(i<listaDeVentas.size()-1 && listaDeVentas.get(i).getNumTicket() != nroTicket)
-        {
+        while (i < listaDeVentas.size() - 1 && listaDeVentas.get(i).getNumTicket() != nroTicket) {
             i++;
         }
 

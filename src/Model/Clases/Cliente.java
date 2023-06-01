@@ -2,6 +2,9 @@ package Model.Clases;
 
 import java.util.Objects;
 
+/**
+ * Representa las personas en el sistema.
+ */
 public class Cliente implements Comparable {
     private String nombre;
     private String apellido;
@@ -35,6 +38,12 @@ public class Cliente implements Comparable {
         this.esVip = esVip;
     }
 
+    /**
+     * verifica si los dni de los clientes a comparar son iguales.
+     * @param o Cliente
+     * @return true si es la misma persona.
+     */
+
     @Override
     public boolean equals(Object o) {
         boolean rta = false;
@@ -53,11 +62,20 @@ public class Cliente implements Comparable {
         return 1;
     }
 
+    /**
+     *
+     * @return los atributos de cliente.
+     */
     @Override
     public String toString() {
         return "Nombre del cliente completo:" + this.nombre + " - " + this.apellido + " DNI : " + this.dni + " vip :" + this.esVip;
     }
 
+    /**
+     * Verifica si es distinto a null, luego si es un cliente, y finalmente si tienen el mismo dni, mayor o menor en su respectivo caso.
+     * @param o objeto a comparar es un cliente.
+     * @return  0 si son iguales - 1 si el primero es mayor.  -  -1 si el primero es menor. -  999 si es invalido.
+     */
     @Override
     public int compareTo(Object o) {
         int rta = 999;

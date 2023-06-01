@@ -2,11 +2,16 @@ package Model.Clases;
 
 import java.util.Objects;
 
+/**
+ * Representa los productos para la venta del sistema.
+ */
+
 public abstract class Producto implements Comparable {
     private String nombre;
     private float precio;
     private int id;
 
+    //CORROBORAR DE ALGUNA FORMA , QUE NO TENGA IDS REPETIDOS.
     public Producto(String nombre, float precio, int id) {
         this.nombre = nombre;
         this.precio = precio;
@@ -33,6 +38,11 @@ public abstract class Producto implements Comparable {
         this.precio = precio;
     }
 
+    /**
+     * compara el producto
+     * @param o el Producto.
+     * @return true si son el mismo.
+     */
     @Override
     public boolean equals(Object o) {
         boolean rta = false;
@@ -57,12 +67,17 @@ public abstract class Producto implements Comparable {
         return "Nombre del producto : " + this.nombre + " Precio : " + this.precio + "Id: " + this.id;
     }
 
+    /**
+     * Compara si un objeto es mayor menor o igual al otro objeto.
+     * @param o Produto
+     * @return 0 si son el mismo id, -1 si el primero es menor, 1 si el primero es mayor.
+     */
     @Override
     public int compareTo(Object o) {
         int rta = 99999;
         if (o != null) {
             if (o instanceof Producto) {
-                if (this.id == ((Producto) o).id) {
+                if (this.id == ((Producto) o).id ) {
                     rta = 0;
                 }
                 if (this.id < ((Producto) o).id) {

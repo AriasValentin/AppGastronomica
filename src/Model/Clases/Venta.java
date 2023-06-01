@@ -4,32 +4,30 @@ import Model.Interfaces.IABM;
 
 import java.util.ArrayList;
 
+/**
+ * Venta particular, con su lista de productos añadidos a su carrito.
+ */
 public class Venta {
 
     private ArrayList<Producto> carrito;
+    private float total;
     private float descuento;
-
-    //private LugarConsumo consumo;
+    private LugarConsumo lugarConsumo;
     private Cliente UnCliente;
 
     private int numTicket;
 
-    public Venta(ArrayList<Producto> carrito, Cliente unCliente, int numTicket) {
-        this.carrito = carrito;
-        UnCliente = unCliente;
+    public Venta(float total, Cliente unCliente, int numTicket, LugarConsumo pos) {
+        this.carrito = new ArrayList<>();
+        this.total = 0;
+        this.lugarConsumo = pos;
+        setUnCliente(unCliente);
         this.numTicket = numTicket;
 
-        //consultar esto!
-        if(UnCliente.isEsVip() == true)
-        {
-            this.descuento = 15;
+    }
 
-        }
-        else
-        {
-            this.descuento = 0;
-        }
-
+    public float getTotal() {
+        return total;
     }
 
     public int getNumTicket() {
@@ -40,26 +38,58 @@ public class Venta {
         return descuento;
     }
 
-    public float PrecioFinalVenta()
-    {
-        float total = 0;
-        for(int i=0;i<carrito.size();i++)
-        {
-            total = total + carrito.get(i).getPrecio();
+    public void setUnCliente(Cliente unCliente) {
+        this.UnCliente = unCliente;
+        if (UnCliente.isEsVip() == true) {
+            this.descuento = 15;
+
+        } else {
+            this.descuento = 0;
         }
 
-        total = total-((total*descuento)/100);
+    }
+
+    /**
+     * calcula el precio final de la venta.
+     *
+     * @return El precio final.
+     */
+    public float PrecioFinalVenta() {
+        for (int i = 0; i < carrito.size(); i++) {
+            this.total = this.total + carrito.get(i).getPrecio();
+        }
+
+        this.total = this.total - ((this.total * this.descuento) / 100);
         return total;
     }
 
-    public String listarCarrito()
-    {
+    public String listarVenta() {
         String productos = "";
-        for(int i=0;i<carrito.size();i++)
-        {
-            productos = productos + carrito.get(i).toString()+ "\n"; //acumula los nombres de los productos comprados
+        for (int i = 0; i < carrito.size(); i++) {
+            productos = productos + carrito.get(i).toString() + "\n"; //acumula los nombres de los productos comprados
         }
-
-        return "Venta: N°Ticket:"+this.numTicket+ ", Productos: "+productos+ ", Precio: "+PrecioFinalVenta();
+        return "Venta: N°Ticket:" + this.numTicket + ", Productos: " + productos + ", Precio: " + this.total;
     }
+    public String MostrarIndexCarrito() {
+        String productos = "";
+        for (int i = 0; i < carrito.size(); i++) {
+            productos = productos +"INDEX: "+i+ "  -  " +carrito.get(i).toString() + "\n"; //acumula los nombres de los productos comprados
+        }
+        return productos;
+    }
+
+    /**
+     * agrega productos al carrito
+     *
+     * @param aux El producto.
+     */
+    public void agregarProductosAlcarrito(Producto aux) {
+        carrito.add(aux);
+    }
+
+    public void eliminarProductoDelcarrito(int index) {
+
+        carrito.remove(index);
+    }
+
 }
