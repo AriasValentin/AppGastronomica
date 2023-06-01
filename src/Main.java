@@ -1,3 +1,5 @@
+import Model.Clases.LugarConsumo;
+
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Scanner;
 
