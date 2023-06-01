@@ -11,7 +11,6 @@ public abstract class Producto implements Comparable {
     private float precio;
     private int id;
 
-    //CORROBORAR DE ALGUNA FORMA , QUE NO TENGA IDS REPETIDOS.
     public Producto(String nombre, float precio, int id) {
         this.nombre = nombre;
         this.precio = precio;
@@ -39,9 +38,9 @@ public abstract class Producto implements Comparable {
     }
 
     /**
-     * compara el producto
-     * @param o el Producto.
-     * @return true si son el mismo.
+     * compara el producto con un objeto
+     * @param o Objeto a comparar con Producto.
+     * @return true si son el mismo objeto, false distinto.
      */
     @Override
     public boolean equals(Object o) {

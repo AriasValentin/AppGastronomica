@@ -79,14 +79,19 @@ public class Venta {
     }
 
     /**
-     * agrega productos al carrito
+     * agrega un objeto de tipo Producto a la lista carrito
      *
-     * @param aux El producto.
+     * @param aux Producto.
      */
     public void agregarProductosAlcarrito(Producto aux) {
         carrito.add(aux);
     }
 
+    /**
+     * elimina por medio de un indice un producto de la lista carrito
+     *
+     * @param index int.
+     */
     public void eliminarProductoDelcarrito(int index) {
 
         carrito.remove(index);
