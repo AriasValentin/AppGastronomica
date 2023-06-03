@@ -1,5 +1,5 @@
 package Model.CE;
-import Model.Clases.Producto;
+
 import Model.Clases.Venta;
 import Model.Interfaces.IABM;
 

@@ -1,10 +1,11 @@
+package Model.APIS;
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class ConsumoAPIcafeCaliente
-{
+public class ConsumoAPIcafeCaliente {
 
     public static String getInfo()
     {

@@ -1,6 +1,5 @@
 package Model.CE;
 import Model.Clases.Cliente;
-import Model.Clases.Producto;
 import Model.Interfaces.IABM;
 
 import java.util.HashSet;

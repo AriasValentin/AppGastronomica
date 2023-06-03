@@ -1,4 +1,4 @@
-package Model.Clases.Productos;
+package Model.Clases.Producto;
 
 /**
  * Representa los productos para la venta del sistema.

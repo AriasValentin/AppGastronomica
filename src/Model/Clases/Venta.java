@@ -1,6 +1,6 @@
 package Model.Clases;
 
-import Model.Clases.Productos.Producto;
+import Model.Clases.Producto.Producto;
 
 import java.util.ArrayList;
 
