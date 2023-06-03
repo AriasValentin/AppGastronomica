@@ -3,7 +3,7 @@ package Model.Clases;
 import java.util.Objects;
 
 /**
- * Representa las personas en el sistema.
+ * Clase que representa las personas clientes en el sistema.
  */
 public class Cliente implements Comparable {
     private String nombre;
@@ -40,10 +40,9 @@ public class Cliente implements Comparable {
 
     /**
      * verifica si los dni de los clientes a comparar son iguales.
-     * @param o Cliente
+     * @param o Objeto a comparar con cliente.
      * @return true si es la misma persona.
      */
-
     @Override
     public boolean equals(Object o) {
         boolean rta = false;
@@ -63,8 +62,8 @@ public class Cliente implements Comparable {
     }
 
     /**
-     *
-     * @return los atributos de cliente.
+     *Retorna la información del Cliente
+     * @return String
      */
     @Override
     public String toString() {
@@ -73,8 +72,8 @@ public class Cliente implements Comparable {
 
     /**
      * Verifica si es distinto a null, luego si es un cliente, y finalmente si tienen el mismo dni, mayor o menor en su respectivo caso.
-     * @param o objeto a comparar es un cliente.
-     * @return  0 si son iguales - 1 si el primero es mayor.  -  -1 si el primero es menor. -  999 si es invalido.
+     * @param o Objeto a comparar con cliente.
+     * @return  0 si son iguales, 1 si el primero es mayor, -1 si el primero es menor, 999 si es invalido.
      */
     @Override
     public int compareTo(Object o) {
