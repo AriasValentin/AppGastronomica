@@ -1,6 +1,4 @@
-package Model.Clases;
-
-import java.util.Objects;
+package Model.Clases.Productos;
 
 /**
  * Representa los productos para la venta del sistema.

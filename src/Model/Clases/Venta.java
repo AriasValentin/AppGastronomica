@@ -1,6 +1,6 @@
 package Model.Clases;
 
-import Model.Interfaces.IABM;
+import Model.Clases.Productos.Producto;
 
 import java.util.ArrayList;
 
