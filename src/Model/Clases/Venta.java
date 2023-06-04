@@ -14,7 +14,6 @@ public class Venta {
     private float descuento;
     private LugarConsumo lugarConsumo;
     private Cliente UnCliente;
-
     private int numTicket;
 
     public Venta(float total, Cliente unCliente, int numTicket, LugarConsumo pos) {
@@ -63,6 +62,7 @@ public class Venta {
         return total;
     }
 
+    // lista todo los productos que lleva mas los atributos propios de esa venta.
     public String listarVenta() {
         String productos = "";
         for (int i = 0; i < carrito.size(); i++) {
@@ -70,6 +70,8 @@ public class Venta {
         }
         return "Venta: N°Ticket:" + this.numTicket + ", Productos: " + productos + ", Precio: " + this.total;
     }
+
+    //Lista todos los productos
     public String MostrarIndexCarrito() {
         String productos = "";
         for (int i = 0; i < carrito.size(); i++) {
