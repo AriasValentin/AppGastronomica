@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         EnvoltoriaProductos claseENVproductos = new EnvoltoriaProductos();
-        claseENVproductos.consumoBebidasCalientes();
+        claseENVproductos.consumoApisBebidas();
         System.out.println(claseENVproductos.listar());
     }
 }

@@ -4,7 +4,7 @@ import Model.Clases.Producto.Producto;
 
 import java.util.ArrayList;
 
-public  class Bebida extends Producto {
+public abstract class Bebida extends Producto {
     private String descripcion;
 
     public Bebida()
@@ -26,6 +26,6 @@ public  class Bebida extends Producto {
 
     @Override
     public String toString() {
-        return super.toString()+ "Acerca de : " +descripcion;
+        return super.toString()+ " \n Acerca de : " +descripcion;
     }
 }

@@ -1,8 +1,10 @@
 package Model.CE;
 
 import Model.APIS.ConsumoAPIcafeCaliente;
+import Model.APIS.ConsumoAPIcafeFrio;
 import Model.Clases.Producto.Bebidas.Bebida;
 import Model.Clases.Producto.Bebidas.BebidaCaliente;
+import Model.Clases.Producto.Bebidas.BebidaFria;
 import Model.Clases.Producto.Producto;
 import Model.Interfaces.IABM;
 import netscape.javascript.JSObject;
@@ -81,7 +83,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         Iterator<Producto> it = listaDeProductos.iterator();
         while (it.hasNext()) {
             Producto nuevoProducto = (Producto) it.next();
-            aux = aux + "\n" + nuevoProducto.toString();
+            aux = aux + "\n" + nuevoProducto.toString()+"\n";
         }
         return aux;
     }
@@ -106,7 +108,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return rta;
     }
 
-    public void consumoBebidasCalientes() {
+    private void consumoBebidasCalientes() {
         try {
             JSONArray jsonArray = new JSONArray(ConsumoAPIcafeCaliente.getInfo());
             for(int i = 0;i<jsonArray.length();i++)
@@ -114,7 +116,25 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 Producto nueva = new BebidaCaliente();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 nueva.setNombre( jsonObject.getString("title"));
-                //CONSULTARnueva.setdescription(jsonObject.getString("description"));
+                ((Bebida)nueva).setDescripcion(jsonObject.getString("description"));
+                nueva.setId(contadorId);
+                contadorId++;
+                agregar(nueva);
+            }
+        } catch (JSONException e) {
+            System.out.println("API MAL PROCESADA." + e.getMessage());
+        }
+    }
+    private void consumoBebidasFrias()
+    {
+        try {
+            JSONArray jsonArray = new JSONArray(ConsumoAPIcafeFrio.getInfo());
+            for(int i = 0;i<jsonArray.length();i++)
+            {
+                Producto nueva = new BebidaFria();
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                nueva.setNombre( jsonObject.getString("title"));
+                ((Bebida)nueva).setDescripcion(jsonObject.getString("description"));
                 nueva.setId(contadorId);
                 contadorId++;
                 agregar(nueva);
@@ -123,6 +143,11 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             System.out.println("API MAL PROCESADA." + e.getMessage());
         }
 
+    }
+    public void consumoApisBebidas()
+    {
+        consumoBebidasCalientes();
+        consumoBebidasFrias();
     }
 
 }
