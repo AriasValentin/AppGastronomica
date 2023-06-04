@@ -15,6 +15,10 @@ public abstract class Producto implements Comparable {
         this.id = id;
     }
 
+    public Producto() {
+
+    }
+
     public String getNombre() {
         return nombre;
     }
@@ -33,6 +37,10 @@ public abstract class Producto implements Comparable {
 
     public void setPrecio(float precio) {
         this.precio = precio;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

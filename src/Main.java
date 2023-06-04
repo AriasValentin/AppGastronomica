@@ -1,3 +1,4 @@
+import Model.CE.EnvoltoriaProductos;
 import Model.Clases.LugarConsumo;
 import Model.Clases.Venta;
 
@@ -6,6 +7,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
+        EnvoltoriaProductos claseENVproductos = new EnvoltoriaProductos();
+        claseENVproductos.consumoBebidasCalientes();
+        System.out.println(claseENVproductos.listar());
     }
 }

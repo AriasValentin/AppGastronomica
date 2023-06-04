@@ -7,5 +7,9 @@ public class BebidaCaliente extends Bebida {
     public BebidaCaliente(String nombre, float precio, int id, String descripcion) {
         super(nombre, precio, id, descripcion);
     }
+    public BebidaCaliente()
+    {
+        super();
+    }
 
 }

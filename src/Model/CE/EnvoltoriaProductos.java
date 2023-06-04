@@ -111,11 +111,12 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             JSONArray jsonArray = new JSONArray(ConsumoAPIcafeCaliente.getInfo());
             for(int i = 0;i<jsonArray.length();i++)
             {
+                Producto nueva = new BebidaCaliente();
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String tittle = jsonObject.getString("tittle");
-                String description = jsonObject.getString("description");
-                Bebida nueva = new BebidaCaliente(tittle,0,this.contadorId,description);
-                this.contadorId++;
+                nueva.setNombre( jsonObject.getString("title"));
+                //CONSULTARnueva.setdescription(jsonObject.getString("description"));
+                nueva.setId(contadorId);
+                contadorId++;
                 agregar(nueva);
             }
         } catch (JSONException e) {
