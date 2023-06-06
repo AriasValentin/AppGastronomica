@@ -4,12 +4,16 @@ import Model.APIS.ConsumoAPIcafeCaliente;
 import Model.APIS.ConsumoAPIcafeFrio;
 import Model.Clases.Producto.Bebidas.Bebida;
 import Model.Clases.Producto.Bebidas.TipoBebida;
+import Model.Clases.Producto.Comidas.Comida;
+import Model.Clases.Producto.Comidas.TipoComida;
 import Model.Clases.Producto.Producto;
 import Model.Interfaces.IABM;
+import Model.CE.JsonUtiles;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -143,10 +147,66 @@ public class EnvoltoriaProductos implements IABM<Producto> {
 
     }
 
-    public void consumoApisBebidas() {
+    private void consumoComidasDulces()
+    {
+        String jsonResponse = JsonUtiles.leer("ComidasDulces");
+
+        try
+        {
+            JSONArray ja_raiz = new JSONArray(jsonResponse);
+            for(int i=0;i<ja_raiz.length();i++)
+            {
+                JSONObject jo_comida = ja_raiz.getJSONObject(i);
+
+                Comida nueva = new Comida();
+                nueva.setNombre(jo_comida.getString("tittle"));
+                nueva.setDescripcion(jo_comida.getString("description"));
+                nueva.setTipoComida(TipoComida.COMIDA_DULCE);
+                nueva.setId(contadorId);
+                contadorId++;
+                agregar(nueva);
+            }
+
+        }catch(JSONException ex)
+        {
+            System.out.println("JSON mal creado "+ex.getMessage());
+        }
+    }
+
+    private void consumoComidasSaladas()
+    {
+        String jsonResponse = JsonUtiles.leer("ComidasSaladas");
+
+        try
+        {
+            JSONArray ja_raiz = new JSONArray(jsonResponse);
+            for(int i=0;i< ja_raiz.length();i++)
+            {
+                JSONObject jo_comida = ja_raiz.getJSONObject(i);
+
+                Comida nueva = new Comida();
+                nueva.setNombre(jo_comida.getString("tittle"));
+                nueva.setDescripcion(jo_comida.getString("description"));
+                nueva.setTipoComida(TipoComida.COMIDA_SALADA);
+                nueva.setId(contadorId);
+                contadorId++;
+                agregar(nueva);
+            }
+        }catch (JSONException ex)
+        {
+            System.out.println("JSON mal creado "+ex.getMessage());
+        }
+    }
+
+    public void consumoBebidasComidasJSON() {
+        consumoComidasDulces();
+        consumoComidasSaladas();
         consumoBebidasCalientes();
         consumoBebidasFrias();
+
     }
+
+
 //TESTEO DE IMPRIMIR ENUM
     /*public String listarBebidasCalientes() {
         String aux = "";

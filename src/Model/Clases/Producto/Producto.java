@@ -9,10 +9,13 @@ public abstract class Producto implements Comparable {
     private float precio;
     private int id;
 
-    public Producto(String nombre, float precio, int id) {
+    private String descripcion;
+
+    public Producto(String nombre, float precio, int id, String descripcion) {
         this.nombre = nombre;
         this.precio = precio;
         this.id = id;
+        this.descripcion = descripcion;
     }
 
     public Producto() {
@@ -31,6 +34,10 @@ public abstract class Producto implements Comparable {
         return id;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -41,6 +48,10 @@ public abstract class Producto implements Comparable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
     /**
@@ -69,7 +80,7 @@ public abstract class Producto implements Comparable {
 
     @Override
     public String toString() {
-        return "Nombre del producto : " + this.nombre + "\n Precio : " + this.precio + " \n Id: " + this.id;
+        return "Nombre del producto : " + this.nombre + "\n Precio : " + this.precio + " \n Id: " + this.id + " \n Descripcion: "+ this.descripcion;
     }
 
     /**
