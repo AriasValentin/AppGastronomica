@@ -9,6 +9,7 @@ public class Main {
     public static void main(String[] args) {
         EnvoltoriaProductos claseENVproductos = new EnvoltoriaProductos();
         claseENVproductos.consumoApisBebidas();
-        System.out.println(claseENVproductos.listar());
+        System.out.println(claseENVproductos.listarBebidasCalientes());
+
     }
 }

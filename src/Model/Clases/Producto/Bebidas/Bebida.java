@@ -4,13 +4,14 @@ import Model.Clases.Producto.Producto;
 
 import java.util.ArrayList;
 
-public abstract class Bebida extends Producto {
+public  class Bebida extends Producto {
     private String descripcion;
-
+    private TipoBebida tipoBebida;
     public Bebida()
     {
         super();
-
+        this.descripcion = "";
+        this.tipoBebida = null;
     }
     public Bebida(String nombre, float precio, int id, String descripcion) {
         super(nombre, precio, id);
@@ -20,8 +21,16 @@ public abstract class Bebida extends Producto {
         return descripcion;
     }
 
+    public TipoBebida getTipoBebida() {
+        return tipoBebida;
+    }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public void setTipoBebida(TipoBebida tipoBebida) {
+        this.tipoBebida = tipoBebida;
     }
 
     @Override
