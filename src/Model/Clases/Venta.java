@@ -1,6 +1,8 @@
 package Model.Clases;
 
 import Model.Clases.Producto.Producto;
+import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
+import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 
 import java.util.ArrayList;
 
@@ -54,11 +56,13 @@ public class Venta {
      * @return El precio final.
      */
     public float PrecioFinalVenta() {
+
         for (int i = 0; i < carrito.size(); i++) {
             this.total = this.total + carrito.get(i).getPrecio();
         }
 
         this.total = this.total - ((this.total * this.descuento) / 100);
+
         return total;
     }
 
@@ -85,8 +89,12 @@ public class Venta {
      *
      * @param aux Producto.
      */
-    public void agregarProductosAlcarrito(Producto aux) {
-        carrito.add(aux);
+    public void agregarProductosAlcarrito(Producto aux) throws ElementNotLoadedException {
+        if(aux != null){
+            carrito.add(aux);
+        } else {
+            throw new ElementNotLoadedException("\nERROR - El producto no pudo agregarse a su carrito.\n")
+        }
     }
 
     /**
@@ -94,9 +102,12 @@ public class Venta {
      *
      * @param index int.
      */
-    public void eliminarProductoDelcarrito(int index) {
+    public void eliminarProductoDelcarrito(int index) throws ElementNotFoundException {
 
-        carrito.remove(index);
+        if(index >= 0){
+            carrito.remove(index);
+        }else {
+            throw new ElementNotFoundException("\nERROR - El producto no fue encontrado o ya fue eliminado.\n");
+        }
     }
-
 }

@@ -7,6 +7,9 @@ import Model.Clases.Producto.Bebidas.TipoBebida;
 import Model.Clases.Producto.Comidas.Comida;
 import Model.Clases.Producto.Comidas.TipoComida;
 import Model.Clases.Producto.Producto;
+import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
+import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
+import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import Model.Interfaces.IABM;
 import Model.CE.JsonUtiles;
 import org.json.JSONArray;
@@ -36,12 +39,18 @@ public class EnvoltoriaProductos implements IABM<Producto> {
 
     /**
      * Añade un objeto de tipo producto al HashSet.
+     * Lanza una excepcion de tipo ElementNotLoadedException si el producto no pudo cargarse.
      *
      * @param unProducto objeto de tipo Producto.
      */
     @Override
-    public void agregar(Producto unProducto) {
-        listaDeProductos.add(unProducto);
+    public void agregar(Producto unProducto) throws ElementNotLoadedException {
+
+        if(unProducto != null) {
+            listaDeProductos.add(unProducto);
+        } else {
+            throw new ElementNotLoadedException("\nERROR - El producto no pudo cargarse.\n");
+        }
     }
 
     /**
@@ -53,7 +62,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      * @see Boolean
      */
     @Override
-    public boolean eliminar(int id) {
+    public boolean eliminar(int id) throws ElementNotFoundException {
         boolean rta = false;
         Iterator<Producto> it = listaDeProductos.iterator();
         int flag = 0;
@@ -65,11 +74,16 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 rta = true;
             }
         }
+
+        if (flag == 0){
+            throw new ElementNotFoundException("\nERROR - El producto no fue encontrado o ya fue eliminado.\n");
+        }
+
         return rta;
     }
 
     @Override
-    public void modificar(int elemento) {
+    public void modificar(int elemento) throws ElementUnmodifiedException {
 
     }
 
@@ -125,6 +139,8 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             }
         } catch (JSONException e) {
             System.out.println("API MAL PROCESADA." + e.getMessage());
+        }catch (ElementNotLoadedException ex){
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -143,6 +159,8 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             }
         } catch (JSONException e) {
             System.out.println("API MAL PROCESADA." + e.getMessage());
+        }catch (ElementNotLoadedException ex){
+            System.out.println(ex.getMessage());
         }
 
     }
@@ -170,6 +188,8 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }catch(JSONException ex)
         {
             System.out.println("JSON mal creado "+ex.getMessage());
+        }catch (ElementNotLoadedException ex){
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -195,6 +215,8 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }catch (JSONException ex)
         {
             System.out.println("JSON mal creado "+ex.getMessage());
+        }catch (ElementNotLoadedException ex){
+            System.out.println(ex.getMessage());
         }
     }
 
