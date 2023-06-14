@@ -30,7 +30,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
      * @param unaVenta Objeto de tipo Venta
      */
     @Override
-    public void agregar(Venta unaVenta) throws ElementNotLoadedException {
+    public  void agregar(Venta unaVenta) throws ElementNotLoadedException {
 
         if (unaVenta != null) {
             listaDeVentas.add(unaVenta);
