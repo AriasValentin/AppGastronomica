@@ -93,7 +93,7 @@ public class Venta {
         if(aux != null){
             carrito.add(aux);
         } else {
-            throw new ElementNotLoadedException("\nERROR - El producto no pudo agregarse a su carrito.\n")
+            throw new ElementNotLoadedException("\nERROR - El producto no pudo agregarse a su carrito.\n");
         }
     }
 
