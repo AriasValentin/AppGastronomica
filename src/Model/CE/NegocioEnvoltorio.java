@@ -1,3 +1,5 @@
+package Model.CE;
+
 import Model.CE.EnvoltoriaClientes;
 import Model.CE.EnvoltoriaProductos;
 import Model.CE.EnvoltoriaVentas;
@@ -15,6 +17,8 @@ public NegocioEnvoltorio()
     lista_productos = new EnvoltoriaProductos();
     lista_clientes = new EnvoltoriaClientes();
 }
+
+
 
     public static void menu()
     {
