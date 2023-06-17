@@ -11,7 +11,7 @@ public class ConsumoAPIcafeCaliente {
     {
         try
         {
-            URL url = new URL("https://api.sampleapis.com/coffee/hot");
+                URL url = new URL("https://api.sampleapis.com/coffee/hot");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("GET");
             connection.connect();

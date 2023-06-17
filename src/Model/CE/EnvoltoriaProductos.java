@@ -11,7 +11,7 @@ import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import Model.Interfaces.IABM;
-import Model.CE.JsonUtiles;
+import Model.Clases.JsonUtiles;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -228,9 +228,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         consumoBebidasFrias();
 
     }
-
-
-//TESTEO DE IMPRIMIR ENUM
+    //TESTEO DE IMPRIMIR ENUM
     /*public String listarBebidasCalientes() {
         String aux = "";
         Iterator <Producto> it = listaDeProductos.iterator();

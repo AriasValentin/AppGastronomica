@@ -8,20 +8,27 @@ import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Scanner;
 
 public class NegocioEnvoltorio {
-private EnvoltoriaVentas lista_ventas;
-private EnvoltoriaProductos lista_productos;
-private EnvoltoriaClientes lista_clientes;
-public NegocioEnvoltorio()
-{
-    lista_ventas = new EnvoltoriaVentas();
-    lista_productos = new EnvoltoriaProductos();
-    lista_clientes = new EnvoltoriaClientes();
-}
+    private EnvoltoriaVentas lista_ventas;
+    private EnvoltoriaProductos lista_productos;
+    private EnvoltoriaClientes lista_clientes;
+
+    public NegocioEnvoltorio() {
+        lista_ventas = new EnvoltoriaVentas();
+        lista_productos = new EnvoltoriaProductos();
+        lista_clientes = new EnvoltoriaClientes();
+    }
 
 
+    public EnvoltoriaProductos getLista_productos() {
+        return lista_productos;
+    }
 
-    public static void menu()
+    public static  void menuEmpleado()
     {
+
+    }
+
+    public static void menuAdministrador() {
         Scanner scan = new Scanner(System.in);
         int opcion;
         System.out.println("Bienvenidos al panel de negocio.");
@@ -50,26 +57,25 @@ public NegocioEnvoltorio()
         System.out.println("-------------------------------------------------------------------------");
         System.out.println("0 SALIR");
         opcion = scan.nextInt();
-        switch (opcion)
-        {
+        switch (opcion) {
 
-            case 1 :
+            case 1:
                 break;
-            case 2 :
+            case 2:
                 break;
             case 3:
                 break;
-            case 4 :
+            case 4:
                 break;
             case 5:
                 break;
-            case 6 :
+            case 6:
                 break;
             case 7:
                 break;
             case 8:
                 break;
-            case 9 :
+            case 9:
                 break;
             case 10:
                 break;
@@ -86,7 +92,8 @@ public NegocioEnvoltorio()
             case 16:
                 break;
 
-        }while(opcion != 0);
+        }
+        while (opcion != 0) ;
 
     }
 }
