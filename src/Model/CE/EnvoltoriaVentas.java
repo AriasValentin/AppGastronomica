@@ -50,7 +50,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
         boolean rta = false;
 
         try {
-            int indice = buscarVenta(numTicket);
+            int indice = buscar(numTicket);
 
             if (indice != -1) {
                 listaDeVentas.remove(indice);
@@ -91,7 +91,10 @@ public class EnvoltoriaVentas implements IABM<Venta> {
      * @param nroTicket numero de ticket de la venta
      * @return indice con la posicion de la venta, -1 si no existe.
      */
-    public int buscarVenta(int nroTicket) throws ElementNotFoundException {
+
+
+    @Override
+    public int buscar(int nroTicket) throws ElementNotFoundException {
         int i = 0, indice = -1;
 
         while (i < (listaDeVentas.size() - 1) && listaDeVentas.get(i).getNumTicket() != nroTicket) {
@@ -106,4 +109,6 @@ public class EnvoltoriaVentas implements IABM<Venta> {
 
         return indice;
     }
+
+
 }

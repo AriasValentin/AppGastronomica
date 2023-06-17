@@ -9,4 +9,5 @@ public interface IABM <T>{
     boolean eliminar(int elemento) throws ElementNotFoundException;
     void modificar(int elemento) throws ElementUnmodifiedException;
     String listar();
+    int buscar(int elemento) throws ElementNotFoundException ;
 }

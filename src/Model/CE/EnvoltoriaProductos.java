@@ -110,18 +110,19 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      * @param id numero id del producto.
      * @return true si encuentra el producto, false si no.
      */
-    public boolean buscar(int id) {
-        boolean rta = false;
+    public int buscar(int id) throws ElementNotFoundException{
+
         Iterator<Producto> it = listaDeProductos.iterator();
         int flag = 0;
         while (it.hasNext() && flag == 0) {
             Producto nuevo = (Producto) it.next();
             if (nuevo.getId() == id) {
                 flag = 1;
-                rta = true;
             }
         }
-        return rta;
+        if(flag == 0)
+            throw new ElementNotFoundException("ERROR - PRODUCTO NO ENCONTRADO !");
+        return flag;
     }
 
     private void consumoBebidasCalientes() {
@@ -220,7 +221,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }
     }
 
-    public void consumoBebidasComidasJSON() {
+    public void consumoJSON() {
         consumoComidasDulces();
         consumoComidasSaladas();
         consumoBebidasCalientes();

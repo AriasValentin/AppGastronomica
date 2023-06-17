@@ -29,7 +29,7 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
      * Añade un objeto de tipo Cliente a la LinkedHashSet.
      *
      * @param unCliente Objeto de tipo cliente.
-     * Lanza una excepcion si el cliente es nulo.
+     *                  Lanza una excepcion si el cliente es nulo.
      */
     @Override
     public void agregar(Cliente unCliente) throws ElementNotLoadedException {
@@ -63,7 +63,7 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
             }
         }
 
-        if(flag == 0){
+        if (flag == 0) {
             throw new ElementNotFoundException("\nERROR - El cliente no fue encontrado o ya fue eliminado.\n");
         }
 
@@ -99,22 +99,20 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
      * @return true si encuentra el cliente, false si no.
      * Lanza una excepcion personalizada si no encuentra al cliente.
      */
-    public boolean buscar(int dni) throws ElementNotFoundException {
-        boolean rta = false;
+    public int buscar(int dni) throws ElementNotFoundException {
         Iterator<Cliente> it = listaDeClientes.iterator();
         int flag = 0;
         while (it.hasNext() && flag == 0) {
             Cliente nuevo = (Cliente) it.next();
             if (nuevo.getDni() == dni) {
                 flag = 1;
-                rta = true;
             }
         }
 
-        if (flag == 0){
+        if (flag == 0) {
             throw new ElementNotFoundException("\nERROR - Cliente no encontrado.\n");
         }
 
-        return rta;
+        return flag;
     }
 }
