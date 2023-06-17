@@ -8,7 +8,6 @@ public abstract class Producto implements Comparable {
     private String nombre;
     private float precio;
     private int id;
-
     private String descripcion;
 
     public Producto(String nombre, float precio, int id, String descripcion) {

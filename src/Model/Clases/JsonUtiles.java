@@ -1,4 +1,4 @@
-package Model.CE;
+package Model.Clases;
 
 import java.io.FileWriter;
 import java.io.IOException;
