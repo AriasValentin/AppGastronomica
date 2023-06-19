@@ -11,6 +11,7 @@ import jdk.jfr.EventType;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Scanner;
 
 /**
  * Clase que envuelve todas los objetos de tipo Venta almacenados en una ArrayList manipulada por la interfaz implementada IABM.
@@ -20,8 +21,13 @@ import java.util.HashSet;
  */
 
 public class EnvoltoriaVentas implements IABM<Venta> {
+
+    Scanner scan = new Scanner(System.in);
+
+    //atributos
     private ArrayList<Venta> listaDeVentas;
 
+    //constructor
     public EnvoltoriaVentas() {
         this.listaDeVentas = new ArrayList<>();
     }
@@ -66,9 +72,36 @@ public class EnvoltoriaVentas implements IABM<Venta> {
         return rta;
     }
 
-    @Override
-    public void modificar(int elemento) throws ElementUnmodifiedException {
+    /**
+     * Modifica el atributo valor de una venta especifica que exista.
+     *
+     * @param nroTicket
+     * @throws ElementUnmodifiedException
+     */
 
+    @Override
+    public void modificar(int nroTicket) throws ElementUnmodifiedException {
+        try {
+            Venta aux = buscar(nroTicket);
+            if(aux != null)
+            {
+                eliminar(nroTicket);
+
+                System.out.println(aux.toString());
+
+                System.out.println("Ingrese el Total de la venta a modificar: ");
+                aux.setTotal(scan.nextFloat());
+
+                agregar(aux);
+
+            }
+
+        } catch (ElementNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (ElementNotLoadedException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

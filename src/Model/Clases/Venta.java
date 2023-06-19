@@ -31,6 +31,10 @@ public class Venta {
         return total;
     }
 
+    public void setTotal(float total) {
+        this.total = total;
+    }
+
     public int getNumTicket() {
         return numTicket;
     }

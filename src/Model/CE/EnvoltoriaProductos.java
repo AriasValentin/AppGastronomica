@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Scanner;
 
 /**
  * Clase que envuelve todos los objetos de tipo Productos almacenados en una coleccion de tipo HashSet. Dicha coleecion es manipulada por la interfaz implementada IABM.
@@ -28,6 +29,7 @@ import java.util.Iterator;
  */
 public class EnvoltoriaProductos implements IABM<Producto> {
 
+    Scanner scan = new Scanner(System.in);
     private HashSet<Producto> listaDeProductos;
     private int contadorId;
 
@@ -86,12 +88,31 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     /**
      * Modifica el precio de un producto.
      *
-     * @param elemento
+     * @param idProducto
      * @throws ElementUnmodifiedException
      */
     @Override
-    public void modificar(int elemento) throws ElementUnmodifiedException {
+    public void modificar(int idProducto) throws ElementUnmodifiedException {
+        try {
+            Producto aux = buscar(idProducto);
+            if(aux != null)
+            {
+                eliminar(idProducto);
 
+                System.out.println(aux.toString());
+
+                System.out.println("Ingrese el precio del producto a modificar: ");
+                aux.setPrecio(scan.nextFloat());
+
+                agregar(aux);
+
+            }
+        } catch (ElementNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (ElementNotLoadedException e)
+        {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**
