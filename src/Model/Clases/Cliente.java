@@ -67,7 +67,7 @@ public class Cliente implements Comparable {
      */
     @Override
     public String toString() {
-        return "\n---------------------------------\n" + "Nombre del cliente: " + this.nombre + " " + this.apellido + "\nDNI: " + this.dni + "\nVIP: " + this.esVip + "\n---------------------------------";
+        return "\n---------------------------------\n" + "Nombre del cliente: " + this.nombre + " " + this.apellido + "\nDNI: " + this.dni + "\nVIP: " + this.esVip + "\n";
     }
 
     /**

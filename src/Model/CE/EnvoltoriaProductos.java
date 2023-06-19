@@ -220,12 +220,25 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             System.out.println(ex.getMessage());
         }
     }
+    private void ConsumoBebidasFriasPERSONAL()
+    {
+        String jsonResponse = JsonUtiles.leer("BebidasFrias");
+        try
+        {
+            JSONArray jsonArray = new JSONArray(jsonResponse);
+        }
+        catch (JSONException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+
 
     public void consumoJSON() {
         consumoComidasDulces();
         consumoComidasSaladas();
-        consumoBebidasCalientes();
-        consumoBebidasFrias();
+        //consumoBebidasCalientes();
+        //consumoBebidasFrias();
 
     }
     //TESTEO DE IMPRIMIR ENUM

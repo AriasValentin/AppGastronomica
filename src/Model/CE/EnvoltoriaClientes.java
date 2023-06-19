@@ -70,8 +70,18 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
         return rta;
     }
 
+    /**
+     * Modifica el dni del cliente.
+     * @param dni
+     * @throws ElementUnmodifiedException
+     */
     @Override
     public void modificar(int dni) throws ElementUnmodifiedException {
+
+
+    }
+    public void modificar()
+    {
 
     }
 
