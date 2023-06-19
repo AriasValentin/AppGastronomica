@@ -28,6 +28,7 @@ public class NegocioEnvoltorio {
     public void menuAplicacion() {
 
         int opcion = 0;
+        lista_productos.consumoJSON();
 
         System.out.println("Bienvenidos al panel de negocio.");
         System.out.println("Como desea operar?: \n");
@@ -110,87 +111,107 @@ public class NegocioEnvoltorio {
                     break;
                 }
 
-                case 8:{
+                case 8: {
                     boolean borrado = false;
 
                     System.out.printf("Ingrese el DNI del cliente a eliminar: ");
                     int dni = enter.nextInt();
 
-                    try{
+                    try {
                         borrado = lista_clientes.eliminar(dni);
 
-                        if (borrado == true){
+                        if (borrado == true) {
                             System.out.println("\nEl cliente se elimino exitosamente.\n");
                         }
-                    }catch (ElementNotFoundException e){
+                    } catch (ElementNotFoundException e) {
                         System.out.println(e.getMessage());
                     }
 
                     break;
                 }
 
-                case 10:{
+                case 10: {
 
                     int subOpcion = 0;
-
-                    System.out.println("PRODUCTOS EN SISTEMA:");
-
-                    System.out.println("\n1 - COMIDAS DULCES.");
-                    System.out.println("2 - COMIDAS SALADAS.");
-                    System.out.println("3 - BEBIDAS FRIAS.");
-                    System.out.println("4 - BEBIDAS CALIENTES.");
-                    System.out.println("5 - MOSTRAR TODOS LOS PRODUCTOS.");
-
-                    System.out.println("\n6 - ATRAS.\n");
-
-                    System.out.printf("Opcion: ");
-                    subOpcion = enter.nextInt();
+                    char subRta = 0;
 
                     do {
-                        switch (subOpcion){
-                            case 1:{
+                        System.out.println("PRODUCTOS EN SISTEMA:");
+
+                        System.out.println("\n1 - COMIDAS DULCES.");
+                        System.out.println("2 - COMIDAS SALADAS.");
+                        System.out.println("3 - BEBIDAS FRIAS.");
+                        System.out.println("4 - BEBIDAS CALIENTES.");
+                        System.out.println("5 - MOSTRAR TODOS LOS PRODUCTOS.");
+
+                        System.out.println("\n0 - ATRAS.\n");
+
+                        System.out.printf("Opcion: ");
+                        subOpcion = enter.nextInt();
+
+
+                        switch (subOpcion) {
+                            case 1: {
+                                lista_productos.vaciarLista();
                                 lista_productos.consumoComidasDulces();
                                 System.out.println(lista_productos.listar());
                                 break;
                             }
 
-                            case 2:{
+                            case 2: {
+                                lista_productos.vaciarLista();
                                 lista_productos.consumoComidasSaladas();
                                 System.out.println(lista_productos.listar());
                                 break;
                             }
 
-                            case 3:{
+                            case 3: {
+                                lista_productos.vaciarLista();
                                 lista_productos.consumoBebidasFriasPERSONAL();
                                 System.out.println(lista_productos.listar());
                                 break;
                             }
 
-                            case 4:{
+                            case 4: {
+                                lista_productos.vaciarLista();
                                 lista_productos.consumoBebidasCalientesPersonal();
                                 System.out.println(lista_productos.listar());
                                 break;
                             }
 
-                            case 5:{
+                            case 5: {
+                                lista_productos.vaciarLista();
                                 lista_productos.consumoJSON();
                                 System.out.println(lista_productos.listar());
                                 break;
                             }
 
-                            default:{
+                            case 0:{
+                                opcion = -1;
+                                rta = 's';
+                                subRta = 'n';
+                                break;
+                            }
+
+                            default: {
                                 System.out.println("\nERROR - Opcion no valida.\n");
                                 break;
                             }
                         }
 
-                    }while ((rta == 's') && (subOpcion != 0));
+                        if (subOpcion != 0) {
+                            System.out.printf("Desea ver otro listado? (s/n): ");
+                            enter.nextLine();
+                            subRta = enter.nextLine().charAt(0);
+                        }
+
+                    } while ((subRta == 's') || (subOpcion != 0));
 
                     break;
                 }
             }
 
-            if(opcion != 0){
+            if ((opcion != 0) && (opcion != -1)) {
                 System.out.printf("Desea volver al menu? (s/n): ");
                 enter.nextLine();
                 rta = enter.nextLine().charAt(0);

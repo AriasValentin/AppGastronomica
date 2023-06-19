@@ -303,6 +303,12 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         //consumoBebidasFrias();
 
     }
+
+    public void vaciarLista(){
+        listaDeProductos.clear();
+    }
+
+
     //TESTEO DE IMPRIMIR ENUM
     /*public String listarBebidasCalientes() {
         String aux = "";
