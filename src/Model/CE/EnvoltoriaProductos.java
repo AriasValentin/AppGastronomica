@@ -21,7 +21,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 
 /**
- * Clase que envuelve todas los objetos de tipo Productos almacenados en una coleccion de tipo HashSet. Dicha coleecion es manipulada por la interfaz implementada IABM.
+ * Clase que envuelve todos los objetos de tipo Productos almacenados en una coleccion de tipo HashSet. Dicha coleecion es manipulada por la interfaz implementada IABM.
  *
  * @see HashSet
  * @see Producto
