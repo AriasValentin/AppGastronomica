@@ -5,6 +5,6 @@ package Model.ExcepcionesPersonalizadas;
  */
 public class ElementUnmodifiedException extends Exception{
     public ElementUnmodifiedException(String message){
-        super(message);
+        super("ELEMENTO NO SE PUDO MODIFICAR.."+message);
     }
 }
