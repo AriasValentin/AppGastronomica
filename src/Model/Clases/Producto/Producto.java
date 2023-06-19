@@ -79,7 +79,12 @@ public abstract class Producto implements Comparable {
 
     @Override
     public String toString() {
-        return "Nombre del producto : " + this.nombre + "\n Precio : " + this.precio + " \n Id: " + this.id + " \n Descripcion: "+ this.descripcion;
+        return "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                "Nombre del producto : " + this.nombre +
+                "\nPrecio : " + this.precio +
+                "\nId: " + this.id +
+                "\nDescripcion: "+ this.descripcion +
+                "\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
     }
 
     /**

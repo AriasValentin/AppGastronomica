@@ -179,7 +179,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
 
     }
 
-    private void consumoComidasDulces()
+    public void consumoComidasDulces()
     {
         String jsonResponse = JsonUtiles.leer("ComidasDulces");
 
@@ -207,7 +207,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }
     }
 
-    private void consumoComidasSaladas()
+    public void consumoComidasSaladas()
     {
         String jsonResponse = JsonUtiles.leer("ComidasSaladas");
 
@@ -233,7 +233,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             System.out.println(ex.getMessage());
         }
     }
-    private void consumoBebidasFriasPERSONAL()
+    public void consumoBebidasFriasPERSONAL()
     {
         String jsonResponse = JsonUtiles.leer("BebidasFrias");
         try
@@ -260,7 +260,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             System.out.println(ex.getMessage());
         }
     }
-    private void consumoBebidasCalientesPersonal()
+    public void consumoBebidasCalientesPersonal()
     {
         String jsonResponse = JsonUtiles.leer("BebidasCalientes");
         try

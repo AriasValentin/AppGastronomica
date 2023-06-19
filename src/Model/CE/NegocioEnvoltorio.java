@@ -4,6 +4,7 @@ import Model.CE.EnvoltoriaClientes;
 import Model.CE.EnvoltoriaProductos;
 import Model.CE.EnvoltoriaVentas;
 import Model.Clases.Cliente;
+import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 
 import javax.swing.plaf.synth.SynthOptionPaneUI;
@@ -24,38 +25,24 @@ public class NegocioEnvoltorio {
         lista_clientes = new EnvoltoriaClientes();
     }
 
-    public EnvoltoriaVentas getLista_ventas() {
-        return lista_ventas;
-    }
+    public void menuAplicacion() {
 
-    public EnvoltoriaProductos getLista_productos() {
-        return lista_productos;
-    }
+        int opcion = 0;
 
-    public EnvoltoriaClientes getLista_clientes() {
-        return lista_clientes;
-    }
+        System.out.println("Bienvenidos al panel de negocio.");
+        System.out.println("Como desea operar?: \n");
 
-    public void menuAplicacion(int contraseña) {
+        System.out.println("1 - Empleado.");
+        System.out.println("2 - Administrador.");
 
-        if (contraseña == 123) {
+        System.out.printf("\nOpcion: ");
 
-            int opcion = 0;
+        opcion = enter.nextInt();
 
-            System.out.println("Bienvenidos al panel de negocio.");
-            System.out.println("Como desea operar?: ");
-
-            System.out.println("1 - Empleado.");
-            System.out.println("2 - Administrador.");
-
-            opcion = enter.nextInt();
-
-            switch (opcion) {
-                case 1: {
-                    menuEmpleado();
-                    break;
-                }
-
+        switch (opcion) {
+            case 1: {
+                menuEmpleado();
+                break;
             }
 
         }
@@ -68,22 +55,28 @@ public class NegocioEnvoltorio {
 
         do {
             System.out.println("\n---OPCIONES PARA VENTAS---\n");
-            System.out.println("1. VENDER");
-            System.out.println("3. MODIFICAR VENTA");
-            System.out.println("4. LISTAR VENTAS");
-            System.out.println("\n---OPCIONES PARA CLIENTES---");
-            System.out.println("7. AGREGAR CLIENTE ");
-            System.out.println("8. ELIMINAR CLIENTE");
-            System.out.println("9. MODIFICAR CLIENTE");
+
+            System.out.println("1 - VENDER");
+            System.out.println("3 - MODIFICAR VENTA");
+            System.out.println("4 - LISTAR VENTAS");
+
+            System.out.println("\n---OPCIONES PARA CLIENTES---\n");
+
+            System.out.println("7 - AGREGAR CLIENTE ");
+            System.out.println("8 - ELIMINAR CLIENTE");
+            System.out.println("9 - MODIFICAR CLIENTE");
+
             System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
-            System.out.println("16. MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA");
-            System.out.println("\n-------------------------------------------------------------------------\n");
-            System.out.println("0 SALIR");
+
+            System.out.println("10 - MOSTRAR PRODUCTOS EN SISTEMA");
+            System.out.println("\n------------------------------------------------\n");
+            System.out.println("0 - SALIR\n");
 
             System.out.printf("Opcion: ");
             opcion = enter.nextInt();
 
             switch (opcion) {
+
                 case 7: {
 
                     Cliente unCliente = new Cliente();
@@ -110,20 +103,100 @@ public class NegocioEnvoltorio {
 
                     try {
                         lista_clientes.agregar(unCliente);
-                    }catch (ElementNotLoadedException e){
+                    } catch (ElementNotLoadedException e) {
                         System.out.println(e.getMessage());
                     }
 
-                    System.out.println(lista_clientes.listar());
+                    break;
+                }
+
+                case 8:{
+                    boolean borrado = false;
+
+                    System.out.printf("Ingrese el DNI del cliente a eliminar: ");
+                    int dni = enter.nextInt();
+
+                    try{
+                        borrado = lista_clientes.eliminar(dni);
+
+                        if (borrado == true){
+                            System.out.println("\nEl cliente se elimino exitosamente.\n");
+                        }
+                    }catch (ElementNotFoundException e){
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+                }
+
+                case 10:{
+
+                    int subOpcion = 0;
+
+                    System.out.println("PRODUCTOS EN SISTEMA:");
+
+                    System.out.println("\n1 - COMIDAS DULCES.");
+                    System.out.println("2 - COMIDAS SALADAS.");
+                    System.out.println("3 - BEBIDAS FRIAS.");
+                    System.out.println("4 - BEBIDAS CALIENTES.");
+                    System.out.println("5 - MOSTRAR TODOS LOS PRODUCTOS.");
+
+                    System.out.println("\n6 - ATRAS.\n");
+
+                    System.out.printf("Opcion: ");
+                    subOpcion = enter.nextInt();
+
+                    do {
+                        switch (subOpcion){
+                            case 1:{
+                                lista_productos.consumoComidasDulces();
+                                System.out.println(lista_productos.listar());
+                                break;
+                            }
+
+                            case 2:{
+                                lista_productos.consumoComidasSaladas();
+                                System.out.println(lista_productos.listar());
+                                break;
+                            }
+
+                            case 3:{
+                                lista_productos.consumoBebidasFriasPERSONAL();
+                                System.out.println(lista_productos.listar());
+                                break;
+                            }
+
+                            case 4:{
+                                lista_productos.consumoBebidasCalientesPersonal();
+                                System.out.println(lista_productos.listar());
+                                break;
+                            }
+
+                            case 5:{
+                                lista_productos.consumoJSON();
+                                System.out.println(lista_productos.listar());
+                                break;
+                            }
+
+                            default:{
+                                System.out.println("\nERROR - Opcion no valida.\n");
+                                break;
+                            }
+                        }
+
+                    }while ((rta == 's') && (subOpcion != 0));
 
                     break;
                 }
             }
 
-            System.out.printf("Desea volver al menu? (s/n): ");
-            rta = enter.nextLine().charAt(0);
+            if(opcion != 0){
+                System.out.printf("Desea volver al menu? (s/n): ");
+                enter.nextLine();
+                rta = enter.nextLine().charAt(0);
+            }
 
-        } while (rta == 's');
+        } while ((rta == 's') && (opcion != 0));
     }
 
     public void menuAdministrador() {

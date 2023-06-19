@@ -18,7 +18,6 @@ public class Main {
 
         NegocioEnvoltorio miNegocio = new NegocioEnvoltorio();
 
-        miNegocio.menuEmpleado();
-        
+        miNegocio.menuAplicacion();
     }
 }
