@@ -233,23 +233,72 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             System.out.println(ex.getMessage());
         }
     }
-    private void ConsumoBebidasFriasPERSONAL()
+    private void consumoBebidasFriasPERSONAL()
     {
         String jsonResponse = JsonUtiles.leer("BebidasFrias");
         try
         {
             JSONArray jsonArray = new JSONArray(jsonResponse);
+            for(int i = 0;i< jsonArray.length();i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Bebida nueva = new Bebida();
+                nueva.setNombre(jsonObject.getString("tittle"));
+                nueva.setDescripcion(jsonObject.getString("description"));
+                nueva.setTipoBebida(TipoBebida.BEBIDA_FRIA);
+                nueva.setId(contadorId);
+                contadorId++;
+                agregar(nueva);
+            }
         }
         catch (JSONException ex)
         {
             System.out.println(ex.getMessage());
         }
+        catch (ElementNotLoadedException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+    }
+    private void consumoBebidasCalientesPersonal()
+    {
+        String jsonResponse = JsonUtiles.leer("BebidasCalientes");
+        try
+        {
+            JSONArray jsonArray = new JSONArray(jsonResponse);
+            for (int i = 0;i<jsonArray.length();i++)
+            {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                Bebida nueva = new Bebida();
+                nueva.setNombre(jsonObject.getString("tittle"));
+                nueva.setDescripcion(jsonObject.getString("description"));
+                nueva.setTipoBebida(TipoBebida.BEBIDA_CALIENTE);
+                nueva.setId(contadorId);
+                contadorId++;
+                agregar(nueva);
+
+            }
+        }
+        catch (JSONException ex)
+        {
+            System.out.println(ex.getMessage());
+
+        }
+        catch (ElementNotLoadedException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+
+
     }
 
 
     public void consumoJSON() {
         consumoComidasDulces();
         consumoComidasSaladas();
+        consumoBebidasFriasPERSONAL();
+        consumoBebidasCalientesPersonal();
+
         //consumoBebidasCalientes();
         //consumoBebidasFrias();
 

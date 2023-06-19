@@ -15,9 +15,16 @@ import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 public class Main {
     public static void main(String[] args) {
+<<<<<<< HEAD
         NegocioEnvoltorio miNegocio = new NegocioEnvoltorio();
 
         miNegocio.menuEmpleado();
-    }
+=======
 
+        EnvoltoriaProductos envoltoriaProductos = new EnvoltoriaProductos();
+        envoltoriaProductos.consumoJSON();
+        System.out.println(envoltoriaProductos.listar());
+
+>>>>>>> 63dfc83301c666b4617a56b9189b41bbf42348a5
+    }
 }
