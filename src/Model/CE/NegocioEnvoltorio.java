@@ -156,8 +156,3 @@ public class NegocioEnvoltorio {
         System.out.println("0 SALIR");
     }
 }
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 63dfc83301c666b4617a56b9189b41bbf42348a5
