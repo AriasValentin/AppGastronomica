@@ -13,23 +13,10 @@ import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 public class Main {
     public static void main(String[] args) {
-        EnvoltoriaClientes envoltoriaClientes = new EnvoltoriaClientes();
-        Cliente cliente1 = new Cliente("Valentin", "Arias", 38395628, true);
-        Cliente cliente2 = new Cliente("Federico", "Falotiche", 39415623, true);
-        try {
-            envoltoriaClientes.agregar(cliente1);
-            envoltoriaClientes.agregar(cliente2);
-        } catch (ElementNotLoadedException ex) {
-            ex.getMessage();
-        }
-        System.out.println(envoltoriaClientes.listar());
-        try {
-            envoltoriaClientes.eliminar(39415623);
-        } catch (ElementNotFoundException ex) {
-            ex.getMessage();
-        }
 
-        System.out.println(envoltoriaClientes.listar());
+        EnvoltoriaProductos envoltoriaProductos = new EnvoltoriaProductos();
+        envoltoriaProductos.consumoJSON();
+        System.out.println(envoltoriaProductos.listar());
+
     }
-
 }
