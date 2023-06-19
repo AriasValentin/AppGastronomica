@@ -1,10 +1,12 @@
 package Model.CE;
 
+import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import Model.Interfaces.IABM;
+import jdk.jfr.EventType;
 
 import java.sql.SQLOutput;
 import java.util.ArrayList;
@@ -50,10 +52,10 @@ public class EnvoltoriaVentas implements IABM<Venta> {
         boolean rta = false;
 
         try {
-            int indice = buscar(numTicket);
+            Venta aux = buscar(numTicket);
 
-            if (indice != -1) {
-                listaDeVentas.remove(indice);
+            if ((aux.getNumTicket() == numTicket) && (aux != null)) {
+                listaDeVentas.remove(aux);
                 rta = true;
             }
 
@@ -86,16 +88,18 @@ public class EnvoltoriaVentas implements IABM<Venta> {
     }
 
     /**
-     * Recorre la lista para buscar si existe una determinada venta
+     * Recorre la lista de ventas y retorna una venta en especifico por medio de un numero de ticket.
      *
      * @param nroTicket numero de ticket de la venta
-     * @return indice con la posicion de la venta, -1 si no existe.
+     * @return un objeto de tipo Venta si se encuentra, sino retorna un objeto nulo.
      */
 
 
     @Override
-    public int buscar(int nroTicket) throws ElementNotFoundException {
+    public Venta buscar(int nroTicket) throws ElementNotFoundException {
+
         int i = 0, indice = -1;
+        Venta aux = null;
 
         while (i < (listaDeVentas.size() - 1) && listaDeVentas.get(i).getNumTicket() != nroTicket) {
             i++;
@@ -103,11 +107,12 @@ public class EnvoltoriaVentas implements IABM<Venta> {
 
         if (i < (listaDeVentas.size() - 1) && listaDeVentas.get(i).getNumTicket() == nroTicket) {
             indice = i;
+            aux = listaDeVentas.get(i);
         } else {
             throw new ElementNotFoundException("\nERROR - La venta no fue encontrada.\n");
         }
 
-        return indice;
+        return aux;
     }
 
 

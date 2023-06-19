@@ -82,6 +82,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return rta;
     }
 
+
+    /**
+     * Modifica el precio de un producto.
+     *
+     * @param elemento
+     * @throws ElementUnmodifiedException
+     */
     @Override
     public void modificar(int elemento) throws ElementUnmodifiedException {
 
@@ -105,24 +112,30 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
     /**
-     * Recorre la coleccion para buscar si existe un determinado producto.
+     * Recorre la coleccion para buscar si existe un determinado producto, si lo encuentra, se retorna.
      *
      * @param id numero id del producto.
-     * @return true si encuentra el producto, false si no.
+     * @return Objeto Producto si fue encontrado, sino retornara un Objeto nulo.
      */
-    public int buscar(int id) throws ElementNotFoundException{
+    public Producto buscar(int id) throws ElementNotFoundException{
 
         Iterator<Producto> it = listaDeProductos.iterator();
+
         int flag = 0;
+        Producto aux = null;
+
         while (it.hasNext() && flag == 0) {
             Producto nuevo = (Producto) it.next();
             if (nuevo.getId() == id) {
                 flag = 1;
+                aux = nuevo;
             }
         }
-        if(flag == 0)
-            throw new ElementNotFoundException("ERROR - PRODUCTO NO ENCONTRADO !");
-        return flag;
+        if(aux == null){
+            throw new ElementNotFoundException("\nERROR - Producto no encontrado.\n");
+        }
+
+        return aux;
     }
 
     private void consumoBebidasCalientes() {

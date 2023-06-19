@@ -6,7 +6,6 @@ import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import Model.Interfaces.IABM;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
@@ -71,13 +70,12 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     }
 
     /**
-     * Modifica el dni del cliente.
+     * Modifica el valor VIP del cliente.
      * @param dni
      * @throws ElementUnmodifiedException
      */
     @Override
     public void modificar(int dni) throws ElementUnmodifiedException {
-
 
     }
     public void modificar()
@@ -103,26 +101,31 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     }
 
     /**
-     * Recorre la coleccion para buscar si existe un determinado Cliente.
+     * Recorre la coleccion para buscar si existe un determinado Cliente, si existe lo retorna.
+     * Lanza una excepcion personalizada si no encuentra al cliente.
      *
      * @param dni numero dni del Cliente.
-     * @return true si encuentra el cliente, false si no.
-     * Lanza una excepcion personalizada si no encuentra al cliente.
+     * @return Objeto Cliente si fue encontrado, sino retornara un Objeto nulo.
      */
-    public int buscar(int dni) throws ElementNotFoundException {
+    public Cliente buscar(int dni) throws ElementNotFoundException {
+
         Iterator<Cliente> it = listaDeClientes.iterator();
+
         int flag = 0;
+        Cliente aux = null;
+
         while (it.hasNext() && flag == 0) {
             Cliente nuevo = (Cliente) it.next();
             if (nuevo.getDni() == dni) {
                 flag = 1;
+                aux = nuevo;
             }
         }
 
-        if (flag == 0) {
+        if (aux == null) {
             throw new ElementNotFoundException("\nERROR - Cliente no encontrado.\n");
         }
 
-        return flag;
+        return aux;
     }
 }
