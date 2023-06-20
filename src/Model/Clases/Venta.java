@@ -51,7 +51,6 @@ public class Venta {
         } else {
             this.descuento = 0;
         }
-
     }
 
     /**
