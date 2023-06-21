@@ -303,6 +303,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 Bebida nueva = new Bebida();
                 nueva.setNombre(jsonObject.getString("tittle"));
                 nueva.setDescripcion(jsonObject.getString("description"));
+                nueva.setPrecio(jsonObject.getInt("price"));
                 nueva.setTipoBebida(TipoBebida.BEBIDA_FRIA);
                 nueva.setId(contadorId);
                 contadorId++;
@@ -338,6 +339,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 Bebida nueva = new Bebida();
                 nueva.setNombre(jsonObject.getString("tittle"));
                 nueva.setDescripcion(jsonObject.getString("description"));
+                nueva.setPrecio(jsonObject.getInt("price"));
                 nueva.setTipoBebida(TipoBebida.BEBIDA_CALIENTE);
                 nueva.setId(contadorId);
                 contadorId++;
