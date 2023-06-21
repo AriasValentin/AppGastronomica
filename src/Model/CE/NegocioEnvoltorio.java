@@ -6,6 +6,7 @@ import Model.CE.EnvoltoriaVentas;
 import Model.Clases.Cliente;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
+import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 
 import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Scanner;
@@ -30,8 +31,8 @@ public class NegocioEnvoltorio {
         int opcion = 0;
         lista_productos.consumoJSON();
 
-        System.out.println("Bienvenidos al panel de negocio.");
-        System.out.println("Como desea operar?: \n");
+        System.out.println("\nBIENVENIDO.");
+        System.out.println("\nINGRESE FORMA DE OPERAR: \n");
 
         System.out.println("1 - Empleado.");
         System.out.println("2 - Administrador.");
@@ -39,6 +40,8 @@ public class NegocioEnvoltorio {
         System.out.printf("\nOpcion: ");
 
         opcion = enter.nextInt();
+
+        clScreen();
 
         switch (opcion) {
             case 1: {
@@ -70,11 +73,15 @@ public class NegocioEnvoltorio {
             System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
 
             System.out.println("10 - MOSTRAR PRODUCTOS EN SISTEMA");
+
             System.out.println("\n------------------------------------------------\n");
+
             System.out.println("0 - SALIR\n");
 
             System.out.printf("Opcion: ");
             opcion = enter.nextInt();
+
+            clScreen();
 
             switch (opcion) {
 
@@ -126,6 +133,25 @@ public class NegocioEnvoltorio {
                     } catch (ElementNotFoundException e) {
                         System.out.println(e.getMessage());
                     }
+
+                    enter.nextLine();
+
+                    break;
+                }
+
+                case 9:{
+                    System.out.printf("Ingrese DNI de la persona a modificar: ");
+                    int dni = enter.nextInt();
+
+                    if (dni != 0){
+                        try {
+                            lista_clientes.modificar(dni);
+                        }catch (ElementUnmodifiedException e){
+                            System.out.println(e.getMessage());
+                        }
+                    }
+
+                    enter.nextLine();
 
                     break;
                 }
@@ -205,6 +231,8 @@ public class NegocioEnvoltorio {
                             subRta = enter.nextLine().charAt(0);
                         }
 
+                        clScreen();
+
                     } while ((subRta == 's') || (subOpcion != 0));
 
                     break;
@@ -213,9 +241,10 @@ public class NegocioEnvoltorio {
 
             if ((opcion != 0) && (opcion != -1)) {
                 System.out.printf("Desea volver al menu? (s/n): ");
-                enter.nextLine();
                 rta = enter.nextLine().charAt(0);
             }
+
+            clScreen();
 
         } while ((rta == 's') && (opcion != 0));
     }
@@ -248,5 +277,9 @@ public class NegocioEnvoltorio {
         System.out.println("16. MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA");
         System.out.println("-------------------------------------------------------------------------");
         System.out.println("0 SALIR");
+    }
+
+    public void clScreen(){
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 }

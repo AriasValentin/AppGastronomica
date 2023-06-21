@@ -88,13 +88,13 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
                 char seguir = 0;
                 int opcion = 0;
                 do {
-                    System.out.println("Cliente: ");
                     System.out.println("1.Nombre: "+aux.getNombre());
                     System.out.println("2.Apellido: "+aux.getApellido());
                     System.out.println("3.DNI: "+aux.getDni());
                     System.out.println("4.VIP: "+aux.isEsVip());
-                    System.out.println("¿Que desea modificar?: ");
+                    System.out.printf("\nINGRESE OPCION A MODIFICAR: ");
                     opcion = scan.nextInt();
+
                     switch (opcion)
                     {
                         case 1:
@@ -102,22 +102,29 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
                             scan.nextLine();
                             aux.setNombre(scan.nextLine());
                             break;
+
                         case 2:
                             System.out.println("Ingrese el apellido: ");
                             scan.nextLine();
                             aux.setApellido(scan.nextLine());
                             break;
+
                         case 3:
                             System.out.println("Ingrese el DNI: ");
                             aux.setDni(scan.nextInt());
                             break;
+
                         case 4:
+
                             int vip = 0;
+
                             do {
+                                System.out.println("VIP: "+aux.isEsVip());
                                 System.out.println("1.Hacerlo VIP. ");
                                 System.out.println("2.Sacarle VIP. ");
-                                System.out.println("Opcion: ");
+                                System.out.printf("Opcion: ");
                                 vip = scan.nextInt();
+
                                 switch (vip)
                                 {
                                     case 1:
