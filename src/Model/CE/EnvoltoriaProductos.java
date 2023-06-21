@@ -159,6 +159,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return aux;
     }
 
+    /**Ingresa a la coleccion los productos de tipo BEBIDA CALIENTE consumidos desde una API.
+     * @see Producto
+     * @see TipoBebida
+     * @see JSONArray
+     * @see JSONObject
+     */
+
     private void consumoBebidasCalientes() {
         try {
             JSONArray jsonArray = new JSONArray(ConsumoAPIcafeCaliente.getInfo());
@@ -179,6 +186,12 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }
     }
 
+    /**Ingresa a la coleccion los productos de tipo BEBIDA FRIA consumidos desde una API.
+     * @see Producto
+     * @see TipoBebida
+     * @see JSONArray
+     * @see JSONObject
+     */
     private void consumoBebidasFrias() {
         try {
             JSONArray jsonArray = new JSONArray(ConsumoAPIcafeFrio.getInfo());
@@ -200,6 +213,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
 
     }
 
+    /**Ingresa a la coleccion los productos de tipo COMIDA DULCE consumidos desde un archivo local JSON.
+     * @see Producto
+     * @see TipoComida
+     * @see JsonUtiles
+     * @see JSONArray
+     * @see JSONObject
+     */
     public void consumoComidasDulces()
     {
         String jsonResponse = JsonUtiles.leer("ComidasDulces");
@@ -214,6 +234,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 Comida nueva = new Comida();
                 nueva.setNombre(jo_comida.getString("tittle"));
                 nueva.setDescripcion(jo_comida.getString("description"));
+                nueva.setPrecio(jo_comida.getInt("price"));
                 nueva.setTipoComida(TipoComida.COMIDA_DULCE);
                 nueva.setId(contadorId);
                 contadorId++;
@@ -228,6 +249,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }
     }
 
+    /**Ingresa a la coleccion los productos de tipo COMIDA SALADA consumidos desde un archivo local JSON.
+     * @see Producto
+     * @see TipoComida
+     * @see JsonUtiles
+     * @see JSONArray
+     * @see JSONObject
+     */
     public void consumoComidasSaladas()
     {
         String jsonResponse = JsonUtiles.leer("ComidasSaladas");
@@ -242,6 +270,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 Comida nueva = new Comida();
                 nueva.setNombre(jo_comida.getString("tittle"));
                 nueva.setDescripcion(jo_comida.getString("description"));
+                nueva.setPrecio(jo_comida.getInt("price"));
                 nueva.setTipoComida(TipoComida.COMIDA_SALADA);
                 nueva.setId(contadorId);
                 contadorId++;
@@ -254,6 +283,14 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             System.out.println(ex.getMessage());
         }
     }
+
+    /**Ingresa a la coleccion los productos de tipo BEBIDA FRIA consumidos desde un archivo local JSON.
+     * @see Producto
+     * @see TipoBebida
+     * @see JsonUtiles
+     * @see JSONArray
+     * @see JSONObject
+     */
     public void consumoBebidasFriasPERSONAL()
     {
         String jsonResponse = JsonUtiles.leer("BebidasFrias");
@@ -281,6 +318,14 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             System.out.println(ex.getMessage());
         }
     }
+
+    /**Ingresa a la coleccion los productos de tipo BEBIDA CALIENTE consumidos desde un archivo local JSON.
+     * @see Producto
+     * @see TipoBebida
+     * @see JsonUtiles
+     * @see JSONArray
+     * @see JSONObject
+     */
     public void consumoBebidasCalientesPersonal()
     {
         String jsonResponse = JsonUtiles.leer("BebidasCalientes");
