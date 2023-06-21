@@ -48,7 +48,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     @Override
     public void agregar(Producto unProducto) throws ElementNotLoadedException {
 
-        if(unProducto != null) {
+        if (unProducto != null) {
             listaDeProductos.add(unProducto);
         } else {
             throw new ElementNotLoadedException("\nERROR - El producto no pudo cargarse.\n");
@@ -77,7 +77,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             }
         }
 
-        if (flag == 0){
+        if (flag == 0) {
             throw new ElementNotFoundException("\nERROR - El producto no fue encontrado o ya fue eliminado.\n");
         }
 
@@ -95,8 +95,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     public void modificar(int idProducto) throws ElementUnmodifiedException {
         try {
             Producto aux = buscar(idProducto);
-            if(aux != null)
-            {
+            if (aux != null) {
                 eliminar(idProducto);
 
                 System.out.println(aux.toString());
@@ -109,8 +108,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             }
         } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
-        } catch (ElementNotLoadedException e)
-        {
+        } catch (ElementNotLoadedException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -138,7 +136,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      * @param id numero id del producto.
      * @return Objeto Producto si fue encontrado, sino retornara un Objeto nulo.
      */
-    public Producto buscar(int id) throws ElementNotFoundException{
+    public Producto buscar(int id) throws ElementNotFoundException {
 
         Iterator<Producto> it = listaDeProductos.iterator();
 
@@ -152,14 +150,16 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 aux = nuevo;
             }
         }
-        if(aux == null){
+        if (aux == null) {
             throw new ElementNotFoundException("\nERROR - Producto no encontrado.\n");
         }
 
         return aux;
     }
 
-    /**Ingresa a la coleccion los productos de tipo BEBIDA CALIENTE consumidos desde una API.
+    /**
+     * Ingresa a la coleccion los productos de tipo BEBIDA CALIENTE consumidos desde una API.
+     *
      * @see Producto
      * @see TipoBebida
      * @see JSONArray
@@ -181,12 +181,14 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             }
         } catch (JSONException e) {
             System.out.println("API MAL PROCESADA." + e.getMessage());
-        }catch (ElementNotLoadedException ex){
+        } catch (ElementNotLoadedException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    /**Ingresa a la coleccion los productos de tipo BEBIDA FRIA consumidos desde una API.
+    /**
+     * Ingresa a la coleccion los productos de tipo BEBIDA FRIA consumidos desde una API.
+     *
      * @see Producto
      * @see TipoBebida
      * @see JSONArray
@@ -207,28 +209,27 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             }
         } catch (JSONException e) {
             System.out.println("API MAL PROCESADA." + e.getMessage());
-        }catch (ElementNotLoadedException ex){
+        } catch (ElementNotLoadedException ex) {
             System.out.println(ex.getMessage());
         }
 
     }
 
-    /**Ingresa a la coleccion los productos de tipo COMIDA DULCE consumidos desde un archivo local JSON.
+    /**
+     * Ingresa a la coleccion los productos de tipo COMIDA DULCE consumidos desde un archivo local JSON.
+     *
      * @see Producto
      * @see TipoComida
      * @see JsonUtiles
      * @see JSONArray
      * @see JSONObject
      */
-    public void consumoComidasDulces()
-    {
+    public void consumoComidasDulces() {
         String jsonResponse = JsonUtiles.leer("ComidasDulces");
 
-        try
-        {
+        try {
             JSONArray ja_raiz = new JSONArray(jsonResponse);
-            for(int i=0;i<ja_raiz.length();i++)
-            {
+            for (int i = 0; i < ja_raiz.length(); i++) {
                 JSONObject jo_comida = ja_raiz.getJSONObject(i);
 
                 Comida nueva = new Comida();
@@ -241,30 +242,28 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 agregar(nueva);
             }
 
-        }catch(JSONException ex)
-        {
-            System.out.println("JSON mal creado "+ex.getMessage());
-        }catch (ElementNotLoadedException ex){
+        } catch (JSONException ex) {
+            System.out.println("JSON mal creado " + ex.getMessage());
+        } catch (ElementNotLoadedException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    /**Ingresa a la coleccion los productos de tipo COMIDA SALADA consumidos desde un archivo local JSON.
+    /**
+     * Ingresa a la coleccion los productos de tipo COMIDA SALADA consumidos desde un archivo local JSON.
+     *
      * @see Producto
      * @see TipoComida
      * @see JsonUtiles
      * @see JSONArray
      * @see JSONObject
      */
-    public void consumoComidasSaladas()
-    {
+    public void consumoComidasSaladas() {
         String jsonResponse = JsonUtiles.leer("ComidasSaladas");
 
-        try
-        {
+        try {
             JSONArray ja_raiz = new JSONArray(jsonResponse);
-            for(int i=0;i< ja_raiz.length();i++)
-            {
+            for (int i = 0; i < ja_raiz.length(); i++) {
                 JSONObject jo_comida = ja_raiz.getJSONObject(i);
 
                 Comida nueva = new Comida();
@@ -276,29 +275,27 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 contadorId++;
                 agregar(nueva);
             }
-        }catch (JSONException ex)
-        {
-            System.out.println("JSON mal creado "+ex.getMessage());
-        }catch (ElementNotLoadedException ex){
+        } catch (JSONException ex) {
+            System.out.println("JSON mal creado " + ex.getMessage());
+        } catch (ElementNotLoadedException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    /**Ingresa a la coleccion los productos de tipo BEBIDA FRIA consumidos desde un archivo local JSON.
+    /**
+     * Ingresa a la coleccion los productos de tipo BEBIDA FRIA consumidos desde un archivo local JSON.
+     *
      * @see Producto
      * @see TipoBebida
      * @see JsonUtiles
      * @see JSONArray
      * @see JSONObject
      */
-    public void consumoBebidasFriasPERSONAL()
-    {
+    public void consumoBebidasFriasPERSONAL() {
         String jsonResponse = JsonUtiles.leer("BebidasFrias");
-        try
-        {
+        try {
             JSONArray jsonArray = new JSONArray(jsonResponse);
-            for(int i = 0;i< jsonArray.length();i++)
-            {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Bebida nueva = new Bebida();
                 nueva.setNombre(jsonObject.getString("tittle"));
@@ -309,32 +306,27 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 contadorId++;
                 agregar(nueva);
             }
-        }
-        catch (JSONException ex)
-        {
+        } catch (JSONException ex) {
             System.out.println(ex.getMessage());
-        }
-        catch (ElementNotLoadedException ex)
-        {
+        } catch (ElementNotLoadedException ex) {
             System.out.println(ex.getMessage());
         }
     }
 
-    /**Ingresa a la coleccion los productos de tipo BEBIDA CALIENTE consumidos desde un archivo local JSON.
+    /**
+     * Ingresa a la coleccion los productos de tipo BEBIDA CALIENTE consumidos desde un archivo local JSON.
+     *
      * @see Producto
      * @see TipoBebida
      * @see JsonUtiles
      * @see JSONArray
      * @see JSONObject
      */
-    public void consumoBebidasCalientesPersonal()
-    {
+    public void consumoBebidasCalientesPersonal() {
         String jsonResponse = JsonUtiles.leer("BebidasCalientes");
-        try
-        {
+        try {
             JSONArray jsonArray = new JSONArray(jsonResponse);
-            for (int i = 0;i<jsonArray.length();i++)
-            {
+            for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
                 Bebida nueva = new Bebida();
                 nueva.setNombre(jsonObject.getString("tittle"));
@@ -346,14 +338,10 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 agregar(nueva);
 
             }
-        }
-        catch (JSONException ex)
-        {
+        } catch (JSONException ex) {
             System.out.println(ex.getMessage());
 
-        }
-        catch (ElementNotLoadedException ex)
-        {
+        } catch (ElementNotLoadedException ex) {
             System.out.println(ex.getMessage());
         }
 
@@ -372,8 +360,74 @@ public class EnvoltoriaProductos implements IABM<Producto> {
 
     }
 
-    public void vaciarLista(){
+    public void vaciarLista() {
         listaDeProductos.clear();
+    }
+
+    public String listarBebidasFrias() {
+        String aux = "BEBIDAS FRIAS : \n";
+        Iterator<Producto> it = listaDeProductos.iterator();
+        while (it.hasNext()) {
+            Producto nuevo = it.next();
+            if (nuevo instanceof Bebida) {
+                if (((Bebida) nuevo).getTipoBebida().equals(TipoBebida.BEBIDA_FRIA)) {
+                    aux += nuevo.getNombre() + "\n";
+
+                }
+
+            }
+        }
+        return aux;
+    }
+
+    public String listarBebidasCalientes() {
+        String aux = "BEBIDAS CALIENTES : \n";
+        Iterator<Producto> it = listaDeProductos.iterator();
+        while (it.hasNext()) {
+            Producto nuevo = it.next();
+            if (nuevo instanceof Bebida) {
+                if (((Bebida) nuevo).getTipoBebida().equals(TipoBebida.BEBIDA_CALIENTE)) {
+                    aux += nuevo.getNombre() + "\n";
+
+                }
+
+            }
+        }
+        return aux;
+    }
+
+    public String listarComidasSaladas() {
+        String aux = "Comidas Saladas : \n";
+        Iterator<Producto> it = listaDeProductos.iterator();
+        while (it.hasNext()) {
+            Producto nuevo = it.next();
+            if (nuevo instanceof Comida) {
+                if (((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_SALADA))
+                {
+                    aux += nuevo.getNombre() + "\n";
+
+                }
+
+            }
+        }
+        return aux;
+    }
+
+    public String listarComidasDulces() {
+        String aux = "Comidas Dulces : \n";
+        Iterator<Producto> it = listaDeProductos.iterator();
+        while (it.hasNext()) {
+            Producto nuevo = it.next();
+            if (nuevo instanceof Comida) {
+                if ( ((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_DULCE))
+                {
+                    aux += nuevo.getNombre() + "\n";
+
+                }
+
+            }
+        }
+        return aux;
     }
 
 
