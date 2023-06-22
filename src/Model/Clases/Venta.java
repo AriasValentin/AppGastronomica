@@ -23,7 +23,7 @@ public class Venta {
     {
         this.carrito = new ArrayList<>();
         this.total = 0;
-        if(UnCliente.getEsVip() == true)
+        if(this.UnCliente != null && UnCliente.getEsVip() == true)
         {
             this.descuento = 10;
         }
