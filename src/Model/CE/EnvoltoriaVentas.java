@@ -26,10 +26,12 @@ public class EnvoltoriaVentas implements IABM<Venta> {
 
     //atributos
     private ArrayList<Venta> listaDeVentas;
+    private int indexNroTicket;
 
     //constructor
     public EnvoltoriaVentas() {
         this.listaDeVentas = new ArrayList<>();
+        this.indexNroTicket = 0;
     }
 
     /**
@@ -42,6 +44,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
 
         if (unaVenta != null) {
             listaDeVentas.add(unaVenta);
+            this.indexNroTicket++;
         } else {
             throw new ElementNotLoadedException("\nERROR - La venta no pudo ser cargada.\n");
         }
@@ -147,7 +150,6 @@ public class EnvoltoriaVentas implements IABM<Venta> {
 
         return aux;
     }
+    }
 
 
-
-}

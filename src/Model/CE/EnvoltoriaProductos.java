@@ -431,22 +431,4 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
 
-    //TESTEO DE IMPRIMIR ENUM
-    /*public String listarBebidasCalientes() {
-        String aux = "";
-        Iterator <Producto> it = listaDeProductos.iterator();
-        while(it.hasNext())
-        {
-            Producto aux2 = it.next();
-            if(((Bebida)aux2).getTipoBebida() == TipoBebida.BEBIDA_CALIENTE)
-            {
-                aux = aux+ aux2.toString() +"\n";
-
-            }
-        }
-        return aux;
-
-    }
-
-     */
 }

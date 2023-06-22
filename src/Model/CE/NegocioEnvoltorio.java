@@ -4,6 +4,8 @@ import Model.CE.EnvoltoriaClientes;
 import Model.CE.EnvoltoriaProductos;
 import Model.CE.EnvoltoriaVentas;
 import Model.Clases.Cliente;
+import Model.Clases.Producto.Producto;
+import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
@@ -140,14 +142,14 @@ public class NegocioEnvoltorio {
                     break;
                 }
 
-                case 9:{
+                case 9: {
                     System.out.printf("Ingrese DNI de la persona a modificar: ");
                     int dni = enter.nextInt();
 
-                    if (dni != 0){
+                    if (dni != 0) {
                         try {
                             lista_clientes.modificar(dni);
-                        }catch (ElementUnmodifiedException e){
+                        } catch (ElementUnmodifiedException e) {
                             System.out.println(e.getMessage());
                         }
                     }
@@ -213,7 +215,7 @@ public class NegocioEnvoltorio {
                                 break;
                             }
 
-                            case 0:{
+                            case 0: {
                                 opcion = -1;
                                 rta = 's';
                                 subRta = 'n';
@@ -280,7 +282,46 @@ public class NegocioEnvoltorio {
         System.out.println("0 SALIR");
     }
 
-    public void clScreen(){
+    public void clScreen() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
+
+    public Venta unaVenta() throws ElementNotLoadedException,ElementNotFoundException {
+        Venta nuevaVenta = new Venta();
+        int opcionSeguirComprando = 0;
+        int opcionBuscarProducto = 0;
+        int idProducto = 0;
+        int opcionCliente = 0;
+        int opcionDni = 0;
+        System.out.println("ES CLIENTE? 1. SI   2.   NO");
+        if(opcionCliente == 1)
+        {
+            System.out.println("ingrese numero de dni");
+            opcionDni = enter.nextInt();
+           Cliente nuevoCliente = lista_clientes.buscar(opcionDni);
+           if(nuevoCliente != null)
+           {
+               nuevaVenta.setUnCliente(nuevoCliente);
+           }
+        }
+            
+
+        do {
+            System.out.println(lista_productos.listar());
+
+            System.out.println("ingrese el id del producto a agregar !");
+            idProducto = enter.nextInt();
+            try {
+                Producto nuevo = lista_productos.buscar(idProducto);
+                if (nuevo != null) {
+                    nuevaVenta.agregarProductosAlcarrito(nuevo);
+                }
+            } catch (ElementNotFoundException ex) {
+                System.out.println(ex.getMessage());
+            }
+            System.out.println("INGRESE 1 PARA ELEGIR PRODUCTOS Y SEGUIR COMPRANDO");
+            opcionSeguirComprando = enter.nextInt();
+        } while (opcionSeguirComprando == 1);
+        return  nuevaVenta;
     }
 }

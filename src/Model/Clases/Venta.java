@@ -18,12 +18,22 @@ public class Venta {
     private Cliente UnCliente;
     private int numTicket;
 
-    public Venta(float total, Cliente unCliente, int numTicket, LugarConsumo pos) {
+
+    public Venta()
+    {
         this.carrito = new ArrayList<>();
         this.total = 0;
-        this.lugarConsumo = pos;
-        setUnCliente(unCliente);
-        this.numTicket = numTicket;
+        if(UnCliente.getEsVip() == true)
+        {
+            this.descuento = 10;
+        }
+        else
+        {
+            this.descuento = 0;
+        }
+        this.lugarConsumo = LugarConsumo.TakeAway;
+        this.UnCliente = null;
+        this.numTicket = 0;
 
     }
 
@@ -45,8 +55,8 @@ public class Venta {
 
     public void setUnCliente(Cliente unCliente) {
         this.UnCliente = unCliente;
-        if (UnCliente.isEsVip() == true) {
-            this.descuento = 15;
+        if (UnCliente.getEsVip() == true) {
+            this.descuento = 10;
 
         } else {
             this.descuento = 0;
