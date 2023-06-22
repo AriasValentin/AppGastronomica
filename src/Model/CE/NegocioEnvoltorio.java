@@ -15,7 +15,6 @@ import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Scanner;
 
 public class NegocioEnvoltorio {
-
     private static Scanner enter = new Scanner(System.in);
 
     //Atributos.
@@ -69,13 +68,13 @@ public class NegocioEnvoltorio {
 
             System.out.println("\n---OPCIONES PARA CLIENTES---\n");
 
-            System.out.println("7 - AGREGAR CLIENTE ");
-            System.out.println("8 - ELIMINAR CLIENTE");
-            System.out.println("9 - MODIFICAR CLIENTE");
+            System.out.println("5 - AGREGAR CLIENTE ");
+            System.out.println("6 - ELIMINAR CLIENTE");
+            System.out.println("7 - MODIFICAR CLIENTE");
 
             System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
 
-            System.out.println("10 - MOSTRAR PRODUCTOS EN SISTEMA");
+            System.out.println("8 - MOSTRAR PRODUCTOS EN SISTEMA");
 
             System.out.println("\n------------------------------------------------\n");
 
@@ -88,30 +87,20 @@ public class NegocioEnvoltorio {
 
             switch (opcion) {
 
-
-                case 7: {
-
-                    Cliente unCliente = new Cliente();
-
-                    System.out.printf("\nIngrese nombre del cliente: ");
-                    enter.nextLine();
-                    unCliente.setNombre(enter.nextLine());
-
-                    System.out.printf("\nIngrese apellido del cliente: ");
-                    unCliente.setApellido(enter.nextLine());
-
-                    System.out.printf("\nIngrese DNI del cliente: ");
-                    unCliente.setDni(enter.nextInt());
-
-                    System.out.printf("\nEl cliente es VIP? (s/n): ");
-                    enter.nextLine();
-                    char aux = enter.nextLine().charAt(0);
-
-                    if (aux == 's') {
-                        unCliente.setEsVip(true);
-                    } else {
-                        unCliente.setEsVip(false);
+                case 1: {
+                    try {
+                        unaVenta();
+                    } catch (ElementNotLoadedException e) {
+                        System.out.println(e.getMessage());
+                    } catch (ElementNotFoundException e) {
+                        System.out.println(e.getMessage());
                     }
+                    break;
+                }
+
+                case 5: {
+
+                    Cliente unCliente = crearCliente();
 
                     try {
                         lista_clientes.agregar(unCliente);
@@ -122,7 +111,7 @@ public class NegocioEnvoltorio {
                     break;
                 }
 
-                case 8: {
+                case 6: {
                     boolean borrado = false;
 
                     System.out.printf("Ingrese el DNI del cliente a eliminar: ");
@@ -143,7 +132,7 @@ public class NegocioEnvoltorio {
                     break;
                 }
 
-                case 9: {
+                case 7: {
                     System.out.printf("Ingrese DNI de la persona a modificar: ");
                     int dni = enter.nextInt();
 
@@ -160,7 +149,7 @@ public class NegocioEnvoltorio {
                     break;
                 }
 
-                case 10: {
+                case 8: {
 
                     int subOpcion = 0;
                     char subRta = 0;
@@ -287,72 +276,106 @@ public class NegocioEnvoltorio {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 
-    public Venta unaVenta() throws ElementNotLoadedException,ElementNotFoundException {
+    public Venta unaVenta() throws ElementNotLoadedException, ElementNotFoundException {
 
         Venta nuevaVenta = new Venta();
-        Cliente nuevoCliente = new Cliente();
+        Cliente nuevoCliente;
 
-        int opcionSeguirComprando = 0, idProducto = 0, opcionCliente = 0, opcionDni = 0, opcionLugarConsumo = 0;
+        int opcionSeguirComprando = 0, idProducto = 0, opcionCliente = 0, opcionDni = 0, opcionLugarConsumo = 0, flag = 0;
+        char rta = 0;
+
+        //crear un cliente para la venta o usar uno existente
 
         do {
-            System.out.println("ES CLIENTE? \n1.SI   \n2.NO \nIngrese una opcion: ");
+            System.out.println("ES CLIENTE? \n1.SI   \n2.NO");
+            System.out.printf("\nIngrese una opcion: ");
             opcionCliente = enter.nextInt();
-            switch(opcionCliente)
-            {
-                case 1:
-                {
-                    //existe el cliente, se busca por dni..
-                    System.out.println("INGRESE DNI DEL CLIENTE: ");
-                    opcionDni = enter.nextInt();
-                    nuevoCliente = lista_clientes.buscar(opcionDni); //retorna cliente y lo almaceno en mi variable local
-                    if(nuevoCliente != null)
-                    {
-                        nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
+
+            clScreen();
+
+            switch (opcionCliente) {
+                case 1: {
+                    do {
+                        //existe el cliente, se busca por dni..
+
+                        System.out.println("INGRESE DNI DEL CLIENTE: ");
+                        opcionDni = enter.nextInt();
+
+                        nuevoCliente = lista_clientes.buscar(opcionDni); //retorna cliente y lo almaceno en mi variable local
+
+                        if (nuevoCliente != null) {
+                            nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
+                        } else {
+                            System.out.println("\nCliente inexistente con DNI ingresado .\n");
+
+                            System.out.printf("Desea ingresar otro DNI? (s/n): ");
+                            rta = enter.nextLine().charAt(0);
+
+                            flag = 1;
+                        }
+
+                    }while(rta == 's');
+
+                    if (rta == 'n'){ //Si rta es 'n' deja la bandera en 0 para que vuelva a preguntar si es cliente o no.
+                        flag = 0;
+                    } else { //setea rta en 0 porque podria haberse confudido al menos una vez. Tambien es la condicion de corte si encontro el cliente por primera vez.
+                        rta = 0;
                     }
-                    else
-                    {
-                        System.out.println("Cliente inexistente con DNI ingresado .");
-                    }
+
                     break;
                 }
-                case 2:
-                {
-                    //crear nuevo cliente
-                    System.out.printf("\nINGRESE NOMBRE DEL CLIENTE: ");
-                    enter.nextLine();
-                    nuevoCliente.setNombre(enter.nextLine());
+                case 2: {
+                    int opcionNO = 0;
 
-                    System.out.printf("\nINGRESE APELLIDO DEL CLIENTE: ");
-                    nuevoCliente.setApellido(enter.nextLine());
+                    do {
+                        System.out.println("\nDesea agregar un nuevo cliente? ");
+                        System.out.println("1 - SI.");
+                        System.out.println("2 - NO.\n");
+                        System.out.printf("Opcion: ");
 
-                    System.out.printf("\nINGRESE DNI DEL CLIENTE: ");
-                    nuevoCliente.setDni(enter.nextInt());
+                        opcionNO = enter.nextInt();
 
-                    System.out.printf("\nEL CLIENTE ES VIP? (s/n): ");
-                    enter.nextLine();
-                    char aux = enter.nextLine().charAt(0);
+                        switch (opcionNO) {
 
-                    if (aux == 's') {
-                        nuevoCliente.setEsVip(true);
-                    } else {
-                        nuevoCliente.setEsVip(false);
-                    }
+                            case 1: { //Crea un cliente nuevo y lo agrega a la lista de clientes.
 
-                    try {
-                        lista_clientes.agregar(nuevoCliente); //lo agrego a la lista de clientes
-                        nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
-                        System.out.println("\nNuevo cliente agregado al sistema.");
+                                nuevoCliente = crearCliente();
 
-                    } catch (ElementNotLoadedException e) {
-                        System.out.println(e.getMessage());
-                    }
+                                try {
+                                    lista_clientes.agregar(nuevoCliente);
+                                } catch (ElementNotLoadedException e) {
+                                    System.out.println(e.getMessage());
+                                }
+
+                                nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
+
+                                break;
+                            }
+
+                            case 2: {
+
+                                Cliente NN = lista_clientes.buscar(0);
+
+                                nuevaVenta.setUnCliente(NN);
+
+                                break;
+                            }
+                            default:
+                                System.out.println("\nERROR - Opcion no valida.\n");
+                        }
+                    } while ((opcionNO <= 0) || (opcionNO >= 3));
 
                     break;
                 }
                 default:
                     System.out.println("\nERROR - Opcion no valida.\n");
             }
-        }while(opcionCliente<=0 || opcionCliente>=3);
+
+            if (rta == 0){ //condicion de salida
+                flag = 1;
+            }
+
+        } while ((opcionCliente <= 0) || (opcionCliente >= 3) || (flag == 0));
 
         //productos que va a llevar el cliente
 
@@ -381,8 +404,7 @@ public class NegocioEnvoltorio {
             System.out.println("2.BARRA");
             System.out.println("3.TAKEAWAY");
             opcionLugarConsumo = enter.nextInt();
-            switch (opcionLugarConsumo)
-            {
+            switch (opcionLugarConsumo) {
                 case 1:
                     //consultar!
                     break;
@@ -396,11 +418,56 @@ public class NegocioEnvoltorio {
                     System.out.println("\nERROR - Opcion no valida.\n");
             }
 
-        }while(opcionLugarConsumo<=0 || opcionLugarConsumo>=4);
+        } while (opcionLugarConsumo <= 0 || opcionLugarConsumo >= 4);
 
         //calculo el total de esa venta (el atributo del total esta dentro de la misma | tambien se puede retornar)
         nuevaVenta.PrecioFinalVenta();
 
-        return  nuevaVenta;
+        return nuevaVenta;
+    }
+
+    public Cliente crearCliente() {
+
+        Cliente unCliente = new Cliente();
+
+        System.out.printf("\nIngrese nombre del cliente: ");
+        enter.nextLine();
+        unCliente.setNombre(enter.nextLine());
+
+        System.out.printf("\nIngrese apellido del cliente: ");
+        unCliente.setApellido(enter.nextLine());
+
+        System.out.printf("\nIngrese DNI del cliente: ");
+        unCliente.setDni(enter.nextInt());
+
+        System.out.printf("\nEl cliente es VIP? (s/n): ");
+        enter.nextLine();
+        char aux = enter.nextLine().charAt(0);
+
+        if (aux == 's') {
+            unCliente.setEsVip(true);
+        } else {
+            unCliente.setEsVip(false);
+        }
+
+        return unCliente;
+    }
+
+    public Cliente ClienteDefault() {
+
+        Cliente unCliente = new Cliente();
+
+        unCliente.setNombre("n/a");
+        unCliente.setApellido("n/a");
+        unCliente.setDni(0);
+        unCliente.setEsVip(false);
+
+        try {
+            lista_clientes.agregar(unCliente);
+        } catch (ElementNotLoadedException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return unCliente;
     }
 }
