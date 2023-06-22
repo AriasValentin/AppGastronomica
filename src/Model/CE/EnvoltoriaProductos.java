@@ -371,7 +371,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             Producto nuevo = it.next();
             if (nuevo instanceof Bebida) {
                 if (((Bebida) nuevo).getTipoBebida().equals(TipoBebida.BEBIDA_FRIA)) {
-                    aux += nuevo.getNombre() + "\n";
+                    aux += nuevo.toString() + "\n";
 
                 }
 
@@ -387,7 +387,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             Producto nuevo = it.next();
             if (nuevo instanceof Bebida) {
                 if (((Bebida) nuevo).getTipoBebida().equals(TipoBebida.BEBIDA_CALIENTE)) {
-                    aux += nuevo.getNombre() + "\n";
+                    aux += nuevo.toString() + "\n";
 
                 }
 
@@ -404,7 +404,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             if (nuevo instanceof Comida) {
                 if (((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_SALADA))
                 {
-                    aux += nuevo.getNombre() + "\n";
+                    aux += nuevo.toString() + "\n";
 
                 }
 
@@ -421,7 +421,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             if (nuevo instanceof Comida) {
                 if ( ((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_DULCE))
                 {
-                    aux += nuevo.getNombre() + "\n";
+                    aux += nuevo.toString() + "\n";
 
                 }
 
@@ -431,22 +431,4 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
 
-    //TESTEO DE IMPRIMIR ENUM
-    /*public String listarBebidasCalientes() {
-        String aux = "";
-        Iterator <Producto> it = listaDeProductos.iterator();
-        while(it.hasNext())
-        {
-            Producto aux2 = it.next();
-            if(((Bebida)aux2).getTipoBebida() == TipoBebida.BEBIDA_CALIENTE)
-            {
-                aux = aux+ aux2.toString() +"\n";
-
-            }
-        }
-        return aux;
-
-    }
-
-     */
 }
