@@ -7,9 +7,10 @@ public class Main {
 
         EnvoltoriaProductos envoltoriaProductos = new EnvoltoriaProductos();
         envoltoriaProductos.consumoJSON();
-        System.out.println(envoltoriaProductos.listarBebidasFrias());
+      /*  System.out.println(envoltoriaProductos.listarBebidasFrias());
         System.out.println(envoltoriaProductos.listarBebidasCalientes());
         System.out.println(envoltoriaProductos.listarComidasSaladas());
-        System.out.println(envoltoriaProductos.listarComidasDulces());
+        System.out.println(envoltoriaProductos.listarComidasDulces());*/
+
     }
 }

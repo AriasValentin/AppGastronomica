@@ -49,7 +49,7 @@ public class Cliente implements Comparable {
         this.dni = dni;
     }
 
-    public boolean isEsVip() {
+    public boolean getEsVip() {
         return esVip;
     }
 
