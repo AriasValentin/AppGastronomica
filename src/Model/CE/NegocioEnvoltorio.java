@@ -4,6 +4,7 @@ import Model.CE.EnvoltoriaClientes;
 import Model.CE.EnvoltoriaProductos;
 import Model.CE.EnvoltoriaVentas;
 import Model.Clases.Cliente;
+import Model.Clases.LugarConsumo;
 import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
@@ -287,29 +288,78 @@ public class NegocioEnvoltorio {
     }
 
     public Venta unaVenta() throws ElementNotLoadedException,ElementNotFoundException {
+
         Venta nuevaVenta = new Venta();
-        int opcionSeguirComprando = 0;
-        int opcionBuscarProducto = 0;
-        int idProducto = 0;
-        int opcionCliente = 0;
-        int opcionDni = 0;
-        System.out.println("ES CLIENTE? 1. SI   2.   NO");
-        if(opcionCliente == 1)
-        {
-            System.out.println("ingrese numero de dni");
-            opcionDni = enter.nextInt();
-           Cliente nuevoCliente = lista_clientes.buscar(opcionDni);
-           if(nuevoCliente != null)
-           {
-               nuevaVenta.setUnCliente(nuevoCliente);
-           }
-        }
-            
+        Cliente nuevoCliente = new Cliente();
+
+        int opcionSeguirComprando = 0, idProducto = 0, opcionCliente = 0, opcionDni = 0, opcionLugarConsumo = 0;
+
+        do {
+            System.out.println("ES CLIENTE? \n1.SI   \n2.NO \nIngrese una opcion: ");
+            opcionCliente = enter.nextInt();
+            switch(opcionCliente)
+            {
+                case 1:
+                {
+                    //existe el cliente, se busca por dni..
+                    System.out.println("INGRESE DNI DEL CLIENTE: ");
+                    opcionDni = enter.nextInt();
+                    nuevoCliente = lista_clientes.buscar(opcionDni); //retorna cliente y lo almaceno en mi variable local
+                    if(nuevoCliente != null)
+                    {
+                        nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
+                    }
+                    else
+                    {
+                        System.out.println("Cliente inexistente con DNI ingresado .");
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    //crear nuevo cliente
+                    System.out.printf("\nINGRESE NOMBRE DEL CLIENTE: ");
+                    enter.nextLine();
+                    nuevoCliente.setNombre(enter.nextLine());
+
+                    System.out.printf("\nINGRESE APELLIDO DEL CLIENTE: ");
+                    nuevoCliente.setApellido(enter.nextLine());
+
+                    System.out.printf("\nINGRESE DNI DEL CLIENTE: ");
+                    nuevoCliente.setDni(enter.nextInt());
+
+                    System.out.printf("\nEL CLIENTE ES VIP? (s/n): ");
+                    enter.nextLine();
+                    char aux = enter.nextLine().charAt(0);
+
+                    if (aux == 's') {
+                        nuevoCliente.setEsVip(true);
+                    } else {
+                        nuevoCliente.setEsVip(false);
+                    }
+
+                    try {
+                        lista_clientes.agregar(nuevoCliente); //lo agrego a la lista de clientes
+                        nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
+                        System.out.println("\nNuevo cliente agregado al sistema.");
+
+                    } catch (ElementNotLoadedException e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                    break;
+                }
+                default:
+                    System.out.println("\nERROR - Opcion no valida.\n");
+            }
+        }while(opcionCliente<=0 || opcionCliente>=3);
+
+        //productos que va a llevar el cliente
 
         do {
             System.out.println(lista_productos.listar());
 
-            System.out.println("ingrese el id del producto a agregar !");
+            System.out.println("\n\nIngrese el ID del producto a agregar: ");
             idProducto = enter.nextInt();
             try {
                 Producto nuevo = lista_productos.buscar(idProducto);
@@ -319,9 +369,38 @@ public class NegocioEnvoltorio {
             } catch (ElementNotFoundException ex) {
                 System.out.println(ex.getMessage());
             }
-            System.out.println("INGRESE 1 PARA ELEGIR PRODUCTOS Y SEGUIR COMPRANDO");
+            System.out.println("\nAGREGAR OTRO PRODUCTO? \n1: SI   \n2:NO");
             opcionSeguirComprando = enter.nextInt();
         } while (opcionSeguirComprando == 1);
+
+        //lugar donde va a consumir el cliente
+
+        do {
+            System.out.println("LUGAR DE CONSUMO DEL CLIENTE: ");
+            System.out.println("1.MESA");
+            System.out.println("2.BARRA");
+            System.out.println("3.TAKEAWAY");
+            opcionLugarConsumo = enter.nextInt();
+            switch (opcionLugarConsumo)
+            {
+                case 1:
+                    //consultar!
+                    break;
+                case 2:
+                    nuevaVenta.setLugarConsumo(LugarConsumo.BARRA);
+                    break;
+                case 3:
+                    nuevaVenta.setLugarConsumo(LugarConsumo.TakeAway);
+                    break;
+                default:
+                    System.out.println("\nERROR - Opcion no valida.\n");
+            }
+
+        }while(opcionLugarConsumo<=0 || opcionLugarConsumo>=4);
+
+        //calculo el total de esa venta (el atributo del total esta dentro de la misma | tambien se puede retornar)
+        nuevaVenta.PrecioFinalVenta();
+
         return  nuevaVenta;
     }
 }

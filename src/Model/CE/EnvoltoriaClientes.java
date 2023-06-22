@@ -91,7 +91,7 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
                     System.out.println("1.Nombre: "+aux.getNombre());
                     System.out.println("2.Apellido: "+aux.getApellido());
                     System.out.println("3.DNI: "+aux.getDni());
-                    System.out.println("4.VIP: "+aux.isEsVip());
+                    System.out.println("4.VIP: "+aux.getEsVip());
                     System.out.printf("\nINGRESE OPCION A MODIFICAR: ");
                     opcion = scan.nextInt();
 
@@ -119,7 +119,7 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
                             int vip = 0;
 
                             do {
-                                System.out.println("VIP: "+aux.isEsVip());
+                                System.out.println("VIP: "+aux.getEsVip());
                                 System.out.println("1.Hacerlo VIP. ");
                                 System.out.println("2.Sacarle VIP. ");
                                 System.out.printf("Opcion: ");

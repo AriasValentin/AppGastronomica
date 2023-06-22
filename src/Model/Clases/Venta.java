@@ -63,6 +63,14 @@ public class Venta {
         }
     }
 
+    public LugarConsumo getLugarConsumo() {
+        return lugarConsumo;
+    }
+
+    public void setLugarConsumo(LugarConsumo lugarConsumo) {
+        this.lugarConsumo = lugarConsumo;
+    }
+
     /**
      * calcula el precio final de la venta.
      *
