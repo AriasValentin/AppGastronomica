@@ -90,13 +90,8 @@ public class NegocioEnvoltorio {
             switch (opcion) {
 
                 case 1: {
-                    try {
-                        unaVenta();
-                    } catch (ElementNotLoadedException e) {
-                        System.out.println(e.getMessage());
-                    } catch (ElementNotFoundException e) {
-                        System.out.println(e.getMessage());
-                    }
+                    unaVenta();
+
                     break;
                 }
 
@@ -278,10 +273,10 @@ public class NegocioEnvoltorio {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 
-    public Venta unaVenta() throws ElementNotLoadedException, ElementNotFoundException {
+    public Venta unaVenta() {
 
         Venta nuevaVenta = new Venta();
-        Cliente nuevoCliente;
+        Cliente nuevoCliente = null;
 
         int opcionSeguirComprando = 0, idProducto = 0, opcionCliente = 0, opcionDni = 0, opcionLugarConsumo = 0, flag = 0;
         char rta = 0;
@@ -303,22 +298,30 @@ public class NegocioEnvoltorio {
                         System.out.println("INGRESE DNI DEL CLIENTE: ");
                         opcionDni = enter.nextInt();
 
-                        nuevoCliente = lista_clientes.buscar(opcionDni); //retorna cliente y lo almaceno en mi variable local
+                        try {
+                            nuevoCliente = lista_clientes.buscar(opcionDni); //retorna cliente y lo almaceno en mi variable local
 
-                        if (nuevoCliente != null) {
-                            nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
-                        } else {
-                            System.out.println("\nCliente inexistente con DNI ingresado .\n");
+                            if (nuevoCliente != null) {
+                                nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
+                                rta = 0;
 
-                            System.out.printf("Desea ingresar otro DNI? (s/n): ");
-                            rta = enter.nextLine().charAt(0);
+                            }
+                        } catch (ElementNotFoundException e) {
+                            System.out.printf(e.getMessage());
+                        } finally {
+                            if (nuevoCliente == null) {
+                                System.out.printf("Desea ingresar otro DNI? (s/n): ");
+                                enter.nextLine();
+                                rta = enter.nextLine().charAt(0);
 
-                            flag = 1;
+                                flag = 1;
+                            }
                         }
 
-                    }while(rta == 's');
 
-                    if (rta == 'n'){ //Si rta es 'n' deja la bandera en 0 para que vuelva a preguntar si es cliente o no.
+                    } while (rta == 's');
+
+                    if (rta == 'n') { //Si rta es 'n' deja la bandera en 0 para que vuelva a preguntar si es cliente o no.
                         flag = 0;
                     } else { //setea rta en 0 porque podria haberse confudido al menos una vez. Tambien es la condicion de corte si encontro el cliente por primera vez.
                         rta = 0;
@@ -356,9 +359,13 @@ public class NegocioEnvoltorio {
 
                             case 2: {
 
-                                Cliente NN = lista_clientes.buscar(0);
+                                try {
+                                    Cliente NN = lista_clientes.buscar(0);
 
-                                nuevaVenta.setUnCliente(NN);
+                                    nuevaVenta.setUnCliente(NN);
+                                } catch (ElementNotFoundException e) {
+                                    System.out.printf(e.getMessage());
+                                }
 
                                 break;
                             }
@@ -373,7 +380,7 @@ public class NegocioEnvoltorio {
                     System.out.println("\nERROR - Opcion no valida.\n");
             }
 
-            if (rta == 0){ //condicion de salida
+            if (rta == 0) { //condicion de salida
                 flag = 1;
             }
 
@@ -393,6 +400,8 @@ public class NegocioEnvoltorio {
                 }
             } catch (ElementNotFoundException ex) {
                 System.out.println(ex.getMessage());
+            } catch (ElementNotLoadedException e) {
+                System.out.printf(e.getMessage());
             }
             System.out.println("\nAGREGAR OTRO PRODUCTO? \n1: SI   \n2:NO");
             opcionSeguirComprando = enter.nextInt();
@@ -419,6 +428,8 @@ public class NegocioEnvoltorio {
                 default:
                     System.out.println("\nERROR - Opcion no valida.\n");
             }
+
+            enter.nextLine();
 
         } while (opcionLugarConsumo <= 0 || opcionLugarConsumo >= 4);
 
