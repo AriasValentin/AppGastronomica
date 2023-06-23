@@ -21,11 +21,13 @@ public class NegocioEnvoltorio {
     private EnvoltoriaVentas lista_ventas;
     private EnvoltoriaProductos lista_productos;
     private EnvoltoriaClientes lista_clientes;
+    private Cliente clienteDefault;
 
     public NegocioEnvoltorio() {
         lista_ventas = new EnvoltoriaVentas();
         lista_productos = new EnvoltoriaProductos();
         lista_clientes = new EnvoltoriaClientes();
+        clienteDefault = ClienteDefault(); //cliente seteado en 0 nullo
     }
 
     public void menuAplicacion() {
@@ -406,7 +408,7 @@ public class NegocioEnvoltorio {
             opcionLugarConsumo = enter.nextInt();
             switch (opcionLugarConsumo) {
                 case 1:
-                    //consultar!
+                    //consultar! hacer switch
                     break;
                 case 2:
                     nuevaVenta.setLugarConsumo(LugarConsumo.BARRA);
@@ -421,7 +423,7 @@ public class NegocioEnvoltorio {
         } while (opcionLugarConsumo <= 0 || opcionLugarConsumo >= 4);
 
         //calculo el total de esa venta (el atributo del total esta dentro de la misma | tambien se puede retornar)
-        nuevaVenta.PrecioFinalVenta();
+        nuevaVenta.setTotal(nuevaVenta.PrecioFinalVenta());
 
         return nuevaVenta;
     }

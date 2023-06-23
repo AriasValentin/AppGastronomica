@@ -10,8 +10,6 @@ public class Main {
 
         NegocioEnvoltorio miNegocio = new NegocioEnvoltorio();
 
-        miNegocio.ClienteDefault();
-
         miNegocio.menuAplicacion();
 
     }

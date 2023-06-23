@@ -69,7 +69,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         Iterator<Producto> it = listaDeProductos.iterator();
         int flag = 0;
         while (it.hasNext() && flag == 0) {
-            Producto aux = (Producto) it.next();
+            Producto aux = it.next();
             if (aux.getId() == id) {
                 it.remove();
                 flag = 1;
@@ -144,7 +144,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         Producto aux = null;
 
         while (it.hasNext() && flag == 0) {
-            Producto nuevo = (Producto) it.next();
+            Producto nuevo =  it.next();
             if (nuevo.getId() == id) {
                 flag = 1;
                 aux = nuevo;
