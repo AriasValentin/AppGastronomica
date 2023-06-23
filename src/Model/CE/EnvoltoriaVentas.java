@@ -11,6 +11,7 @@ import jdk.jfr.EventType;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -86,8 +87,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
     public void modificar(int nroTicket) throws ElementUnmodifiedException {
         try {
             Venta aux = buscar(nroTicket);
-            if(aux != null)
-            {
+            if (aux != null) {
                 eliminar(nroTicket);
 
                 System.out.println(aux.toString());
@@ -101,8 +101,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
 
         } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
-        } catch (ElementNotLoadedException e)
-        {
+        } catch (ElementNotLoadedException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -150,6 +149,12 @@ public class EnvoltoriaVentas implements IABM<Venta> {
 
         return aux;
     }
+
+    @Override
+    public Iterator<Venta> devolverIterador() {
+        Iterator<Venta> it = listaDeVentas.iterator();
+        return it;
     }
+}
 
 

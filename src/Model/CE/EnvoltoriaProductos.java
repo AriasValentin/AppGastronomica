@@ -430,5 +430,9 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return aux;
     }
 
-
+    @Override
+    public Iterator<Producto> devolverIterador() {
+        Iterator<Producto> it = listaDeProductos.iterator();
+        return it;
+    }
 }

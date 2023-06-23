@@ -4,12 +4,13 @@ import Model.Clases.Producto.Producto;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Venta particular, con su lista de productos añadidos a su carrito.
  */
-public class Venta {
+public class Venta implements Serializable {
 
     private ArrayList<Producto> carrito;
     private float total;

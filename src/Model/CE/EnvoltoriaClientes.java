@@ -6,6 +6,9 @@ import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import Model.Interfaces.IABM;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Scanner;
@@ -209,5 +212,11 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
         }
 
         return aux;
+    }
+
+    @Override
+    public Iterator<Cliente> devolverIterador() {
+        Iterator<Cliente> it = listaDeClientes.iterator();
+        return it;
     }
 }

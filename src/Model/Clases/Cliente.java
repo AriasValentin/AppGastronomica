@@ -1,11 +1,12 @@
 package Model.Clases;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Clase que representa las personas clientes en el sistema.
  */
-public class Cliente implements Comparable {
+public class Cliente implements Comparable, Serializable {
     private String nombre;
     private String apellido;
     private int dni;

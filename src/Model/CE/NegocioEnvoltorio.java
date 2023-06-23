@@ -1,18 +1,14 @@
 package Model.CE;
-
-import Model.CE.EnvoltoriaClientes;
-import Model.CE.EnvoltoriaProductos;
-import Model.CE.EnvoltoriaVentas;
 import Model.Clases.Cliente;
+import Model.Clases.Grabadora;
 import Model.Clases.LugarConsumo;
 import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
-
-import javax.swing.plaf.synth.SynthOptionPaneUI;
 import java.util.Scanner;
+
 
 public class NegocioEnvoltorio {
     private static Scanner enter = new Scanner(System.in);
@@ -22,6 +18,7 @@ public class NegocioEnvoltorio {
     private EnvoltoriaProductos lista_productos;
     private EnvoltoriaClientes lista_clientes;
     private Cliente clienteDefault;
+
 
     public NegocioEnvoltorio() {
         lista_ventas = new EnvoltoriaVentas();
@@ -91,7 +88,7 @@ public class NegocioEnvoltorio {
             switch (opcion) {
 
                 case 1: {
-                    unaVenta();
+                    crearUnaVenta();
 
                     break;
                 }
@@ -101,7 +98,10 @@ public class NegocioEnvoltorio {
                     Cliente unCliente = crearCliente();
 
                     try {
+                        Grabadora<Cliente> grabadoraCliente = new Grabadora<>();
                         lista_clientes.agregar(unCliente);
+
+
                     } catch (ElementNotLoadedException e) {
                         System.out.println(e.getMessage());
                     }
@@ -264,7 +264,7 @@ public class NegocioEnvoltorio {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 
-    public Venta unaVenta() {
+    public Venta crearUnaVenta() {
 
         Venta nuevaVenta = new Venta();
         Cliente nuevoCliente = null;
@@ -474,6 +474,9 @@ public class NegocioEnvoltorio {
 
         return unCliente;
     }
+
+
+
 }
 
 
