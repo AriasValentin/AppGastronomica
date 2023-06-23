@@ -88,7 +88,15 @@ public class NegocioEnvoltorio {
             switch (opcion) {
 
                 case 1: {
+<<<<<<< HEAD
                     crearUnaVenta();
+=======
+                    try{
+                        lista_ventas.agregar(unaVenta());
+                    }catch (ElementNotLoadedException e){
+                        System.out.printf(e.getMessage());
+                    }
+>>>>>>> b1efbd9075f61f878e53fbc02e51ddac3045f57f
 
                     break;
                 }
@@ -309,6 +317,7 @@ public class NegocioEnvoltorio {
                             }
                         }
 
+                        clScreen();
 
                     } while (rta == 's');
 
@@ -352,8 +361,8 @@ public class NegocioEnvoltorio {
 
                                 try {
                                     Cliente NN = lista_clientes.buscar(0);
-
                                     nuevaVenta.setUnCliente(NN);
+                                    flag = 1;
                                 } catch (ElementNotFoundException e) {
                                     System.out.printf(e.getMessage());
                                 }
@@ -394,7 +403,7 @@ public class NegocioEnvoltorio {
             } catch (ElementNotLoadedException e) {
                 System.out.printf(e.getMessage());
             }
-            System.out.println("\nAGREGAR OTRO PRODUCTO? \n1: SI   \n2:NO");
+            System.out.println("\nAGREGAR OTRO PRODUCTO? \n1:SI   \n2:NO");
             opcionSeguirComprando = enter.nextInt();
         } while (opcionSeguirComprando == 1);
 
