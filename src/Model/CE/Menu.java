@@ -12,14 +12,16 @@ import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import java.util.Scanner;
 
 public class Menu {
+
+    //Atributos.
     private Scanner enter = new Scanner(System.in);
     private NegocioEnvoltorio negocioEnvoltorio;
     Cliente clienteDefault;
 
+    //Constructor.
     public Menu() {
-
         negocioEnvoltorio = new NegocioEnvoltorio();
-        clienteDefault = ClienteDefault(); //cliente seteado en 0 nullo
+        clienteDefault = negocioEnvoltorio.ClienteDefault(); //cliente seteado en 0 nullo
     }
 
     public void menuAplicacion() {
@@ -81,157 +83,10 @@ public class Menu {
 
             switch (opcion) {
 
-                //TODO LO QUE ESTA COMENTADO ES LO QUE HABIA.
-
                 case 1: {
-                    Venta unaVenta = crearUnaVenta();
-                    try {
-                        negocioEnvoltorio.getLista_ventas().agregar(unaVenta);//lista_ventas.agregar(unaVenta());
-                    } catch (ElementNotLoadedException e) {
-                        System.out.printf(e.getMessage());
-                    }
+                    Venta unaVenta = generarVenta();
 
-                    break;
-                }
-                case 2 :
-                {
-
-                }
-                    break;
-                case 3 :
-                {
-                    System.out.println(negocioEnvoltorio.getLista_ventas().listar());
-                }
-                break;
-                case 4 :
-                {
-
-                }
-                break;
-
-                case 5: {
-
-                    Cliente unCliente = crearCliente();
-
-                    try {
-                        Grabadora<Cliente> grabadoraCliente = new Grabadora<>();
-                        negocioEnvoltorio.getLista_clientes().agregar(unCliente);
-                        grabadoraCliente.persistirObjeto(negocioEnvoltorio.getLista_clientes().devolverIterador(),"clientes.dat");
-
-
-                    } catch (ElementNotLoadedException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    break;
-                }
-
-                case 6: {
-                    boolean borrado = false;
-
-                    System.out.printf("Ingrese el DNI del cliente a eliminar: ");
-                    int dni = enter.nextInt();
-
-                    try {
-                        borrado = negocioEnvoltorio.getLista_clientes().eliminar(dni);
-
-                        if (borrado == true) {
-                            System.out.println("\nEl cliente se elimino exitosamente.\n");
-                        }
-                    } catch (ElementNotFoundException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    enter.nextLine();
-
-                    break;
-                }
-
-                case 7: {
-                    System.out.printf("Ingrese DNI de la persona a modificar: ");
-                    int dni = enter.nextInt();
-
-                    if (dni != 0) {
-                        try {
-                            negocioEnvoltorio.getLista_clientes().modificar(dni);
-                        } catch (ElementUnmodifiedException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
-
-                    enter.nextLine();
-
-                    break;
-                }
-
-                case 8: {
-
-                    int subOpcion = 0;
-                    char subRta = 0;
-
-                    do {
-                        System.out.println("PRODUCTOS EN SISTEMA:");
-
-                        System.out.println("\n1 - COMIDAS DULCES.");
-                        System.out.println("2 - COMIDAS SALADAS.");
-                        System.out.println("3 - BEBIDAS FRIAS.");
-                        System.out.println("4 - BEBIDAS CALIENTES.");
-                        System.out.println("5 - MOSTRAR TODOS LOS PRODUCTOS.");
-
-                        System.out.println("\n0 - ATRAS.\n");
-
-                        System.out.printf("Opcion: ");
-                        subOpcion = enter.nextInt();
-
-
-                        switch (subOpcion) {
-                            case 1: {
-                                System.out.println(negocioEnvoltorio.getLista_productos().listarComidasDulces());
-                                break;
-                            }
-
-                            case 2: {
-                                System.out.println(negocioEnvoltorio.getLista_productos().listarComidasSaladas());
-                                break;
-                            }
-
-                            case 3: {
-                                System.out.println(negocioEnvoltorio.getLista_productos().listarBebidasFrias());
-                                break;
-                            }
-
-                            case 4: {
-                                System.out.println(negocioEnvoltorio.getLista_productos().listarBebidasCalientes());
-                                break;
-                            }
-
-                            case 5: {
-                                System.out.println(negocioEnvoltorio.getLista_productos().listar());
-                                break;
-                            }
-
-                            case 0: {
-                                opcion = -1;
-                                rta = 's';
-                                subRta = 'n';
-                                break;
-                            }
-
-                            default: {
-                                System.out.println("\nERROR - Opcion no valida.\n");
-                                break;
-                            }
-                        }
-
-                        if (subOpcion != 0) {
-                            System.out.printf("Desea ver otro listado? (s/n): ");
-                            enter.nextLine();
-                            subRta = enter.nextLine().charAt(0);
-                        }
-
-                        clScreen();
-
-                    } while ((subRta == 's') || (subOpcion != 0));
+                    System.out.println("\nPrecio total: " + unaVenta.PrecioFinalVenta());
 
                     break;
                 }
@@ -239,6 +94,7 @@ public class Menu {
 
             if ((opcion != 0) && (opcion != -1)) {
                 System.out.printf("Desea volver al menu? (s/n): ");
+                enter.nextLine();
                 rta = enter.nextLine().charAt(0);
             }
 
@@ -247,6 +103,115 @@ public class Menu {
         } while ((rta == 's') && (opcion != 0));
     }
 
+    public Venta generarVenta() {
+
+        Venta unaVenta = new Venta();
+        Cliente aux = null;
+        Producto unProducto = null;
+        int DNIcliente = 0, IDproducto = 0, opcionLugarConsumo = 0;
+        char rtaCliente = 0;
+
+        System.out.println("Ingrese DNI del cliente: ");
+        DNIcliente = enter.nextInt();
+
+        clScreen();
+
+        try {
+            aux = negocioEnvoltorio.buscarClienteExistente(DNIcliente);
+            unaVenta.setUnCliente(aux);
+
+        } catch (ElementNotFoundException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            if (aux == null) {
+                System.out.println("Desea registrar al cliente? (s/n): ");
+                enter.nextLine();
+                rtaCliente = enter.nextLine().charAt(0);
+                clScreen();
+
+                if (rtaCliente == 's') {
+                    aux = crearCliente();
+                    unaVenta.setUnCliente(aux);
+                } else {
+                    unaVenta.setUnCliente(clienteDefault);
+                }
+            }
+        }
+
+        do {
+            System.out.println(negocioEnvoltorio.cartaProductos(5));
+
+            System.out.println("\n\nIngrese el ID del producto a agregar: ");
+            IDproducto = enter.nextInt();
+
+            try {
+                unProducto = negocioEnvoltorio.buscarProducto(IDproducto);
+            } catch (ElementNotFoundException e) {
+                System.out.println(e.getMessage());
+            } finally {
+                if (unProducto == null) {
+                    rtaCliente = 's';
+                } else {
+                    try {
+                        unaVenta.agregarProductosAlcarrito(unProducto);
+                    } catch (ElementNotLoadedException e) {
+                        System.out.println(e.getMessage());
+                    } finally {
+                        System.out.println("Desea agregar otro producto? (s/n): ");
+                        enter.nextLine();
+                        rtaCliente = enter.nextLine().charAt(0);
+                        clScreen();
+                    }
+                }
+            }
+        } while (rtaCliente == 's');
+
+        do {
+            System.out.println("LUGAR DE CONSUMO DEL CLIENTE: ");
+            System.out.println("1.MESA");
+            System.out.println("2.BARRA");
+            System.out.println("3.TAKEAWAY");
+            opcionLugarConsumo = enter.nextInt();
+
+            System.out.println(negocioEnvoltorio.lugarAConsumir(unaVenta, opcionLugarConsumo));
+
+        } while (opcionLugarConsumo <= 0 || opcionLugarConsumo >= 4);
+
+        return unaVenta;
+    }
+
+    public Cliente crearCliente() {
+
+        Cliente unCliente = new Cliente();
+
+        System.out.printf("\nIngrese nombre del cliente: ");
+        unCliente.setNombre(enter.nextLine());
+
+        System.out.printf("\nIngrese apellido del cliente: ");
+        unCliente.setApellido(enter.nextLine());
+
+        System.out.printf("\nIngrese DNI del cliente: ");
+        unCliente.setDni(enter.nextInt());
+
+        System.out.printf("\nEl cliente es VIP? (s/n): ");
+        enter.nextLine();
+        char aux = enter.nextLine().charAt(0);
+
+        if (aux == 's') {
+            unCliente.setEsVip(true);
+        } else {
+            unCliente.setEsVip(false);
+        }
+
+        return unCliente;
+    }
+
+    public void clScreen() {
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    }
+
+
+    /*
     public void menuAdministrador() {
 
         int opcion = 0;
@@ -276,223 +241,5 @@ public class Menu {
         System.out.println("-------------------------------------------------------------------------");
         System.out.println("0 SALIR");
     }
-
-    private void clScreen() {
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    }
-
-    private Venta crearUnaVenta() {
-
-        Venta nuevaVenta = new Venta();
-        Cliente nuevoCliente = null;
-
-        int opcionSeguirComprando = 0, idProducto = 0, opcionCliente = 0, opcionDni = 0, opcionLugarConsumo = 0, flag = 0;
-        char rta = 0;
-
-        //crear un cliente para la venta o usar uno existente
-
-        do {
-            System.out.println("ES CLIENTE? \n1.SI   \n2.NO");
-            System.out.printf("\nIngrese una opcion: ");
-            opcionCliente = enter.nextInt();
-
-            clScreen();
-
-            switch (opcionCliente) {
-                case 1: {
-                    do {
-                        //existe el cliente, se busca por dni..
-
-                        System.out.println("INGRESE DNI DEL CLIENTE: ");
-                        opcionDni = enter.nextInt();
-
-                        try {
-                            nuevoCliente = negocioEnvoltorio.getLista_clientes().buscar(opcionDni); //retorna cliente y lo almaceno en mi variable local
-
-                            if (nuevoCliente != null) {
-                                nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
-                                rta = 0;
-
-                            }
-                        } catch (ElementNotFoundException e) {
-                            System.out.printf(e.getMessage());
-                        } finally {
-                            if (nuevoCliente == null) {
-                                System.out.printf("Desea ingresar otro DNI? (s/n): ");
-                                enter.nextLine();
-                                rta = enter.nextLine().charAt(0);
-
-                                flag = 1;
-                            }
-                        }
-
-                        clScreen();
-
-                    } while (rta == 's');
-
-                    if (rta == 'n') { //Si rta es 'n' deja la bandera en 0 para que vuelva a preguntar si es cliente o no.
-                        flag = 0;
-                    } else { //setea rta en 0 porque podria haberse confudido al menos una vez. Tambien es la condicion de corte si encontro el cliente por primera vez.
-                        rta = 0;
-                    }
-
-                    break;
-                }
-                case 2: {
-                    int opcionNO = 0;
-
-                    do {
-                        System.out.println("\nDesea agregar un nuevo cliente? ");
-                        System.out.println("1 - SI.");
-                        System.out.println("2 - NO.\n");
-                        System.out.printf("Opcion: ");
-
-                        opcionNO = enter.nextInt();
-
-                        switch (opcionNO) {
-
-                            case 1: { //Crea un cliente nuevo y lo agrega a la lista de clientes.
-
-                                nuevoCliente = crearCliente();
-
-                                try {
-                                    negocioEnvoltorio.getLista_clientes().agregar(nuevoCliente);
-                                } catch (ElementNotLoadedException e) {
-                                    System.out.println(e.getMessage());
-                                }
-
-                                nuevaVenta.setUnCliente(nuevoCliente); //lo agrego a mi venta
-
-                                break;
-                            }
-
-                            case 2: {
-
-                                try {
-                                    Cliente NN = negocioEnvoltorio.getLista_clientes().buscar(0);
-                                    nuevaVenta.setUnCliente(NN);
-                                    flag = 1;
-                                } catch (ElementNotFoundException e) {
-                                    System.out.printf(e.getMessage());
-                                }
-
-                                break;
-                            }
-                            default:
-                                System.out.println("\nERROR - Opcion no valida.\n");
-                        }
-                    } while ((opcionNO <= 0) || (opcionNO >= 3));
-
-                    break;
-                }
-                default:
-                    System.out.println("\nERROR - Opcion no valida.\n");
-            }
-
-            if (rta == 0) { //condicion de salida
-                flag = 1;
-            }
-
-        } while ((opcionCliente <= 0) || (opcionCliente >= 3) || (flag == 0));
-
-        //productos que va a llevar el cliente
-
-        do {
-            System.out.println(negocioEnvoltorio.getLista_productos().listarBebidasCalientes());
-            System.out.println(negocioEnvoltorio.getLista_productos().listarBebidasFrias());
-            System.out.println(negocioEnvoltorio.getLista_productos().listarComidasDulces());
-            System.out.println(negocioEnvoltorio.getLista_productos().listarComidasSaladas());
-
-            System.out.println("\n\nIngrese el ID del producto a agregar: ");
-            idProducto = enter.nextInt();
-            try {
-                Producto nuevo = negocioEnvoltorio.getLista_productos().buscar(idProducto);
-                if (nuevo != null) {
-                    nuevaVenta.agregarProductosAlcarrito(nuevo);
-                }
-            } catch (ElementNotFoundException ex) {
-                System.out.println(ex.getMessage());
-            } catch (ElementNotLoadedException e) {
-                System.out.printf(e.getMessage());
-            }
-            System.out.println("\nAGREGAR OTRO PRODUCTO? \n1:SI   \n2:NO");
-            opcionSeguirComprando = enter.nextInt();
-        } while (opcionSeguirComprando == 1);
-
-        //lugar donde va a consumir el cliente
-
-        do {
-            System.out.println("LUGAR DE CONSUMO DEL CLIENTE: ");
-            System.out.println("1.MESA");
-            System.out.println("2.BARRA");
-            System.out.println("3.TAKEAWAY");
-            opcionLugarConsumo = enter.nextInt();
-            switch (opcionLugarConsumo) {
-                case 1:
-                    //consultar! hacer switch
-                    break;
-                case 2:
-                    nuevaVenta.setLugarConsumo(LugarConsumo.BARRA);
-                    break;
-                case 3:
-                    nuevaVenta.setLugarConsumo(LugarConsumo.TakeAway);
-                    break;
-                default:
-                    System.out.println("\nERROR - Opcion no valida.\n");
-            }
-
-            enter.nextLine();
-
-        } while (opcionLugarConsumo <= 0 || opcionLugarConsumo >= 4);
-
-        //calculo el total de esa venta (el atributo del total esta dentro de la misma | tambien se puede retornar)
-        nuevaVenta.setTotal(nuevaVenta.PrecioFinalVenta());
-
-        return nuevaVenta;
-    }
-
-    private Cliente crearCliente() {
-
-        Cliente unCliente = new Cliente();
-
-        System.out.printf("\nIngrese nombre del cliente: ");
-        enter.nextLine();
-        unCliente.setNombre(enter.nextLine());
-
-        System.out.printf("\nIngrese apellido del cliente: ");
-        unCliente.setApellido(enter.nextLine());
-
-        System.out.printf("\nIngrese DNI del cliente: ");
-        unCliente.setDni(enter.nextInt());
-
-        System.out.printf("\nEl cliente es VIP? (s/n): ");
-        enter.nextLine();
-        char aux = enter.nextLine().charAt(0);
-
-        if (aux == 's') {
-            unCliente.setEsVip(true);
-        } else {
-            unCliente.setEsVip(false);
-        }
-
-        return unCliente;
-    }
-
-    private Cliente ClienteDefault() {
-
-        Cliente unCliente = new Cliente();
-
-        unCliente.setNombre("n/a");
-        unCliente.setApellido("n/a");
-        unCliente.setDni(0);
-        unCliente.setEsVip(false);
-
-        try {
-            negocioEnvoltorio.getLista_clientes().agregar(unCliente);
-        } catch (ElementNotLoadedException e) {
-            System.out.println(e.getMessage());
-        }
-
-        return unCliente;
-    }
+     */
 }

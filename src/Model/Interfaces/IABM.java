@@ -9,7 +9,7 @@ import java.util.Iterator;
 public interface IABM <T>{
     void agregar(T elemento) throws ElementNotLoadedException;
     boolean eliminar(int elemento) throws ElementNotFoundException;
-    void modificar(int elemento) throws ElementUnmodifiedException;
+    void modificar(T elemento, float numero) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException;
     String listar();
     T buscar(int elemento) throws ElementNotFoundException ;
 

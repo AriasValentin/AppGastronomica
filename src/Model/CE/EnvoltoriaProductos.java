@@ -16,7 +16,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -88,29 +87,22 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     /**
      * Modifica el precio de un producto.
      *
-     * @param idProducto
+     * @param nuevoPrecio
+     * @param unProducto
      * @throws ElementUnmodifiedException
      */
     @Override
-    public void modificar(int idProducto) throws ElementUnmodifiedException {
-        try {
-            Producto aux = buscar(idProducto);
-            if (aux != null) {
-                eliminar(idProducto);
+    public void modificar(Producto unProducto, float nuevoPrecio) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException {
+            if (unProducto != null) {
 
-                System.out.println(aux.toString());
-
-                System.out.println("Ingrese el precio del producto a modificar: ");
-                aux.setPrecio(scan.nextFloat());
-
+                Producto aux = unProducto;
+                eliminar(unProducto.getId());
+                aux.setPrecio(nuevoPrecio);
                 agregar(aux);
 
+            } else {
+                throw new ElementUnmodifiedException("\nERROR - El elemento no pudo ser modificado.\n");
             }
-        } catch (ElementNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (ElementNotLoadedException e) {
-            System.out.println(e.getMessage());
-        }
     }
 
     /**
@@ -144,7 +136,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         Producto aux = null;
 
         while (it.hasNext() && flag == 0) {
-            Producto nuevo =  it.next();
+            Producto nuevo = it.next();
             if (nuevo.getId() == id) {
                 flag = 1;
                 aux = nuevo;
@@ -402,8 +394,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         while (it.hasNext()) {
             Producto nuevo = it.next();
             if (nuevo instanceof Comida) {
-                if (((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_SALADA))
-                {
+                if (((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_SALADA)) {
                     aux += nuevo.toString() + "\n";
 
                 }
@@ -419,8 +410,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         while (it.hasNext()) {
             Producto nuevo = it.next();
             if (nuevo instanceof Comida) {
-                if ( ((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_DULCE))
-                {
+                if (((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_DULCE)) {
                     aux += nuevo.toString() + "\n";
 
                 }

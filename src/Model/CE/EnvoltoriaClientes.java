@@ -75,96 +75,35 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     }
 
     /**
-     * Modifica atributos del cliente creado.
+     * Modifica la membresia del cliente.
      *
-     * @param dni
+     * @param unCliente
+     * @param opcion
      * @throws ElementUnmodifiedException
      */
     @Override
-    public void modificar(int dni) throws ElementUnmodifiedException {
-        try {
-            Cliente aux = buscar(dni);
-            if(aux != null)
-            {
-                eliminar(dni);
+    public void modificar(Cliente unCliente, float opcion) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException {
 
-                char seguir = 0;
-                int opcion = 0;
-                do {
-                    System.out.println("1.Nombre: "+aux.getNombre());
-                    System.out.println("2.Apellido: "+aux.getApellido());
-                    System.out.println("3.DNI: "+aux.getDni());
-                    System.out.println("4.VIP: "+aux.getEsVip());
-                    System.out.printf("\nINGRESE OPCION A MODIFICAR: ");
-                    opcion = scan.nextInt();
+        int opcionInt = (int) opcion;
 
-                    switch (opcion)
-                    {
-                        case 1:
-                            System.out.println("Ingrese el nombre: ");
-                            scan.nextLine();
-                            aux.setNombre(scan.nextLine());
-                            break;
+        if (unCliente != null) {
 
-                        case 2:
-                            System.out.println("Ingrese el apellido: ");
-                            scan.nextLine();
-                            aux.setApellido(scan.nextLine());
-                            break;
+            Cliente aux = unCliente;
+            eliminar(unCliente.getDni());
 
-                        case 3:
-                            System.out.println("Ingrese el DNI: ");
-                            aux.setDni(scan.nextInt());
-                            break;
-
-                        case 4:
-
-                            int vip = 0;
-
-                            do {
-                                System.out.println("VIP: "+aux.getEsVip());
-                                System.out.println("1.Hacerlo VIP. ");
-                                System.out.println("2.Sacarle VIP. ");
-                                System.out.printf("Opcion: ");
-                                vip = scan.nextInt();
-
-                                switch (vip)
-                                {
-                                    case 1:
-                                        scan.nextLine();
-                                        aux.setEsVip(true);
-                                        break;
-                                    case 2:
-                                        scan.nextLine();
-                                        aux.setEsVip(false);
-                                        break;
-                                    default:
-                                        System.out.println("Opcion invalida.");
-                                }
-                            }while(vip <= 0 || vip >= 3);
-                            break;
-                        default:
-                            System.out.println("Opcion invalida.");
-                    }
-
-                    System.out.println("Desea modificar otro atributo del cliente? (s/n): ");
-                    seguir = scan.nextLine().charAt(0);
-
-                }while(seguir == 's');
-
-                agregar(aux);
-
-            }
-            else
-            {
-                throw new ElementUnmodifiedException("El Cliente no existe.");
+            switch (opcionInt) {
+                case 1: {
+                    aux.setEsVip(true);
+                }
+                case 2: {
+                    aux.setEsVip(false);
+                }
             }
 
-        } catch (ElementNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (ElementNotLoadedException e)
-        {
-            System.out.println(e.getMessage());
+            agregar(unCliente);
+
+        } else {
+            throw new ElementUnmodifiedException("\nERROR - El elemento no pudo ser modificado.\n");
         }
     }
 

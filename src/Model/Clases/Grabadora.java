@@ -6,7 +6,6 @@ import java.util.Iterator;
 
 public class Grabadora <T>{
 
-
     public void persistirObjeto(Iterator<T> it, String nombreArchivo) {
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;

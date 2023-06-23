@@ -59,7 +59,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
      * @return true si elimina, false si no.
      */
     @Override
-    public boolean eliminar(int numTicket) {
+    public boolean eliminar(int numTicket) throws ElementNotFoundException{
         boolean rta = false;
 
         try {
@@ -68,6 +68,8 @@ public class EnvoltoriaVentas implements IABM<Venta> {
             if ((aux.getNumTicket() == numTicket) && (aux != null)) {
                 listaDeVentas.remove(aux);
                 rta = true;
+            }else {
+                throw new ElementNotFoundException("\nERROR - El producto no fue encontrado o ya fue eliminado.\n");
             }
 
         } catch (ElementNotFoundException e) {
@@ -80,30 +82,21 @@ public class EnvoltoriaVentas implements IABM<Venta> {
     /**
      * Modifica el atributo valor de una venta especifica que exista.
      *
-     * @param nroTicket
+     * @param unaVenta
+     * @param nuevoTotal
      * @throws ElementUnmodifiedException
      */
 
     @Override
-    public void modificar(int nroTicket) throws ElementUnmodifiedException {
-        try {
-            Venta aux = buscar(nroTicket);
-            if (aux != null) {
-                eliminar(nroTicket);
+    public void modificar(Venta unaVenta, float nuevoTotal) throws ElementUnmodifiedException, ElementNotLoadedException, ElementNotFoundException {
 
-                System.out.println(aux.toString());
-
-                System.out.println("Ingrese el Total de la venta a modificar: ");
-                aux.setTotal(scan.nextFloat());
-
-                agregar(aux);
-
-            }
-
-        } catch (ElementNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (ElementNotLoadedException e) {
-            System.out.println(e.getMessage());
+        if (unaVenta != null) {
+            Venta aux = unaVenta;
+            eliminar(unaVenta.getNumTicket());
+            aux.setTotal(nuevoTotal);
+            agregar(aux);
+        } else {
+            throw new ElementUnmodifiedException("\nERROR - El elemento no pudo ser modificado.\n");
         }
     }
 
