@@ -309,6 +309,7 @@ public class NegocioEnvoltorio {
                             }
                         }
 
+                        clScreen();
 
                     } while (rta == 's');
 
@@ -352,8 +353,8 @@ public class NegocioEnvoltorio {
 
                                 try {
                                     Cliente NN = lista_clientes.buscar(0);
-
                                     nuevaVenta.setUnCliente(NN);
+                                    flag = 1;
                                 } catch (ElementNotFoundException e) {
                                     System.out.printf(e.getMessage());
                                 }
