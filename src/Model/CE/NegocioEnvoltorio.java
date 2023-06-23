@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 
 public class NegocioEnvoltorio {
-
+    private Scanner enter = new Scanner(System.in);
 
     //Atributos.
     private EnvoltoriaVentas lista_ventas;
@@ -37,7 +37,6 @@ public class NegocioEnvoltorio {
         return lista_clientes;
     }
 
-   /*
     public void menuAplicacion() {
 
         int opcion = 0;
@@ -98,7 +97,7 @@ public class NegocioEnvoltorio {
             switch (opcion) {
 
                 case 1: {
-                    crearUnaVenta();
+                    unaVenta();
                     try{
                         lista_ventas.agregar(unaVenta());
                     }catch (ElementNotLoadedException e){
@@ -278,7 +277,7 @@ public class NegocioEnvoltorio {
     public void clScreen() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
-    public Venta crearUnaVenta() {
+    public Venta unaVenta() {
         Venta nuevaVenta = new Venta();
         Cliente nuevoCliente = null;
 
@@ -488,9 +487,6 @@ public class NegocioEnvoltorio {
 
         return unCliente;
     }
-
-*/
-
 }
 
 
