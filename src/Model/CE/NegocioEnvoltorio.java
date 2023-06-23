@@ -28,12 +28,13 @@ public class NegocioEnvoltorio {
         lista_productos = new EnvoltoriaProductos();
         lista_clientes = new EnvoltoriaClientes();
         clienteDefault = ClienteDefault(); //cliente seteado en 0 nullo
+        lista_productos.consumoJSON(); //consumo de productos
     }
 
     public void menuAplicacion() {
 
         int opcion = 0;
-        lista_productos.consumoJSON();
+
 
         System.out.println("\nBIENVENIDO.");
         System.out.println("\nINGRESE FORMA DE OPERAR: \n");
@@ -173,36 +174,26 @@ public class NegocioEnvoltorio {
 
                         switch (subOpcion) {
                             case 1: {
-                                lista_productos.vaciarLista();
-                                lista_productos.consumoComidasDulces();
-                                System.out.println(lista_productos.listar());
+                                System.out.println(lista_productos.listarComidasDulces());
                                 break;
                             }
 
                             case 2: {
-                                lista_productos.vaciarLista();
-                                lista_productos.consumoComidasSaladas();
-                                System.out.println(lista_productos.listar());
+                                System.out.println(lista_productos.listarComidasSaladas());
                                 break;
                             }
 
                             case 3: {
-                                lista_productos.vaciarLista();
-                                lista_productos.consumoBebidasFriasPERSONAL();
-                                System.out.println(lista_productos.listar());
+                                System.out.println(lista_productos.listarBebidasFrias());
                                 break;
                             }
 
                             case 4: {
-                                lista_productos.vaciarLista();
-                                lista_productos.consumoBebidasCalientesPersonal();
-                                System.out.println(lista_productos.listar());
+                                System.out.println(lista_productos.listarBebidasCalientes());
                                 break;
                             }
 
                             case 5: {
-                                lista_productos.vaciarLista();
-                                lista_productos.consumoJSON();
                                 System.out.println(lista_productos.listar());
                                 break;
                             }
@@ -473,3 +464,5 @@ public class NegocioEnvoltorio {
         return unCliente;
     }
 }
+
+
