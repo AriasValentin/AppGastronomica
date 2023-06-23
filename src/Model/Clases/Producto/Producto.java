@@ -86,6 +86,14 @@ public abstract class Producto implements Comparable {
                 "\nDescripcion: "+ this.descripcion +
                 "\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
     }
+    public  String toStringSimple()
+    {
+        return "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
+                "Nombre del producto : " + this.nombre +
+                "\nPrecio : " + this.precio +
+                "\nId: " + this.id +
+                "\n";
+    }
 
     /**
      * Compara si un objeto es mayor menor o igual al otro objeto.

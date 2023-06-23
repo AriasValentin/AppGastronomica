@@ -35,6 +35,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
         this.indexNroTicket = 0;
     }
 
+
     /**
      * Añade un objeto de tipo Venta al ArrayList.
      *

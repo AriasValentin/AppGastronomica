@@ -11,23 +11,33 @@ import java.util.Scanner;
 
 
 public class NegocioEnvoltorio {
-    private static Scanner enter = new Scanner(System.in);
+
 
     //Atributos.
     private EnvoltoriaVentas lista_ventas;
     private EnvoltoriaProductos lista_productos;
     private EnvoltoriaClientes lista_clientes;
-    private Cliente clienteDefault;
-
 
     public NegocioEnvoltorio() {
         lista_ventas = new EnvoltoriaVentas();
         lista_productos = new EnvoltoriaProductos();
         lista_clientes = new EnvoltoriaClientes();
-        clienteDefault = ClienteDefault(); //cliente seteado en 0 nullo
         lista_productos.consumoJSON(); //consumo de productos
     }
 
+    public EnvoltoriaVentas getLista_ventas() {
+        return lista_ventas;
+    }
+
+    public EnvoltoriaProductos getLista_productos() {
+        return lista_productos;
+    }
+
+    public EnvoltoriaClientes getLista_clientes() {
+        return lista_clientes;
+    }
+
+   /*
     public void menuAplicacion() {
 
         int opcion = 0;
@@ -88,15 +98,12 @@ public class NegocioEnvoltorio {
             switch (opcion) {
 
                 case 1: {
-<<<<<<< HEAD
                     crearUnaVenta();
-=======
                     try{
                         lista_ventas.agregar(unaVenta());
                     }catch (ElementNotLoadedException e){
                         System.out.printf(e.getMessage());
                     }
->>>>>>> b1efbd9075f61f878e53fbc02e51ddac3045f57f
 
                     break;
                 }
@@ -271,9 +278,7 @@ public class NegocioEnvoltorio {
     public void clScreen() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
-
     public Venta crearUnaVenta() {
-
         Venta nuevaVenta = new Venta();
         Cliente nuevoCliente = null;
 
@@ -484,7 +489,7 @@ public class NegocioEnvoltorio {
         return unCliente;
     }
 
-
+*/
 
 }
 
