@@ -91,7 +91,11 @@ public class NegocioEnvoltorio {
             switch (opcion) {
 
                 case 1: {
-                    unaVenta();
+                    try{
+                        lista_ventas.agregar(unaVenta());
+                    }catch (ElementNotLoadedException e){
+                        System.out.printf(e.getMessage());
+                    }
 
                     break;
                 }
@@ -395,7 +399,7 @@ public class NegocioEnvoltorio {
             } catch (ElementNotLoadedException e) {
                 System.out.printf(e.getMessage());
             }
-            System.out.println("\nAGREGAR OTRO PRODUCTO? \n1: SI   \n2:NO");
+            System.out.println("\nAGREGAR OTRO PRODUCTO? \n1:SI   \n2:NO");
             opcionSeguirComprando = enter.nextInt();
         } while (opcionSeguirComprando == 1);
 
