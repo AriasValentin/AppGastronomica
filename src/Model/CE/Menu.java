@@ -7,9 +7,10 @@ import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 
 
+import java.io.Serializable;
 import java.util.Scanner;
 
-public class Menu {
+public class Menu  {
 
     //Atributos.
     private Scanner enter = new Scanner(System.in);
@@ -86,7 +87,15 @@ public class Menu {
 
                     System.out.println(unaVenta.listarVenta());
                     System.out.println("Precio total: " + unaVenta.PrecioFinalVenta() + "\n");
-                    negocioEnvoltorio.guardarVentas(unaVenta);
+                    try
+                    {
+                        negocioEnvoltorio.guardarVentas(unaVenta);
+                    }
+                    catch (ElementNotLoadedException ex)
+                    {
+                        System.out.println(ex.getMessage());
+                    }
+
 
                     break;
                 }

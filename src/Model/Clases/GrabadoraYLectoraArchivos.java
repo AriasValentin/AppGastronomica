@@ -7,18 +7,20 @@ import java.util.Iterator;
 
 public class GrabadoraYLectoraArchivos{
 
-    public static void persistirVentas(ArrayList<Venta> listaVenta, String nombreArchivo) {
+    public static void persistirVentas(ArrayList<Venta> listaVenta) {
 
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
 
         try {
-            fileOutputStream = new FileOutputStream(nombreArchivo);
+            fileOutputStream = new FileOutputStream("ventas.dat");
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
             for(Venta aux : listaVenta)
             {
+
                 objectOutputStream.writeObject(aux);
+
             }
 
         } catch (IOException e) {

@@ -9,11 +9,12 @@ import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Scanner;
 
 
-public class NegocioEnvoltorio {
+public class NegocioEnvoltorio  {
     private Scanner enter = new Scanner(System.in);
     private GrabadoraYLectoraArchivos miGrabadora = new GrabadoraYLectoraArchivos();
 
@@ -68,24 +69,17 @@ public class NegocioEnvoltorio {
     }
 
 
-    public void grabarVentas(){
-        lista_ventas.GrabarArchivoVenta();
-    }
+    public void guardarVentas(Venta unaVenta)throws ElementNotLoadedException {
 
-    public String guardarVentas(Venta unaVenta){
-
-        String aux = "";
-
-        try{
-            if (unaVenta != null){
-                lista_ventas.agregar(unaVenta);
-                grabarVentas();
-            }
-        }catch (ElementNotLoadedException e){
-            aux = e.getMessage();
+        if (unaVenta != null) {
+            lista_ventas.agregar(unaVenta);
         }
-        return aux;
+        else
+        {
+            throw new ElementNotLoadedException("\nERROR - La venta no pudo ser cargada.\n");
+        }
     }
+
 
     public String lugarAConsumir(Venta unaVenta, int opcion) {
 

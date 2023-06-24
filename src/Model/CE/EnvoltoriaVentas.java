@@ -9,6 +9,7 @@ import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import Model.Interfaces.IABM;
 import jdk.jfr.EventType;
 
+import java.io.Serializable;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,7 +23,7 @@ import java.util.Scanner;
  * @see Venta
  */
 
-public class EnvoltoriaVentas implements IABM<Venta> {
+public class EnvoltoriaVentas implements IABM<Venta>  {
 
     Scanner scan = new Scanner(System.in);
 
@@ -49,9 +50,11 @@ public class EnvoltoriaVentas implements IABM<Venta> {
             unaVenta.setNumTicket(indexNroTicket);
             listaDeVentas.add(unaVenta);
             this.indexNroTicket++;
+            GrabarArchivoVenta();
         } else {
             throw new ElementNotLoadedException("\nERROR - La venta no pudo ser cargada.\n");
         }
+
     }
 
     /**
@@ -148,7 +151,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
 
     public void GrabarArchivoVenta()
     {
-        GrabadoraYLectoraArchivos.persistirVentas(listaDeVentas,"ventas.dat");
+        GrabadoraYLectoraArchivos.persistirVentas(listaDeVentas);
     }
 }
 

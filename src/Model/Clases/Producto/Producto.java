@@ -1,10 +1,12 @@
 package Model.Clases.Producto;
 
+import java.io.Serializable;
+
 /**
  * Representa los productos para la venta del sistema.
  */
 
-public abstract class Producto implements Comparable {
+public abstract class Producto implements Comparable, Serializable {
     private String nombre;
     private float precio;
     private int id;
