@@ -29,7 +29,6 @@ public class Menu  {
 
         int opcion = 0;
 
-
         System.out.println("\nBIENVENIDO.");
         System.out.println("\nINGRESE FORMA DE OPERAR: \n");
 
@@ -87,7 +86,7 @@ public class Menu  {
 
                     Venta unaVenta = generarVenta();
 
-                    System.out.println(unaVenta.listarVenta());
+                    System.out.println(unaVenta.listarVentaSinTicket());
                     System.out.println("Precio total: " + unaVenta.PrecioFinalVenta() + "\n");
                     try
                     {
@@ -253,6 +252,8 @@ public class Menu  {
             System.out.println(negocioEnvoltorio.lugarAConsumir(unaVenta, opcionLugarConsumo));
 
         } while (opcionLugarConsumo <= 0 || opcionLugarConsumo >= 4);
+
+        unaVenta.setNumTicket(negocioEnvoltorio.numeroTicket());
 
         return unaVenta;
     }

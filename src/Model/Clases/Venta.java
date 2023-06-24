@@ -94,20 +94,18 @@ public class Venta implements Serializable {
     // lista todo los productos que lleva mas los atributos propios de esa venta.
     public String listarVenta() {
         String productos = "";
-        int i;
-        for (i = 0; i < carrito.size(); i++) {
+        for (int i = 0; i < carrito.size(); i++) {
             productos = productos + "\n" + carrito.get(i).toStringSimple(); //acumula los nombres de los productos comprados
         }
-        return "Venta : \n"+"Productos : "+"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + productos + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+        return "Venta: " + "\nnumTicket: " + numTicket + "\nProductos : "+"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + productos + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
     }
 
-    //Lista todos los productos
-    public String MostrarIndexCarrito() {
+    public String listarVentaSinTicket() {
         String productos = "";
         for (int i = 0; i < carrito.size(); i++) {
-            productos = productos +"INDEX: "+i+ "  -  " +carrito.get(i).toString() + "\n"; //acumula los nombres de los productos comprados
+            productos = productos + "\n" + carrito.get(i).toStringSimple(); //acumula los nombres de los productos comprados
         }
-        return productos;
+        return "Venta: " + "\nProductos : "+"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + productos + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
     }
 
     /**

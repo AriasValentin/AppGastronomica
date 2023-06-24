@@ -16,19 +16,13 @@ import java.util.Scanner;
 
 
 public class NegocioEnvoltorio  {
-    private Scanner enter = new Scanner(System.in);
-    private GrabadoraYLectoraArchivos miGrabadora = new GrabadoraYLectoraArchivos();
 
     //Atributos.
     private EnvoltoriaVentas lista_ventas;
     private EnvoltoriaProductos lista_productos;
     private EnvoltoriaClientes lista_clientes;
 
-
-    public EnvoltoriaVentas getLista_ventas() {
-        return lista_ventas;
-    }
-
+    //Constructor.
     public NegocioEnvoltorio() {
         lista_ventas = new EnvoltoriaVentas();
         lista_productos = new EnvoltoriaProductos();
@@ -111,6 +105,10 @@ public class NegocioEnvoltorio  {
 
     public Producto buscarProducto(int id) throws ElementNotFoundException {
         return lista_productos.buscar(id);
+    }
+
+    public int numeroTicket(){
+        return lista_ventas.getIndexNroTicket();
     }
 
     public String cartaProductos(int opcion){

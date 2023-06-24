@@ -23,7 +23,7 @@ import java.util.Scanner;
  * @see Venta
  */
 
-public class EnvoltoriaVentas implements IABM<Venta>  {
+public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
 
     Scanner scan = new Scanner(System.in);
 
@@ -37,6 +37,12 @@ public class EnvoltoriaVentas implements IABM<Venta>  {
         this.indexNroTicket = 0;
     }
 
+    //Getters.
+    public int getIndexNroTicket() {
+        return indexNroTicket;
+    }
+
+    //Metodos.
 
     /**
      * Añade un objeto de tipo Venta al ArrayList.
@@ -47,15 +53,40 @@ public class EnvoltoriaVentas implements IABM<Venta>  {
     public void agregar(Venta unaVenta) throws ElementNotLoadedException {
 
         if (unaVenta != null) {
-           listaDeVentas =  GrabadoraYLectoraArchivos.leerVentas();
-            unaVenta.setNumTicket(indexNroTicket);
+            Venta aux = null;
+            listaDeVentas = GrabadoraYLectoraArchivos.leerVentas();
+
+            aux = buscarIndexMayor();
+
+            if (aux != null) {
+                unaVenta.setNumTicket(aux.getNumTicket() + 1);
+            } else {
+                unaVenta.setNumTicket(indexNroTicket);
+            }
+
             listaDeVentas.add(unaVenta);
-            this.indexNroTicket++;
-            GrabarArchivoVenta();
+            indexNroTicket++;
+            GrabadoraYLectoraArchivos.persistirVentas(listaDeVentas);
         } else {
             throw new ElementNotLoadedException("\nERROR - La venta no pudo ser cargada.\n");
         }
+    }
 
+    public Venta buscarIndexMayor() {
+
+        Venta aux = null;
+
+        if (listaDeVentas.size() != 0) {
+            aux = listaDeVentas.get(0);
+
+            for (int i = 0; i < listaDeVentas.size(); i++) {
+                if (aux.getNumTicket() < listaDeVentas.get(i).getNumTicket()) {
+                    aux = listaDeVentas.get(i);
+                }
+            }
+        }
+
+        return aux;
     }
 
     /**
@@ -65,7 +96,7 @@ public class EnvoltoriaVentas implements IABM<Venta>  {
      * @return true si elimina, false si no.
      */
     @Override
-    public boolean eliminar(int numTicket) throws ElementNotFoundException{
+    public boolean eliminar(int numTicket) throws ElementNotFoundException {
         boolean rta = false;
 
         try {
@@ -74,7 +105,7 @@ public class EnvoltoriaVentas implements IABM<Venta>  {
             if ((aux.getNumTicket() == numTicket) && (aux != null)) {
                 listaDeVentas.remove(aux);
                 rta = true;
-            }else {
+            } else {
                 throw new ElementNotFoundException("\nERROR - El producto no fue encontrado o ya fue eliminado.\n");
             }
 
@@ -131,7 +162,6 @@ public class EnvoltoriaVentas implements IABM<Venta>  {
      * @return un objeto de tipo Venta si se encuentra, sino retorna un objeto nulo.
      */
 
-
     @Override
     public Venta buscar(int nroTicket) throws ElementNotFoundException {
 
@@ -151,12 +181,6 @@ public class EnvoltoriaVentas implements IABM<Venta>  {
 
         return aux;
     }
-
-    public void GrabarArchivoVenta()
-    {
-        GrabadoraYLectoraArchivos.persistirVentas(listaDeVentas);
-    }
-
 }
 
 
