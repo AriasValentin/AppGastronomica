@@ -13,5 +13,4 @@ public interface IABM <T>{
     String listar();
     T buscar(int elemento) throws ElementNotFoundException ;
 
-    Iterator devolverIterador();
 }

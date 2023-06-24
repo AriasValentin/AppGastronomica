@@ -153,9 +153,4 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
         return aux;
     }
 
-    @Override
-    public Iterator<Cliente> devolverIterador() {
-        Iterator<Cliente> it = listaDeClientes.iterator();
-        return it;
-    }
 }

@@ -1,5 +1,6 @@
 package Model.CE;
 
+import Model.Clases.GrabadoraYLectoraArchivos;
 import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
@@ -145,10 +146,9 @@ public class EnvoltoriaVentas implements IABM<Venta> {
         return aux;
     }
 
-    @Override
-    public Iterator<Venta> devolverIterador() {
-        Iterator<Venta> it = listaDeVentas.iterator();
-        return it;
+    public void GrabarArchivoVenta()
+    {
+        GrabadoraYLectoraArchivos.persistirVentas(listaDeVentas,"ventas.dat");
     }
 }
 

@@ -1,7 +1,7 @@
 package Model.CE;
 
 import Model.Clases.Cliente;
-import Model.Clases.Grabadora;
+import Model.Clases.GrabadoraYLectoraArchivos;
 import Model.Clases.LugarConsumo;
 import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
@@ -15,11 +15,17 @@ import java.util.Scanner;
 
 public class NegocioEnvoltorio {
     private Scanner enter = new Scanner(System.in);
+    private GrabadoraYLectoraArchivos miGrabadora = new GrabadoraYLectoraArchivos();
 
     //Atributos.
     private EnvoltoriaVentas lista_ventas;
     private EnvoltoriaProductos lista_productos;
     private EnvoltoriaClientes lista_clientes;
+
+
+    public EnvoltoriaVentas getLista_ventas() {
+        return lista_ventas;
+    }
 
     public NegocioEnvoltorio() {
         lista_ventas = new EnvoltoriaVentas();
@@ -34,20 +40,16 @@ public class NegocioEnvoltorio {
         cadena = lista_ventas.listar();
         return cadena;
     }
-
+/*
     public void grabarArchivoCliente(Cliente unCliente){
         Grabadora<Cliente> miGrabadora = new Grabadora<>();
         Iterator<Cliente> it = lista_clientes.devolverIterador();
 
         miGrabadora.persistirObjeto(it,"clientes.dat");
-    }
+    }*/
 
-    public void grabarArchivoVenta(Venta unaVenta){
-        Grabadora<Venta> miGrabadora = new Grabadora<>();
-        Iterator<Venta> it = lista_ventas.devolverIterador();
 
-        miGrabadora.persistirObjeto(it,"ventas.dat");
-    }
+
 
     public String guardarCliente(Cliente unCliente){
 
@@ -56,13 +58,18 @@ public class NegocioEnvoltorio {
         try {
 
             lista_clientes.agregar(unCliente);
-            grabarArchivoCliente(unCliente);
+            //grabarArchivoCliente(unCliente);
 
         }catch (ElementNotLoadedException e){
             aux = e.getMessage();
         }
 
         return aux;
+    }
+
+
+    public void grabarVentas(){
+        lista_ventas.GrabarArchivoVenta();
     }
 
     public String guardarVentas(Venta unaVenta){
@@ -72,12 +79,11 @@ public class NegocioEnvoltorio {
         try{
             if (unaVenta != null){
                 lista_ventas.agregar(unaVenta);
-                grabarArchivoVenta(unaVenta);
+                grabarVentas();
             }
         }catch (ElementNotLoadedException e){
             aux = e.getMessage();
         }
-
         return aux;
     }
 

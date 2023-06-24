@@ -2,11 +2,13 @@ package Model.Clases;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Grabadora <T>{
+public class GrabadoraYLectoraArchivos{
 
-    public void persistirObjeto(Iterator<T> it, String nombreArchivo) {
+    public static void persistirVentas(ArrayList<Venta> listaVenta, String nombreArchivo) {
+
         FileOutputStream fileOutputStream = null;
         ObjectOutputStream objectOutputStream = null;
 
@@ -14,9 +16,9 @@ public class Grabadora <T>{
             fileOutputStream = new FileOutputStream(nombreArchivo);
             objectOutputStream = new ObjectOutputStream(fileOutputStream);
 
-            while(it.hasNext())
+            for(Venta aux : listaVenta)
             {
-                objectOutputStream.writeObject(it.next());
+                objectOutputStream.writeObject(aux);
             }
 
         } catch (IOException e) {
@@ -31,9 +33,12 @@ public class Grabadora <T>{
                         fileOutputStream.close();
                     }
                 } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                   System.out.println(e.getMessage());
                 }
             }
         }
     }
+
+
+
 }

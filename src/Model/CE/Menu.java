@@ -1,13 +1,11 @@
 package Model.CE;
 
 import Model.Clases.Cliente;
-import Model.Clases.Grabadora;
-import Model.Clases.LugarConsumo;
 import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
-import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
+
 
 import java.util.Scanner;
 
@@ -88,7 +86,7 @@ public class Menu {
 
                     System.out.println(unaVenta.listarVenta());
                     System.out.println("Precio total: " + unaVenta.PrecioFinalVenta() + "\n");
-                    System.out.println(negocioEnvoltorio.guardarVentas(unaVenta));
+                    negocioEnvoltorio.guardarVentas(unaVenta);
 
                     break;
                 }
