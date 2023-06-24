@@ -94,10 +94,11 @@ public class Venta implements Serializable {
     // lista todo los productos que lleva mas los atributos propios de esa venta.
     public String listarVenta() {
         String productos = "";
-        for (int i = 0; i < carrito.size(); i++) {
+        int i;
+        for (i = 0; i < carrito.size(); i++) {
             productos = productos + "\n" + carrito.get(i).toStringSimple(); //acumula los nombres de los productos comprados
         }
-        return "Venta: N°Ticket:" + this.numTicket + ", Productos:\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + productos + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+        return "Venta : \n"+"Productos : "+"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + productos + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
     }
 
     //Lista todos los productos

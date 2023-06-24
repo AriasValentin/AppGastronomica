@@ -1,7 +1,5 @@
 package Model.Clases;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -39,6 +37,56 @@ public class GrabadoraYLectoraArchivos{
                 }
             }
         }
+    }
+    public static  ArrayList<Venta> leerVentas()
+    {
+        ArrayList<Venta> arrayList = new ArrayList<>();
+        FileInputStream fileInputStream = null;
+        ObjectInputStream objectInputStream = null;
+
+        try
+        {
+            fileInputStream = new FileInputStream("ventas.dat");
+            objectInputStream = new ObjectInputStream(fileInputStream);
+
+           while(true)
+           {
+               Venta venta = (Venta) objectInputStream.readObject();
+               arrayList.add(venta);
+
+           }
+        }
+        catch (EOFException ex1)
+        {
+            System.out.println(ex1.getMessage());
+        }
+        catch (ClassNotFoundException ex2)
+        {
+            System.out.println(ex2.getMessage());
+        }
+        catch (IOException ex)
+        {
+            System.out.println(ex.getMessage());
+        }
+        finally {
+            try
+            {
+                if(fileInputStream != null)
+                {
+                    fileInputStream.close();
+                }
+                if(objectInputStream != null)
+                {
+                    objectInputStream.close();
+                }
+
+            }
+            catch (IOException ex5)
+            {
+                System.out.println(ex5.getMessage());
+            }
+        }
+        return arrayList;
     }
 
 
