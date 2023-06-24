@@ -34,7 +34,6 @@ public class Venta implements Serializable {
         }
         this.lugarConsumo = LugarConsumo.TakeAway;
         this.UnCliente = null;
-        this.numTicket = 0;
 
     }
 
@@ -63,6 +62,7 @@ public class Venta implements Serializable {
             this.descuento = 0;
         }
     }
+
 
     public LugarConsumo getLugarConsumo() {
         return lugarConsumo;

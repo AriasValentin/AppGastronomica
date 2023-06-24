@@ -7,7 +7,7 @@ import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
-import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
+
 
 import java.util.Iterator;
 import java.util.Scanner;
@@ -28,130 +28,6 @@ public class NegocioEnvoltorio {
         lista_productos.consumoJSON(); //consumo de productos
     }
 
-    /*
-    public EnvoltoriaVentas getLista_ventas() {
-        return lista_ventas;
-    }
-
-    public EnvoltoriaProductos getLista_productos() {
-        return lista_productos;
-    }
-
-    public EnvoltoriaClientes getLista_clientes() {
-        return lista_clientes;
-    }
-     */
-
-    public void menuAplicacion() {
-
-        int opcion = 0;
-
-
-        System.out.println("\nBIENVENIDO.");
-        System.out.println("\nINGRESE FORMA DE OPERAR: \n");
-
-        System.out.println("1 - Empleado.");
-        System.out.println("2 - Administrador.");
-
-        System.out.printf("\nOpcion: ");
-
-        opcion = enter.nextInt();
-
-        clScreen();
-
-        switch (opcion) {
-            case 1: {
-                menuEmpleado();
-                break;
-            }
-
-        }
-    }
-
-    public void menuEmpleado() {
-
-        int opcion = 0;
-        char rta = 0;
-
-        do {
-            System.out.println("\n---OPCIONES PARA VENTAS---\n");
-
-            System.out.println("3 - MODIFICAR VENTA");
-            System.out.println("4 - LISTAR VENTAS");
-
-            System.out.println("\n---OPCIONES PARA CLIENTES---\n");
-
-            System.out.println("6 - ELIMINAR CLIENTE");
-            System.out.println("7 - MODIFICAR CLIENTE");
-
-            System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
-
-            System.out.println("\n------------------------------------------------\n");
-
-            System.out.println("0 - SALIR\n");
-
-            System.out.printf("Opcion: ");
-            opcion = enter.nextInt();
-
-            clScreen();
-
-            switch (opcion) {
-
-                case 6: {
-                    boolean borrado = false;
-
-                    System.out.printf("Ingrese el DNI del cliente a eliminar: ");
-                    int dni = enter.nextInt();
-
-                    try {
-                        borrado = lista_clientes.eliminar(dni);
-
-                        if (borrado == true) {
-                            System.out.println("\nEl cliente se elimino exitosamente.\n");
-                        }
-                    } catch (ElementNotFoundException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    enter.nextLine();
-
-                    break;
-                }
-
-                case 7: {
-                    System.out.printf("Ingrese DNI de la persona a modificar: ");
-                    int dni = enter.nextInt();
-
-                    /*
-                    if (dni != 0) {
-                        try {
-                            lista_clientes.modificar(dni);
-                        } catch (ElementUnmodifiedException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
-
-                     */
-
-                    enter.nextLine();
-
-                    break;
-                }
-            }
-
-            if ((opcion != 0) && (opcion != -1)) {
-                System.out.printf("Desea volver al menu? (s/n): ");
-                rta = enter.nextLine().charAt(0);
-            }
-
-            clScreen();
-
-        } while ((rta == 's') && (opcion != 0));
-    }
-
-    public void clScreen() {
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-    }
 
     public String listarVentas(){
         String cadena = "";

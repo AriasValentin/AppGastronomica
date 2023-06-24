@@ -45,6 +45,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
     public void agregar(Venta unaVenta) throws ElementNotLoadedException {
 
         if (unaVenta != null) {
+            unaVenta.setNumTicket(indexNroTicket);
             listaDeVentas.add(unaVenta);
             this.indexNroTicket++;
         } else {
@@ -110,7 +111,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
         String aux = "";
 
         for (int i = 0; i < listaDeVentas.size(); i++) {
-            aux = "\n" + listaDeVentas.get(i).listarVenta();
+            aux += "\n" + listaDeVentas.get(i).listarVenta();
         }
 
         return aux;
