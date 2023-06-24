@@ -92,9 +92,9 @@ public class Venta implements Serializable {
     public String listarVenta() {
         String productos = "";
         for (int i = 0; i < carrito.size(); i++) {
-            productos = productos + carrito.get(i).toString() + "\n"; //acumula los nombres de los productos comprados
+            productos = productos + "\n" + carrito.get(i).toStringSimple(); //acumula los nombres de los productos comprados
         }
-        return "Venta: N°Ticket:" + this.numTicket + ", Productos:\n" + productos;
+        return "Venta: N°Ticket:" + this.numTicket + ", Productos:\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + productos + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
     }
 
     //Lista todos los productos

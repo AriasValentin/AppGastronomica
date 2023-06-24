@@ -88,11 +88,8 @@ public abstract class Producto implements Comparable {
     }
     public  String toStringSimple()
     {
-        return "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
-                "Nombre del producto : " + this.nombre +
-                "\nPrecio : " + this.precio +
-                "\nId: " + this.id +
-                "\n";
+        return "Nombre del producto : " + this.nombre +
+                "\nPrecio : " + this.precio + "\n";
     }
 
     /**
