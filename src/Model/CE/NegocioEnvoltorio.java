@@ -9,6 +9,7 @@ import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 
+import java.util.Iterator;
 import java.util.Scanner;
 
 
@@ -75,19 +76,15 @@ public class NegocioEnvoltorio {
         do {
             System.out.println("\n---OPCIONES PARA VENTAS---\n");
 
-            System.out.println("1 - VENDER");
             System.out.println("3 - MODIFICAR VENTA");
             System.out.println("4 - LISTAR VENTAS");
 
             System.out.println("\n---OPCIONES PARA CLIENTES---\n");
 
-            System.out.println("5 - AGREGAR CLIENTE ");
             System.out.println("6 - ELIMINAR CLIENTE");
             System.out.println("7 - MODIFICAR CLIENTE");
 
             System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
-
-            System.out.println("8 - MOSTRAR PRODUCTOS EN SISTEMA");
 
             System.out.println("\n------------------------------------------------\n");
 
@@ -99,33 +96,6 @@ public class NegocioEnvoltorio {
             clScreen();
 
             switch (opcion) {
-
-                case 1: {
-                    crearVenta();
-                    try {
-                        lista_ventas.agregar(crearVenta());
-                    } catch (ElementNotLoadedException e) {
-                        System.out.printf(e.getMessage());
-                    }
-
-                    break;
-                }
-
-                case 5: {
-
-                    Cliente unCliente = null;
-
-                    try {
-                        Grabadora<Cliente> grabadoraCliente = new Grabadora<>();
-                        lista_clientes.agregar(unCliente);
-
-
-                    } catch (ElementNotLoadedException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    break;
-                }
 
                 case 6: {
                     boolean borrado = false;
@@ -167,55 +137,6 @@ public class NegocioEnvoltorio {
 
                     break;
                 }
-
-                case 8: {
-
-                    int subOpcion = 0;
-                    char subRta = 0;
-
-                    do {
-                        System.out.println("PRODUCTOS EN SISTEMA:");
-
-                        System.out.println("\n1 - COMIDAS DULCES.");
-                        System.out.println("2 - COMIDAS SALADAS.");
-                        System.out.println("3 - BEBIDAS FRIAS.");
-                        System.out.println("4 - BEBIDAS CALIENTES.");
-                        System.out.println("5 - MOSTRAR TODOS LOS PRODUCTOS.");
-
-                        System.out.println("\n0 - ATRAS.\n");
-
-                        System.out.printf("Opcion: ");
-                        subOpcion = enter.nextInt();
-
-
-                        switch (subOpcion) {
-
-
-                            case 0: {
-                                opcion = -1;
-                                rta = 's';
-                                subRta = 'n';
-                                break;
-                            }
-
-                            default: {
-                                System.out.println("\nERROR - Opcion no valida.\n");
-                                break;
-                            }
-                        }
-
-                        if (subOpcion != 0) {
-                            System.out.printf("Desea ver otro listado? (s/n): ");
-                            enter.nextLine();
-                            subRta = enter.nextLine().charAt(0);
-                        }
-
-                        clScreen();
-
-                    } while ((subRta == 's') || (subOpcion != 0));
-
-                    break;
-                }
             }
 
             if ((opcion != 0) && (opcion != -1)) {
@@ -232,48 +153,56 @@ public class NegocioEnvoltorio {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
 
-    public Venta crearVenta() {
+    public String listarVentas(){
+        String cadena = "";
+        cadena = lista_ventas.listar();
+        return cadena;
+    }
 
-        Venta nuevaVenta = new Venta();
-        Cliente nuevoCliente = null;
+    public void grabarArchivoCliente(Cliente unCliente){
+        Grabadora<Cliente> miGrabadora = new Grabadora<>();
+        Iterator<Cliente> it = lista_clientes.devolverIterador();
 
-        int opcionSeguirComprando = 0, idProducto = 0, opcionCliente = 0, opcionDni = 0, opcionLugarConsumo = 0, flag = 0;
-        char rta = 0;
+        miGrabadora.persistirObjeto(it,"clientes.dat");
+    }
 
-        //crear un cliente para la venta o usar uno existente
+    public void grabarArchivoVenta(Venta unaVenta){
+        Grabadora<Venta> miGrabadora = new Grabadora<>();
+        Iterator<Venta> it = lista_ventas.devolverIterador();
 
-        //productos que va a llevar el cliente
+        miGrabadora.persistirObjeto(it,"ventas.dat");
+    }
 
-        //lugar donde va a consumir el cliente
+    public String guardarCliente(Cliente unCliente){
 
-        do {
-            System.out.println("LUGAR DE CONSUMO DEL CLIENTE: ");
-            System.out.println("1.MESA");
-            System.out.println("2.BARRA");
-            System.out.println("3.TAKEAWAY");
-            opcionLugarConsumo = enter.nextInt();
-            switch (opcionLugarConsumo) {
-                case 1:
-                    //consultar! hacer switch
-                    break;
-                case 2:
-                    nuevaVenta.setLugarConsumo(LugarConsumo.BARRA);
-                    break;
-                case 3:
-                    nuevaVenta.setLugarConsumo(LugarConsumo.TakeAway);
-                    break;
-                default:
-                    System.out.println("\nERROR - Opcion no valida.\n");
+        String aux = "";
+
+        try {
+
+            lista_clientes.agregar(unCliente);
+            grabarArchivoCliente(unCliente);
+
+        }catch (ElementNotLoadedException e){
+            aux = e.getMessage();
+        }
+
+        return aux;
+    }
+
+    public String guardarVentas(Venta unaVenta){
+
+        String aux = "";
+
+        try{
+            if (unaVenta != null){
+                lista_ventas.agregar(unaVenta);
+                grabarArchivoVenta(unaVenta);
             }
+        }catch (ElementNotLoadedException e){
+            aux = e.getMessage();
+        }
 
-            enter.nextLine();
-
-        } while (opcionLugarConsumo <= 0 || opcionLugarConsumo >= 4);
-
-        //calculo el total de esa venta (el atributo del total esta dentro de la misma | tambien se puede retornar)
-        nuevaVenta.setTotal(nuevaVenta.PrecioFinalVenta());
-
-        return nuevaVenta;
+        return aux;
     }
 
     public String lugarAConsumir(Venta unaVenta, int opcion) {

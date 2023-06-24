@@ -16,12 +16,12 @@ public class Menu {
     //Atributos.
     private Scanner enter = new Scanner(System.in);
     private NegocioEnvoltorio negocioEnvoltorio;
-    Cliente clienteDefault;
+    private Cliente clienteDefault;
 
     //Constructor.
     public Menu() {
-        negocioEnvoltorio = new NegocioEnvoltorio();
-        clienteDefault = negocioEnvoltorio.ClienteDefault(); //cliente seteado en 0 nullo
+        this.negocioEnvoltorio = new NegocioEnvoltorio();
+        this.clienteDefault = negocioEnvoltorio.ClienteDefault(); //cliente seteado en 0 nullo
     }
 
     public void menuAplicacion() {
@@ -59,18 +59,17 @@ public class Menu {
             System.out.println("\n---OPCIONES PARA VENTAS---\n");
 
             System.out.println("1 - VENDER");
-            System.out.println("2 - MODIFICAR VENTA");
-            System.out.println("3 - LISTAR VENTAS");
+            System.out.println("2 - LISTAR VENTAS");
 
             System.out.println("\n---OPCIONES PARA CLIENTES---\n");
 
-            System.out.println("4 - AGREGAR CLIENTE ");
-            System.out.println("5 - ELIMINAR CLIENTE");
-            System.out.println("6 - MODIFICAR CLIENTE");
+            System.out.println("3 - AGREGAR CLIENTE ");
+            System.out.println("4 - ELIMINAR CLIENTE");
+            System.out.println("5 - MODIFICAR CLIENTE");
 
             System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
 
-            System.out.println("7 - MOSTRAR PRODUCTOS EN SISTEMA");
+            System.out.println("6 - MOSTRAR PRODUCTOS EN SISTEMA");
 
             System.out.println("\n------------------------------------------------\n");
 
@@ -84,17 +83,81 @@ public class Menu {
             switch (opcion) {
 
                 case 1: {
+
                     Venta unaVenta = generarVenta();
 
-                    System.out.println("\nPrecio total: " + unaVenta.PrecioFinalVenta());
+                    System.out.println(unaVenta.listarVenta());
+                    System.out.println("Precio total: " + unaVenta.PrecioFinalVenta() + "\n");
+                    System.out.println(negocioEnvoltorio.guardarVentas(unaVenta));
 
+                    break;
+                }
+
+                case 2: {
+                    System.out.println(negocioEnvoltorio.listarVentas());
+                    break;
+                }
+
+                case 3: {
+
+                    enter.nextLine();
+                    Cliente unCliente = crearCliente();
+                    break;
+                }
+
+                case 6: {
+                    int subOpcion = 0;
+                    char subRta = 0;
+
+                    do {
+                        System.out.println("PRODUCTOS EN SISTEMA:");
+
+                        System.out.println("\n1 - COMIDAS DULCES.");
+                        System.out.println("2 - COMIDAS SALADAS.");
+                        System.out.println("3 - BEBIDAS FRIAS.");
+                        System.out.println("4 - BEBIDAS CALIENTES.");
+                        System.out.println("5 - MOSTRAR TODOS LOS PRODUCTOS.");
+
+                        System.out.println("\n0 - ATRAS.\n");
+
+                        System.out.printf("Opcion: ");
+                        subOpcion = enter.nextInt();
+
+                        System.out.println(negocioEnvoltorio.cartaProductos(subOpcion));
+
+                        if (subOpcion == 0) {
+                            switch (subOpcion) {
+
+                                case 0: {
+                                    opcion = -1;
+                                    rta = 's';
+                                    subRta = 'n';
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (subOpcion < 0 || subOpcion > 5) {
+                            System.out.println("ERROR - Opcion invalida.\n");
+                        }
+
+                        if (subOpcion != 0) {
+                            System.out.printf("Desea ver otro listado? (s/n): ");
+                            enter.nextLine();
+                            subRta = enter.nextLine().charAt(0);
+                        }
+
+                        clScreen();
+
+                    } while ((subRta == 's') || (subOpcion != 0));
                     break;
                 }
             }
 
+            enter.nextLine();
+
             if ((opcion != 0) && (opcion != -1)) {
                 System.out.printf("Desea volver al menu? (s/n): ");
-                enter.nextLine();
                 rta = enter.nextLine().charAt(0);
             }
 
@@ -103,6 +166,10 @@ public class Menu {
         } while ((rta == 's') && (opcion != 0));
     }
 
+    /**
+     *
+     * @return
+     */
     public Venta generarVenta() {
 
         Venta unaVenta = new Venta();
@@ -154,6 +221,7 @@ public class Menu {
                 } else {
                     try {
                         unaVenta.agregarProductosAlcarrito(unProducto);
+                        unProducto = null;
                     } catch (ElementNotLoadedException e) {
                         System.out.println(e.getMessage());
                     } finally {
@@ -180,6 +248,10 @@ public class Menu {
         return unaVenta;
     }
 
+    /**
+     *
+     * @return
+     */
     public Cliente crearCliente() {
 
         Cliente unCliente = new Cliente();
@@ -203,9 +275,14 @@ public class Menu {
             unCliente.setEsVip(false);
         }
 
+        negocioEnvoltorio.guardarCliente(unCliente);
+
         return unCliente;
     }
 
+    /**
+     * Limpieza de pantalla.
+     */
     public void clScreen() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }

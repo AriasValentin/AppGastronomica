@@ -110,7 +110,7 @@ public class EnvoltoriaVentas implements IABM<Venta> {
         String aux = "";
 
         for (int i = 0; i < listaDeVentas.size(); i++) {
-            aux = "\n" + listaDeVentas.get(i).toString();
+            aux = "\n" + listaDeVentas.get(i).listarVenta();
         }
 
         return aux;
