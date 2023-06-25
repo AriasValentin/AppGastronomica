@@ -1,6 +1,7 @@
 package Model.CE;
 
 import Model.Clases.Cliente;
+import Model.Clases.GrabadoraYLectoraArchivos;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
@@ -39,7 +40,9 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     @Override
     public void agregar(Cliente unCliente) throws ElementNotLoadedException {
         if (unCliente != null) {
+            listaDeClientes = GrabadoraYLectoraArchivos.leerClientes();
             listaDeClientes.add(unCliente);
+            GrabadoraYLectoraArchivos.persistirClientes(listaDeClientes);
         } else {
             throw new ElementNotLoadedException("\nERROR - El cliente no tiene datos, o no existe.\n");
         }

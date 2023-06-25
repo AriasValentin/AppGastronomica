@@ -4,6 +4,7 @@ import javax.xml.crypto.Data;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 public class GrabadoraYLectoraArchivos {
 
@@ -34,6 +35,37 @@ public class GrabadoraYLectoraArchivos {
                 } catch (IOException e) {
                     System.out.println(e.getMessage());
                 }
+            }
+        }
+    }
+
+    public static void persistirClientes(LinkedHashSet<Cliente> setCliente){
+        FileOutputStream file = null;
+        ObjectOutputStream object = null;
+
+        try {
+            file = new FileOutputStream("clientes.dat");
+            object = new ObjectOutputStream(file);
+
+            for (Cliente aux : setCliente){
+                object.writeObject(aux);
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (file != null){
+                    file.close();
+                }
+
+                if (object != null){
+                    object.close();
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
         }
     }
@@ -71,5 +103,42 @@ public class GrabadoraYLectoraArchivos {
             }
         }
         return arrayList;
+    }
+
+    public static LinkedHashSet<Cliente> leerClientes(){
+        LinkedHashSet<Cliente> setClientes = new LinkedHashSet<>();
+        FileInputStream file = null;
+        ObjectInputStream object = null;
+
+        try {
+            file = new FileInputStream("clientes.dat");
+            object = new ObjectInputStream(file);
+
+            while (true){
+                Cliente unCliente = (Cliente) object.readObject();
+                setClientes.add(unCliente);
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (file != null){
+                    file.close();
+                }
+
+                if (object != null){
+                    object.close();
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return setClientes;
     }
 }
