@@ -1,7 +1,5 @@
 package Model.CE;
 
-import Model.APIS.ConsumoAPIcafeCaliente;
-import Model.APIS.ConsumoAPIcafeFrio;
 import Model.Clases.Producto.Bebidas.Bebida;
 import Model.Clases.Producto.Bebidas.TipoBebida;
 import Model.Clases.Producto.Comidas.Comida;
@@ -16,7 +14,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
@@ -151,64 +148,6 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
     /**
-     * Ingresa a la coleccion los productos de tipo BEBIDA CALIENTE consumidos desde una API.
-     *
-     * @see Producto
-     * @see TipoBebida
-     * @see JSONArray
-     * @see JSONObject
-     */
-
-    private void consumoBebidasCalientes() {
-        try {
-            JSONArray jsonArray = new JSONArray(ConsumoAPIcafeCaliente.getInfo());
-            for (int i = 0; i < jsonArray.length(); i++) {
-                Bebida nueva = new Bebida();
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                nueva.setNombre(jsonObject.getString("title"));
-                nueva.setDescripcion(jsonObject.getString("description"));
-                nueva.setTipoBebida(TipoBebida.BEBIDA_CALIENTE);
-                nueva.setId(contadorId);
-                contadorId++;
-                agregar(nueva);
-            }
-        } catch (JSONException e) {
-            System.out.println("API MAL PROCESADA." + e.getMessage());
-        } catch (ElementNotLoadedException ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    /**
-     * Ingresa a la coleccion los productos de tipo BEBIDA FRIA consumidos desde una API.
-     *
-     * @see Producto
-     * @see TipoBebida
-     * @see JSONArray
-     * @see JSONObject
-     */
-    private void consumoBebidasFrias() {
-        try {
-            JSONArray jsonArray = new JSONArray(ConsumoAPIcafeFrio.getInfo());
-            for (int i = 0; i < jsonArray.length(); i++) {
-                Bebida nueva = new Bebida();
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                nueva.setNombre(jsonObject.getString("title"));
-                nueva.setDescripcion(jsonObject.getString("description"));
-                nueva.setTipoBebida(TipoBebida.BEBIDA_FRIA);
-                nueva.setId(contadorId);
-                contadorId++;
-                agregar(nueva);
-            }
-        } catch (JSONException e) {
-            System.out.println("API MAL PROCESADA." + e.getMessage());
-        } catch (ElementNotLoadedException ex) {
-            System.out.println(ex.getMessage());
-        }
-
-    }
-
-    /**
      * Ingresa a la coleccion los productos de tipo COMIDA DULCE consumidos desde un archivo local JSON.
      *
      * @see Producto
@@ -337,10 +276,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         } catch (ElementNotLoadedException ex) {
             System.out.println(ex.getMessage());
         }
-
-
     }
-
 
     public void consumoJSON() {
         consumoComidasDulces();
@@ -351,10 +287,6 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         //consumoBebidasCalientes();
         //consumoBebidasFrias();
 
-    }
-
-    public void vaciarLista() {
-        listaDeProductos.clear();
     }
 
     public String listarBebidasFrias() {

@@ -22,7 +22,7 @@ public class GrabadoraYLectoraArchivos {
             }
 
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
         } finally {
             {
                 try {
@@ -33,7 +33,7 @@ public class GrabadoraYLectoraArchivos {
                         fileOutputStream.close();
                     }
                 } catch (IOException e) {
-                    System.out.println(e.getMessage());
+                    e.getMessage();
                 }
             }
         }
@@ -52,9 +52,9 @@ public class GrabadoraYLectoraArchivos {
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
         } finally {
             try {
                 if (file != null){
@@ -65,7 +65,7 @@ public class GrabadoraYLectoraArchivos {
                     object.close();
                 }
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.getMessage();
             }
         }
     }
@@ -84,12 +84,12 @@ public class GrabadoraYLectoraArchivos {
                 arrayList.add(venta);
 
             }
-        } catch (EOFException ex1) {
-            System.out.println(ex1.getMessage());
-        } catch (ClassNotFoundException ex2) {
-            System.out.println(ex2.getMessage());
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
+        } catch (EOFException e) {
+            e.getMessage();
+        } catch (ClassNotFoundException e) {
+            e.getMessage();
+        } catch (IOException e) {
+            e.getMessage();
         } finally {
             try {
                 if (fileInputStream != null) {
@@ -98,8 +98,8 @@ public class GrabadoraYLectoraArchivos {
                 if (objectInputStream != null) {
                     objectInputStream.close();
                 }
-            } catch (IOException ex5) {
-                System.out.println(ex5.getMessage());
+            } catch (IOException e) {
+                e.getMessage();
             }
         }
         return arrayList;
@@ -120,11 +120,11 @@ public class GrabadoraYLectoraArchivos {
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
         } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            e.getMessage();
         } finally {
             try {
                 if (file != null){
@@ -135,7 +135,7 @@ public class GrabadoraYLectoraArchivos {
                     object.close();
                 }
             } catch (IOException e) {
-                System.out.println(e.getMessage());
+                e.getMessage();
             }
         }
 

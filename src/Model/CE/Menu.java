@@ -22,7 +22,6 @@ public class Menu {
 
     //Constructor.
     public Menu() {
-
         this.negocioEnvoltorio = new NegocioEnvoltorio();
         this.clienteDefault = negocioEnvoltorio.ClienteDefault(); //cliente seteado en 0 nullo
     }
@@ -31,25 +30,40 @@ public class Menu {
 
         int opcion = 0;
 
-        System.out.println("\nBIENVENIDO.");
-        System.out.println("\nINGRESE FORMA DE OPERAR: \n");
+        do {
+            System.out.println("\nBIENVENIDO.");
+            System.out.println("\nINGRESE FORMA DE OPERAR: \n");
 
-        System.out.println("1 - Empleado.");
-        System.out.println("2 - Administrador.");
+            System.out.println("1 - Empleado.");
+            System.out.println("2 - Administrador.");
 
-        System.out.printf("\nOpcion: ");
+            System.out.println("\n0 - SALIR.");
 
-        opcion = enter.nextInt();
+            System.out.printf("\nOpcion: ");
 
-        clScreen();
+            opcion = enter.nextInt();
 
-        switch (opcion) {
-            case 1: {
-                menuEmpleado();
-                break;
+            clScreen();
+
+            switch (opcion) {
+                case 1: {
+                    menuEmpleado();
+                    break;
+                }
+
+                case 2: {
+                    menuAdministrador();
+                    break;
+                }
+
+                default:{
+                    System.out.println("\nERROR - Opcion no valida, presione Enter para intentar nuevamente.\n");
+                    enter.nextLine();
+                    enter.nextLine();
+                }
+
             }
-
-        }
+        }while (opcion != 0);
     }
 
     public void menuEmpleado() {
@@ -58,24 +72,13 @@ public class Menu {
         char rta = 0;
 
         do {
-            System.out.println("\n---OPCIONES PARA VENTAS---\n");
+            System.out.println("\n---OPCIONES EMPLEADO---\n");
 
             System.out.println("1 - VENDER");
-            System.out.println("2 - LISTAR VENTAS");
+            System.out.println("2 - AGREGAR CLIENTE ");
+            System.out.println("3 - MOSTRAR PRODUCTOS EN SISTEMA");
 
-            System.out.println("\n---OPCIONES PARA CLIENTES---\n");
-
-            System.out.println("3 - AGREGAR CLIENTE ");
-            System.out.println("4 - ELIMINAR CLIENTE");
-            System.out.println("5 - MODIFICAR CLIENTE");
-
-            System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
-
-            System.out.println("6 - MOSTRAR PRODUCTOS EN SISTEMA");
-
-            System.out.println("\n------------------------------------------------\n");
-
-            System.out.println("0 - SALIR\n");
+            System.out.println("\n0 - ATRAS\n");
 
             System.out.printf("Opcion: ");
             opcion = enter.nextInt();
@@ -85,155 +88,121 @@ public class Menu {
             switch (opcion) {
 
                 case 1: {
-
-                    Venta unaVenta = generarVenta();
-
-                    System.out.println(unaVenta.listarVentaSinTicket());
-                    System.out.println("Precio total: " + unaVenta.PrecioFinalVenta() + "\n");
-                    try {
-                        negocioEnvoltorio.guardarVentas(unaVenta);
-                    } catch (ElementNotLoadedException ex) {
-                        System.out.println(ex.getMessage());
-                    }
-
+                    generarVenta();
+                    enter.nextLine();
 
                     break;
                 }
 
                 case 2: {
+                    enter.nextLine();
+                    crearCliente();
 
-                    System.out.println(negocioEnvoltorio.listarVentas());
                     break;
                 }
 
                 case 3: {
+                    int retornoOpcion = mostrarProductos();
 
+                    if (retornoOpcion == 0) {
+                        opcion = -1;
+                        rta = 's';
+                    }
                     enter.nextLine();
-                    Cliente unCliente = crearCliente();
-
-                    break;
-                }
-
-                case 4: {
-                    boolean respuesta;
-                    int dni = 0;
-                    System.out.println("CLIENTES: ");
-                    System.out.println(negocioEnvoltorio.listarClientes());
-
-                    System.out.println("\n\nIngrese el dni del cliente que desea eliminar: ");
-                    dni = enter.nextInt();
-                    try {
-
-                        respuesta = negocioEnvoltorio.eliminarUnCliente(dni);
-                        if (respuesta == true) {
-                            System.out.println("\nCliente eliminado correctamente.");
-                        } else {
-                            System.out.println("\nCliente no se pudo eliminar.");
-                        }
-
-                    } catch (ElementNotFoundException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    break;
-
-                }
-
-                case 5: {
-                    int dni = 0;
-
-                    System.out.println("CLIENTES: ");
-                    System.out.println(negocioEnvoltorio.listarClientes());
-
-                    System.out.println("\n\nIngrese DNI del cliente para modificar su estado VIP: ");
-                    dni = enter.nextInt();
-
-                    try {
-                        Cliente clienteAModificar = negocioEnvoltorio.buscarClienteExistente(dni);
-                        int opcionVIP = 0;
-                        if (clienteAModificar != null) {
-                            do {
-                                System.out.println("1.HACER VIP.");
-                                System.out.println("2.SACAR VIP.");
-                                System.out.println("\nOpcion: ");
-                                opcionVIP = enter.nextInt();
-                                switch (opcionVIP) {
-                                    case 1: {
-                                        negocioEnvoltorio.modificarUnCliente(clienteAModificar, 1);
-                                        break;
-                                    }
-                                    case 2: {
-                                        negocioEnvoltorio.modificarUnCliente(clienteAModificar, 2);
-                                        break;
-                                    }
-                                    default:
-                                        System.out.println("\nOpcion invalida...\n");
-                                }
-                            } while (opcionVIP <= 0 || opcionVIP >= 3);
-
-                        }
-
-                    } catch (ElementNotFoundException e) {
-                        System.out.println(e.getMessage());
-                    } catch (ElementUnmodifiedException e) {
-                        System.out.println(e.getMessage());
-                    } catch (ElementNotLoadedException e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                    break;
-                }
-
-                case 6: {
-                    int subOpcion = 0;
-                    char subRta = 0;
-
-                    do {
-                        System.out.println("PRODUCTOS EN SISTEMA:");
-
-                        System.out.println("\n1 - COMIDAS DULCES.");
-                        System.out.println("2 - COMIDAS SALADAS.");
-                        System.out.println("3 - BEBIDAS FRIAS.");
-                        System.out.println("4 - BEBIDAS CALIENTES.");
-                        System.out.println("5 - MOSTRAR TODOS LOS PRODUCTOS.");
-
-                        System.out.println("\n0 - ATRAS.\n");
-
-                        System.out.printf("Opcion: ");
-                        subOpcion = enter.nextInt();
-
-                        System.out.println(negocioEnvoltorio.cartaProductos(subOpcion));
-
-                        if (subOpcion == 0) {
-                            switch (subOpcion) {
-
-                                case 0: {
-                                    opcion = -1;
-                                    rta = 's';
-                                    subRta = 'n';
-                                    break;
-                                }
-                            }
-                        }
-
-                        if (subOpcion < 0 || subOpcion > 5) {
-                            System.out.println("ERROR - Opcion invalida.\n");
-                        }
-
-                        if (subOpcion != 0) {
-                            System.out.printf("Desea ver otro listado? (s/n): ");
-                            enter.nextLine();
-                            subRta = enter.nextLine().charAt(0);
-                        }
-
-                        clScreen();
-
-                    } while ((subRta == 's') || (subOpcion != 0));
                     break;
                 }
             }
 
-            enter.nextLine();
+            if ((opcion != 0) && (opcion != -1)) {
+                System.out.printf("Desea volver al menu? (s/n): ");
+                rta = enter.nextLine().charAt(0);
+            }
+
+            clScreen();
+
+        } while ((rta == 's') && (opcion != 0));
+    }
+
+    public void menuAdministrador() {
+
+        int opcion = 0;
+        char rta = 0;
+
+        do {
+            System.out.println("\n\n---OPCIONES PARA CLIENTES---");
+
+            System.out.println("1. AGREGAR CLIENTE "); //Echo
+            System.out.println("2. ELIMINAR CLIENTE"); //Echo
+            System.out.println("3. MODIFICAR CLIENTE"); //Echo
+            System.out.println("4. MOSTRAR TODOS LOS CLIENTES EN SISTEMA");
+            System.out.println("5. BUSCAR CLIENTE ");
+
+
+            System.out.println("\n---OPCIONES PARA VENTAS---\n");
+
+            System.out.println("6. VENDER"); //Echo
+            System.out.println("7. ELIMINAR VENTA");
+            System.out.println("8. MODIFICAR VENTA");
+            System.out.println("9. LISTAR VENTAS"); //Echo
+            System.out.println("10. MOSTRAR VENTAS DEL SISTEMA");
+            System.out.println("11. BUSCAR VENTA");
+
+            System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
+
+            System.out.println("12. AGREGAR PRODUCTO");
+            System.out.println("13. ELIMINAR PRODUCTO");
+            System.out.println("14. MODIFICAR PRODUCTO");
+            System.out.println("15. BUSCAR PRODUCTO");
+            System.out.println("16. MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA"); //Echo
+            System.out.println("\n-------------------------------------------------------------------------\n");
+            System.out.println("0 SALIR");
+
+            System.out.printf("\nOpcion: ");
+            opcion = enter.nextInt();
+
+            switch (opcion) {
+
+                case 1: {
+                    enter.nextLine();
+                    crearCliente();
+                    break;
+                }
+                case 2: {
+                    eliminarCliente();
+                    enter.nextLine();
+                    break;
+                }
+
+                case 3: {
+                    modificarCliente();
+                    enter.nextLine();
+                    break;
+                }
+
+                case 6: {
+                    generarVenta();
+                    enter.nextLine();
+
+                    break;
+                }
+
+                case 9: {
+                    System.out.println(negocioEnvoltorio.listarVentas());
+                    enter.nextLine();
+                    break;
+                }
+
+                case 16: {
+                    int retornoOpcion = mostrarProductos();
+
+                    if (retornoOpcion == 0) {
+                        opcion = -1;
+                        rta = 's';
+                    }
+                    enter.nextLine();
+                    break;
+                }
+            }
 
             if ((opcion != 0) && (opcion != -1)) {
                 System.out.printf("Desea volver al menu? (s/n): ");
@@ -325,7 +294,129 @@ public class Menu {
 
         unaVenta.setNumTicket(negocioEnvoltorio.numeroTicket());
 
+        System.out.println(unaVenta.listarVentaSinTicket());
+        System.out.println("Precio total: " + unaVenta.PrecioFinalVenta() + "\n");
+        try {
+            negocioEnvoltorio.guardarVentas(unaVenta);
+        } catch (ElementNotLoadedException ex) {
+            System.out.println(ex.getMessage());
+        }
+
         return unaVenta;
+    }
+
+    public int mostrarProductos() {
+        int subOpcion = 0;
+        char subRta = 0;
+
+        do {
+            System.out.println("PRODUCTOS EN SISTEMA:");
+
+            System.out.println("\n1 - COMIDAS DULCES.");
+            System.out.println("2 - COMIDAS SALADAS.");
+            System.out.println("3 - BEBIDAS FRIAS.");
+            System.out.println("4 - BEBIDAS CALIENTES.");
+            System.out.println("5 - MOSTRAR TODOS LOS PRODUCTOS.");
+
+            System.out.println("\n0 - ATRAS.\n");
+
+            System.out.printf("Opcion: ");
+            subOpcion = enter.nextInt();
+
+            System.out.println(negocioEnvoltorio.cartaProductos(subOpcion));
+
+            if (subOpcion == 0) {
+                switch (subOpcion) {
+
+                    case 0: {
+                        subRta = 'n';
+                        break;
+                    }
+                }
+            }
+
+            if (subOpcion < 0 || subOpcion > 5) {
+                System.out.println("ERROR - Opcion invalida.\n");
+            }
+
+            if (subOpcion != 0) {
+                System.out.printf("Desea ver otro listado? (s/n): ");
+                enter.nextLine();
+                subRta = enter.nextLine().charAt(0);
+            }
+
+            clScreen();
+
+        } while ((subRta == 's') || (subOpcion != 0));
+
+        return subOpcion;
+    }
+
+    public void modificarCliente() {
+        int dni = 0;
+
+        System.out.println("CLIENTES: ");
+        System.out.println(negocioEnvoltorio.listarClientes());
+
+        System.out.println("\n\nIngrese DNI del cliente para modificar su estado VIP: ");
+        dni = enter.nextInt();
+
+        try {
+            Cliente clienteAModificar = negocioEnvoltorio.buscarClienteExistente(dni);
+            int opcionVIP = 0;
+            if (clienteAModificar != null) {
+                do {
+                    System.out.println("1.HACER VIP.");
+                    System.out.println("2.SACAR VIP.");
+                    System.out.println("\nOpcion: ");
+                    opcionVIP = enter.nextInt();
+                    switch (opcionVIP) {
+                        case 1: {
+                            negocioEnvoltorio.modificarUnCliente(clienteAModificar, 1);
+                            break;
+                        }
+                        case 2: {
+                            negocioEnvoltorio.modificarUnCliente(clienteAModificar, 2);
+                            break;
+                        }
+                        default:
+                            System.out.println("\nOpcion invalida...\n");
+                    }
+                } while (opcionVIP <= 0 || opcionVIP >= 3);
+            }
+        } catch (ElementNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (ElementUnmodifiedException e) {
+            System.out.println(e.getMessage());
+        } catch (ElementNotLoadedException e) {
+            System.out.println(e.getMessage());
+        }
+
+        enter.nextLine();
+    }
+
+    public void eliminarCliente() {
+        boolean respuesta;
+        int dni = 0;
+        System.out.println("CLIENTES: ");
+        System.out.println(negocioEnvoltorio.listarClientes());
+
+        System.out.println("\n\nIngrese el dni del cliente que desea eliminar: ");
+        dni = enter.nextInt();
+        try {
+
+            respuesta = negocioEnvoltorio.eliminarUnCliente(dni);
+            if (respuesta == true) {
+                System.out.println("\nCliente eliminado correctamente.");
+            } else {
+                System.out.println("\nCliente no se pudo eliminar.");
+            }
+
+        } catch (ElementNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+
+        enter.nextLine();
     }
 
     /**
@@ -365,37 +456,4 @@ public class Menu {
     public void clScreen() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
     }
-
-
-    /*
-    public void menuAdministrador() {
-
-        int opcion = 0;
-
-        System.out.println("\n\n---OPCIONES PARA CLIENTES---");
-        System.out.println("1. AGREGAR CLIENTE ");
-        System.out.println("2. ELIMINAR CLIENTE");
-        System.out.println("3. MODIFICAR CLIENTE");
-        System.out.println("4. MOSTRAR TODOS LOS CLIENTES EN SISTEMA");
-        System.out.println("5. BUSCAR CLIENTE ");
-
-
-        System.out.println("\n---OPCIONES PARA VENTAS---\n");
-        System.out.println("6. VENDER");
-        System.out.println("7. ELIMINAR VENTA");
-        System.out.println("8. MODIFICAR VENTA");
-        System.out.println("9. LISTAR VENTAS");
-        System.out.println("10. MOSTRAR VENTAS DEL SISTEMA");
-        System.out.println("11. BUSCAR VENTA");
-
-        System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
-        System.out.println("12. AGREGAR PRODUCTO");
-        System.out.println("13. ELIMINAR PRODUCTO");
-        System.out.println("14. MODIFICAR PRODUCTO");
-        System.out.println("15. BUSCAR PRODUCTO");
-        System.out.println("16. MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA");
-        System.out.println("-------------------------------------------------------------------------");
-        System.out.println("0 SALIR");
-    }
-     */
 }
