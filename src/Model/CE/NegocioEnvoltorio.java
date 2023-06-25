@@ -7,6 +7,7 @@ import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
+import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 
 
 import java.io.Serializable;
@@ -31,36 +32,12 @@ public class NegocioEnvoltorio  {
     }
 
 
+    //METODOS VENTA
+
     public String listarVentas(){
         String cadena = "";
         cadena = lista_ventas.listar();
         return cadena;
-    }
-/*
-    public void grabarArchivoCliente(Cliente unCliente){
-        Grabadora<Cliente> miGrabadora = new Grabadora<>();
-        Iterator<Cliente> it = lista_clientes.devolverIterador();
-
-        miGrabadora.persistirObjeto(it,"clientes.dat");
-    }*/
-
-
-
-
-    public String guardarCliente(Cliente unCliente){
-
-        String aux = "";
-
-        try {
-
-            lista_clientes.agregar(unCliente);
-            //grabarArchivoCliente(unCliente);
-
-        }catch (ElementNotLoadedException e){
-            aux = e.getMessage();
-        }
-
-        return aux;
     }
 
 
@@ -144,8 +121,30 @@ public class NegocioEnvoltorio  {
         return aux;
     }
 
+    //METODOS CLIENTE
+
+    public String guardarCliente(Cliente unCliente){
+
+        String aux = "";
+
+        try {
+
+            lista_clientes.agregar(unCliente);
+
+        }catch (ElementNotLoadedException e){
+            aux = e.getMessage();
+        }
+
+        return aux;
+    }
+
     public Cliente buscarClienteExistente(int dni) throws ElementNotFoundException {
         return lista_clientes.buscar(dni);
+    }
+
+    public String listarClientes()
+    {
+        return lista_clientes.listar();
     }
 
 
@@ -166,6 +165,23 @@ public class NegocioEnvoltorio  {
 
         return unCliente;
     }
+
+    public boolean eliminarUnCliente(int dni) throws ElementNotFoundException {
+        boolean rta = false;
+        Cliente aux = buscarClienteExistente(dni);
+        if(aux != null)
+        {
+            lista_clientes.eliminar(aux.getDni());
+            rta = true;
+        }
+        return rta;
+    }
+
+    public void modificarUnCliente(Cliente unCliente, int opcion) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException {
+        lista_clientes.modificar(unCliente,opcion);
+    }
+
+
 }
 
 

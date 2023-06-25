@@ -60,6 +60,7 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     @Override
     public boolean eliminar(int dni) throws ElementNotFoundException {
         boolean rta = false;
+        listaDeClientes = GrabadoraYLectoraArchivos.leerClientes();
         Iterator<Cliente> it = listaDeClientes.iterator();
         int flag = 0;
         while (it.hasNext() && flag == 0) {
@@ -73,6 +74,8 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
 
         if (flag == 0) {
             throw new ElementNotFoundException("\nERROR - El cliente no fue encontrado o ya fue eliminado.\n");
+        } else {
+            GrabadoraYLectoraArchivos.persistirClientes(listaDeClientes);
         }
 
         return rta;
@@ -91,20 +94,16 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
         int opcionInt = (int) opcion;
 
         if (unCliente != null) {
-
             Cliente aux = unCliente;
             eliminar(unCliente.getDni());
 
-            switch (opcionInt) {
-                case 1: {
-                    aux.setEsVip(true);
-                }
-                case 2: {
-                    aux.setEsVip(false);
-                }
+            if (opcionInt == 1) {
+                aux.setEsVip(true);
+            } else if (opcionInt == 2) {
+                aux.setEsVip(false);
             }
 
-            agregar(unCliente);
+            agregar(aux);
 
         } else {
             throw new ElementUnmodifiedException("\nERROR - El elemento no pudo ser modificado.\n");
