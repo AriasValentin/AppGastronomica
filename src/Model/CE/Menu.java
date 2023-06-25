@@ -59,14 +59,14 @@ public class Menu {
                     break;
                 }
 
-                default:{
+                default: {
                     System.out.println("\nERROR - Opcion no valida, presione Enter para intentar nuevamente.\n");
                     enter.nextLine();
                     enter.nextLine();
                 }
 
             }
-        }while (opcion != 0);
+        } while (opcion != 0);
     }
 
     public void menuEmpleado() {
@@ -365,27 +365,31 @@ public class Menu {
         dni = enter.nextInt();
 
         try {
-            Cliente clienteAModificar = negocioEnvoltorio.buscarClienteExistente(dni);
-            int opcionVIP = 0;
-            if (clienteAModificar != null) {
-                do {
-                    System.out.println("1.HACER VIP.");
-                    System.out.println("2.SACAR VIP.");
-                    System.out.println("\nOpcion: ");
-                    opcionVIP = enter.nextInt();
-                    switch (opcionVIP) {
-                        case 1: {
-                            negocioEnvoltorio.modificarUnCliente(clienteAModificar, 1);
-                            break;
+            if (dni != 0) {
+                Cliente clienteAModificar = negocioEnvoltorio.buscarClienteExistente(dni);
+                int opcionVIP = 0;
+                if (clienteAModificar != null) {
+                    do {
+                        System.out.println("1.HACER VIP.");
+                        System.out.println("2.SACAR VIP.");
+                        System.out.println("\nOpcion: ");
+                        opcionVIP = enter.nextInt();
+                        switch (opcionVIP) {
+                            case 1: {
+                                negocioEnvoltorio.modificarUnCliente(clienteAModificar, 1);
+                                break;
+                            }
+                            case 2: {
+                                negocioEnvoltorio.modificarUnCliente(clienteAModificar, 2);
+                                break;
+                            }
+                            default:
+                                System.out.println("\nOpcion invalida...\n");
                         }
-                        case 2: {
-                            negocioEnvoltorio.modificarUnCliente(clienteAModificar, 2);
-                            break;
-                        }
-                        default:
-                            System.out.println("\nOpcion invalida...\n");
-                    }
-                } while (opcionVIP <= 0 || opcionVIP >= 3);
+                    } while (opcionVIP <= 0 || opcionVIP >= 3);
+                }
+            } else {
+                System.out.println("\nERROR - No se puede modificar el cliente Default.\n");
             }
         } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
@@ -407,13 +411,17 @@ public class Menu {
         System.out.println("\n\nIngrese el dni del cliente que desea eliminar: ");
         dni = enter.nextInt();
         try {
-
-            respuesta = negocioEnvoltorio.eliminarUnCliente(dni);
-            if (respuesta == true) {
-                System.out.println("\nCliente eliminado correctamente.");
+            if (dni != 0) {
+                respuesta = negocioEnvoltorio.eliminarUnCliente(dni);
+                if (respuesta == true) {
+                    System.out.println("\nCliente eliminado correctamente.");
+                } else {
+                    System.out.println("\nCliente no se pudo eliminar.");
+                }
             } else {
-                System.out.println("\nCliente no se pudo eliminar.");
+                System.out.println("\nERROR - No se puede eliminar el cliente Default.\n");
             }
+
 
         } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
