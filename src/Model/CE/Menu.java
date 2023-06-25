@@ -3,6 +3,7 @@ package Model.CE;
 import Model.Clases.Cliente;
 import Model.Clases.GrabadoraYLectoraArchivos;
 import Model.Clases.Producto.Producto;
+
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
@@ -20,11 +21,13 @@ public class Menu {
     private NegocioEnvoltorio negocioEnvoltorio;
     private Cliente clienteDefault;
 
+
     //Constructor.
     public Menu() {
 
         this.negocioEnvoltorio = new NegocioEnvoltorio();
         this.clienteDefault = negocioEnvoltorio.ClienteDefault(); //cliente seteado en 0 nullo
+
     }
 
     public void menuAplicacion() {

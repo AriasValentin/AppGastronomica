@@ -2,9 +2,7 @@ package Model.Clases;
 
 import javax.xml.crypto.Data;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 public class GrabadoraYLectoraArchivos {
 
@@ -39,7 +37,7 @@ public class GrabadoraYLectoraArchivos {
         }
     }
 
-    public static void persistirClientes(LinkedHashSet<Cliente> setCliente){
+    public static void persistirClientes(HashMap<Integer,Cliente> mapaCliente){
         FileOutputStream file = null;
         ObjectOutputStream object = null;
 
@@ -47,8 +45,13 @@ public class GrabadoraYLectoraArchivos {
             file = new FileOutputStream("clientes.dat");
             object = new ObjectOutputStream(file);
 
-            for (Cliente aux : setCliente){
-                object.writeObject(aux);
+
+            Iterator<Map.Entry<Integer,Cliente>> it = mapaCliente.entrySet().iterator();
+            while(it.hasNext())
+            {
+                Map.Entry<Integer,Cliente> entrada = it.next();
+
+                object.writeObject(entrada.getValue());
             }
 
         } catch (FileNotFoundException e) {
@@ -105,8 +108,8 @@ public class GrabadoraYLectoraArchivos {
         return arrayList;
     }
 
-    public static LinkedHashSet<Cliente> leerClientes(){
-        LinkedHashSet<Cliente> setClientes = new LinkedHashSet<>();
+    public static HashMap<Integer,Cliente> leerClientes(){
+        HashMap<Integer,Cliente> setClientes = new HashMap<>();
         FileInputStream file = null;
         ObjectInputStream object = null;
 
@@ -116,7 +119,7 @@ public class GrabadoraYLectoraArchivos {
 
             while (true){
                 Cliente unCliente = (Cliente) object.readObject();
-                setClientes.add(unCliente);
+                setClientes.put(unCliente.getDni(), unCliente);
             }
 
         } catch (FileNotFoundException e) {
