@@ -22,7 +22,6 @@ import java.util.*;
 
 public class EnvoltoriaClientes implements IABM<Cliente> {
 
-    Scanner scan = new Scanner(System.in);
     private HashMap<Integer,Cliente> listaDeClientes;
 
     public EnvoltoriaClientes() {

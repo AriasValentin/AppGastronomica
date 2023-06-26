@@ -5,6 +5,6 @@ package Model.ExcepcionesPersonalizadas;
  */
 public class ElementNotFoundException extends Exception{
     public ElementNotFoundException(String message){
-        super(message);
+        super("NO SE ENCONTRO EL DATO.."+message);
     }
 }

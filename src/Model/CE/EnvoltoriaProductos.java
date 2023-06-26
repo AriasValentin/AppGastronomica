@@ -26,7 +26,6 @@ import java.util.Scanner;
  */
 public class EnvoltoriaProductos implements IABM<Producto> {
 
-    Scanner scan = new Scanner(System.in);
     private HashSet<Producto> listaDeProductos;
     private int contadorId;
 

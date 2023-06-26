@@ -25,8 +25,6 @@ import java.util.Scanner;
 
 public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
 
-    Scanner scan = new Scanner(System.in);
-
     //atributos
     private ArrayList<Venta> listaDeVentas;
     private int indexNroTicket;

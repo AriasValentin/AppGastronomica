@@ -3,7 +3,7 @@ package Model.Clases;
 /**
  * Representan los posibles lugares de consumo.
  */
-public enum LugarConsumo {
+public enum  LugarConsumo {
         MESA,BARRA,TakeAway;
 
 }
