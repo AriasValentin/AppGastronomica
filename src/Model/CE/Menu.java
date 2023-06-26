@@ -161,8 +161,8 @@ public class Menu {
 
             System.out.println("11 - AGREGAR PRODUCTO"); /////////// SE ESTAN UTILIZANDO DENTRO DE LA CLASE.
             System.out.println("12 - ELIMINAR PRODUCTO");///////////
-            System.out.println("13 - MODIFICAR PRODUCTO");//////////
-            System.out.println("14 - BUSCAR PRODUCTO"); //////////// INNECESARIO HACERLO EN EL MENU, MENOS COMPLICACIONES.
+            System.out.println("13 - MODIFICAR PRODUCTO");////////// INNECESARIO HACERLO EN EL MENU, MENOS COMPLICACIONES.
+            System.out.println("14 - BUSCAR PRODUCTO"); //Echo
             System.out.println("15 - MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA"); //Echo
             System.out.println("\n-------------------------------------------------------------------------\n");
             System.out.println("0 - ATRAS");
@@ -241,6 +241,13 @@ public class Menu {
                     break;
                 }
 
+                case 14: {
+                    clScreen();
+                    buscarProducto();
+                    enter.nextLine();
+                    break;
+                }
+
                 case 15: {
                     clScreen();
                     int retornoOpcion = mostrarProductos();
@@ -314,7 +321,7 @@ public class Menu {
         }
 
         do {
-            System.out.println(negocioEnvoltorio.cartaProductos(5));
+            System.out.println(negocioEnvoltorio.listarProductosNombreID());
 
             System.out.println("Ingrese el ID del producto a agregar: ");
             IDproducto = enter.nextInt();
@@ -625,6 +632,28 @@ public class Menu {
         negocioEnvoltorio.guardarCliente(unCliente);
 
         return unCliente;
+    }
+
+    public void buscarProducto(){
+        int id = 0;
+
+        System.out.println(negocioEnvoltorio.listarProductosNombreID());
+
+        System.out.println("\nIngrese ID del producto para ver su descripcion.");
+        id = enter.nextInt();
+
+        clScreen();
+
+        try {
+            Producto aux = negocioEnvoltorio.buscarProducto(id);
+
+            if (aux != null){
+                System.out.println(aux.toString());
+            }
+
+        } catch (ElementNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     /**

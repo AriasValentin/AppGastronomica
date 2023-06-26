@@ -128,6 +128,14 @@ public class NegocioEnvoltorio {
         return lista_ventas.buscar(nroTicket);
     }
 
+    public String listarProductosNombreID(){
+        String aux = "";
+
+        aux = lista_productos.listarNombreID();
+
+        return aux;
+    }
+
     //METODOS CLIENTE
     public String guardarCliente(Cliente unCliente) {
 

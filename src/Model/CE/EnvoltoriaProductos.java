@@ -118,6 +118,16 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return aux;
     }
 
+    public String listarNombreID() {
+        String aux = "";
+        Iterator<Producto> it = listaDeProductos.iterator();
+        while (it.hasNext()) {
+            Producto nuevoProducto = (Producto) it.next();
+            aux = aux + "\n" + nuevoProducto.toStringNombreID() + "\n";
+        }
+        return aux;
+    }
+
     /**
      * Recorre la coleccion para buscar si existe un determinado producto, si lo encuentra, se retorna.
      *
@@ -281,10 +291,6 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         consumoComidasSaladas();
         consumoBebidasFriasPERSONAL();
         consumoBebidasCalientesPersonal();
-
-        //consumoBebidasCalientes();
-        //consumoBebidasFrias();
-
     }
 
     public String listarBebidasFrias() {
@@ -345,7 +351,6 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                     aux += nuevo.toString() + "\n";
 
                 }
-
             }
         }
         return aux;

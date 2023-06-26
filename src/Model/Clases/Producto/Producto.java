@@ -57,6 +57,7 @@ public abstract class Producto implements Comparable, Serializable {
 
     /**
      * compara el producto con un objeto
+     *
      * @param o Objeto a comparar con Producto.
      * @return true si son el mismo objeto, false distinto.
      */
@@ -82,20 +83,28 @@ public abstract class Producto implements Comparable, Serializable {
     @Override
     public String toString() {
         return "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
-                "Nombre del producto : " + this.nombre +
-                "\nPrecio : " + this.precio +
+                "Nombre del producto: " + this.nombre +
+                "\nPrecio: " + this.precio +
                 "\nId: " + this.id +
-                "\nDescripcion: "+ this.descripcion +
+                "\nDescripcion: " + this.descripcion +
                 "\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
     }
-    public  String toStringSimple()
-    {
-        return "Nombre del producto : " + this.nombre +
-                "\nPrecio : " + this.precio + "\n";
+
+    public String toStringSimple() {
+        return "Nombre del producto: " + this.nombre +
+                "\nPrecio: " + this.precio + "\n";
+    }
+
+    public String toStringNombreID() {
+        return  "----------------------------------------------------------------" +
+                "\nNombre del producto: " + this.nombre +
+                "\nID : " + this.id +
+                "\n----------------------------------------------------------------";
     }
 
     /**
      * Compara si un objeto es mayor menor o igual al otro objeto.
+     *
      * @param o Produto
      * @return 0 si son el mismo id, -1 si el primero es menor, 1 si el primero es mayor.
      */
@@ -104,7 +113,7 @@ public abstract class Producto implements Comparable, Serializable {
         int rta = 99999;
         if (o != null) {
             if (o instanceof Producto) {
-                if (this.id == ((Producto) o).id ) {
+                if (this.id == ((Producto) o).id) {
                     rta = 0;
                 }
                 if (this.id < ((Producto) o).id) {
