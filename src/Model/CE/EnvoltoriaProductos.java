@@ -13,6 +13,7 @@ import Model.Clases.JsonUtiles;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -89,16 +90,16 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      */
     @Override
     public void modificar(Producto unProducto, float nuevoPrecio) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException {
-            if (unProducto != null) {
+        if (unProducto != null) {
 
-                Producto aux = unProducto;
-                eliminar(unProducto.getId());
-                aux.setPrecio(nuevoPrecio);
-                agregar(aux);
+            Producto aux = unProducto;
+            eliminar(unProducto.getId());
+            aux.setPrecio(nuevoPrecio);
+            agregar(aux);
 
-            } else {
-                throw new ElementUnmodifiedException("\nERROR - El elemento no pudo ser modificado.\n");
-            }
+        } else {
+            throw new ElementUnmodifiedException("\nERROR - El elemento no pudo ser modificado.\n");
+        }
     }
 
     /**
@@ -291,6 +292,178 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         consumoComidasSaladas();
         consumoBebidasFriasPERSONAL();
         consumoBebidasCalientesPersonal();
+    }
+
+    public void agregarComidaAJson(Comida nueva) throws JSONException {
+
+        HashSet<Producto> listaComida = new HashSet<>();
+
+        if (nueva != null) {
+            if (nueva.getTipoComida() == TipoComida.COMIDA_DULCE) {
+                //me traigo el json
+                String jsonResponse = JsonUtiles.leer("ComidasDulces");
+
+                //lo leo
+                JSONArray jsonArray = new JSONArray(jsonResponse);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    Comida aux = new Comida();
+                    aux.setNombre(jsonObject.getString("tittle"));
+                    aux.setDescripcion(jsonObject.getString("description"));
+                    aux.setPrecio(jsonObject.getInt("price"));
+                    aux.setTipoComida(TipoComida.COMIDA_DULCE);
+                    aux.setId(contadorId);
+                    contadorId++;
+
+                    listaComida.add(aux);
+                }
+                //agrego el nuevo producto a la lista
+                listaComida.add(nueva);
+
+                //paso la lista al json para que se actualize
+                JSONArray jsonArray_ComidasDulces = new JSONArray();
+
+
+                for(Producto aux : listaComida)
+                {
+                    JSONObject jo_comidaDulce = new JSONObject();
+                    jo_comidaDulce.put("tittle", aux.getNombre());
+                    jo_comidaDulce.put("description", aux.getDescripcion());
+                    jo_comidaDulce.put("price", aux.getPrecio());
+
+                    jsonArray_ComidasDulces.put(jo_comidaDulce);
+                }
+
+                JsonUtiles.grabar(jsonArray_ComidasDulces, "ComidasDulces");
+
+            } else if (nueva.getTipoComida() == TipoComida.COMIDA_SALADA) {
+                //me traigo el json
+                String jsonResponse = JsonUtiles.leer("ComidasSaladas");
+
+                //lo leo
+                JSONArray jsonArray = new JSONArray(jsonResponse);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    Comida aux = new Comida();
+                    aux.setNombre(jsonObject.getString("tittle"));
+                    aux.setDescripcion(jsonObject.getString("description"));
+                    aux.setPrecio(jsonObject.getInt("price"));
+                    aux.setTipoComida(TipoComida.COMIDA_SALADA);
+                    aux.setId(contadorId);
+                    contadorId++;
+
+                    listaComida.add(aux);
+                }
+                //agrego el nuevo producto a la lista
+                listaComida.add(nueva);
+
+                //paso la lista al json para que se actualize
+                JSONArray jsonArray_ComidasDulces = new JSONArray();
+
+
+                Iterator<Producto> it = listaComida.iterator();
+                while(it.hasNext())
+                {
+
+                    JSONObject jo_comidaDulce = new JSONObject();
+                    jo_comidaDulce.put("tittle", it.next().getNombre());
+                    jo_comidaDulce.put("description", it.next().getDescripcion());
+                    jo_comidaDulce.put("price", it.next().getPrecio());
+
+                    jsonArray_ComidasDulces.put(jo_comidaDulce);
+                }
+
+                JsonUtiles.grabar(jsonArray_ComidasDulces, "ComidasDulces");
+            }
+        }
+
+    }
+    public void agregarBebidaAJson(Bebida nueva) throws JSONException {
+
+        HashSet<Producto> listaBebida = new HashSet<>();
+
+        if (nueva != null) {
+            if (nueva.getTipoBebida() == TipoBebida.BEBIDA_FRIA) {
+                //me traigo el json
+                String jsonResponse = JsonUtiles.leer("BebidasFrias");
+
+                //lo leo
+                JSONArray jsonArray = new JSONArray(jsonResponse);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    Bebida aux = new Bebida();
+                    aux.setNombre(jsonObject.getString("tittle"));
+                    aux.setDescripcion(jsonObject.getString("description"));
+                    aux.setPrecio(jsonObject.getInt("price"));
+                    aux.setTipoBebida(TipoBebida.BEBIDA_FRIA);
+                    aux.setId(contadorId);
+                    contadorId++;
+
+                    listaBebida.add(aux);
+                }
+                //agrego el nuevo producto a la lista
+                listaBebida.add(nueva);
+
+                //paso la lista al json para que se actualize
+                JSONArray jsonArray_BebidasFrias = new JSONArray();
+
+                for(Producto aux : listaBebida)
+                {
+                    JSONObject jo_bebidaFria = new JSONObject();
+                    jo_bebidaFria.put("tittle", aux.getNombre());
+                    jo_bebidaFria.put("description", aux.getDescripcion());
+                    jo_bebidaFria.put("price", aux.getPrecio());
+
+                    jsonArray_BebidasFrias.put(jo_bebidaFria);
+                }
+
+                JsonUtiles.grabar(jsonArray_BebidasFrias, "BebidasFrias");
+
+            } else if (nueva.getTipoBebida() == TipoBebida.BEBIDA_CALIENTE) {
+                //me traigo el json
+                String jsonResponse = JsonUtiles.leer("BebidasCalientes");
+
+                //lo leo
+                JSONArray jsonArray = new JSONArray(jsonResponse);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                    Bebida aux = new Bebida();
+                    aux.setNombre(jsonObject.getString("tittle"));
+                    aux.setDescripcion(jsonObject.getString("description"));
+                    aux.setPrecio(jsonObject.getInt("price"));
+                    aux.setTipoBebida(TipoBebida.BEBIDA_CALIENTE);
+                    aux.setId(contadorId);
+                    contadorId++;
+
+                    listaBebida.add(aux);
+                }
+                //agrego el nuevo producto a la lista
+                listaBebida.add(nueva);
+
+                //paso la lista al json para que se actualize
+                JSONArray jsonArray_BebidasCalientes = new JSONArray();
+
+
+                Iterator<Producto> it = listaBebida.iterator();
+                while(it.hasNext())
+                {
+
+                    JSONObject jo_bebidaCaliente = new JSONObject();
+                    jo_bebidaCaliente.put("tittle", it.next().getNombre());
+                    jo_bebidaCaliente.put("description", it.next().getDescripcion());
+                    jo_bebidaCaliente.put("price", it.next().getPrecio());
+
+                    jsonArray_BebidasCalientes.put(jo_bebidaCaliente);
+                }
+
+                JsonUtiles.grabar(jsonArray_BebidasCalientes, "BebidasCalientes");
+            }
+        }
+
     }
 
     public String listarBebidasFrias() {

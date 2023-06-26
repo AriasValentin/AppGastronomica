@@ -6,6 +6,7 @@ import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
+import org.json.JSONException;
 
 import java.util.Scanner;
 
@@ -237,6 +238,13 @@ public class Menu {
                 case 10: {
                     clScreen();
                     buscarUnaVenta();
+                    enter.nextLine();
+                    break;
+                }
+
+                case 11: {
+                    clScreen();
+                    //agregarProducto();
                     enter.nextLine();
                     break;
                 }
@@ -652,6 +660,16 @@ public class Menu {
             }
 
         } catch (ElementNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void agregarProducto()
+    {
+        //HACER MENU PARA AGREGAR COMIDA(DULCE-SALADA) O BEBIDA(FRIA-CALIENTE)
+        try {
+            negocioEnvoltorio.agregarProductoNuevo();
+        } catch (JSONException e) {
             System.out.println(e.getMessage());
         }
     }

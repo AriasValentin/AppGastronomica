@@ -2,11 +2,16 @@ package Model.CE;
 
 import Model.Clases.Cliente;
 import Model.Clases.LugarConsumo;
+import Model.Clases.Producto.Bebidas.Bebida;
+import Model.Clases.Producto.Bebidas.TipoBebida;
+import Model.Clases.Producto.Comidas.Comida;
+import Model.Clases.Producto.Comidas.TipoComida;
 import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
+import org.json.JSONException;
 
 public class NegocioEnvoltorio {
 
@@ -191,6 +196,23 @@ public class NegocioEnvoltorio {
 
     public void modificarUnCliente(Cliente unCliente, int opcion) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException {
         lista_clientes.modificar(unCliente, opcion);
+    }
+
+    public void agregarProductoNuevo() throws JSONException {
+        Comida nuevo = new Comida();
+        nuevo.setPrecio(55.5F);
+        nuevo.setNombre("CARAMELO XXXXXXXXXXXXXXXX");
+        nuevo.setDescripcion("Un caramelo dulceeee");
+        nuevo.setTipoComida(TipoComida.COMIDA_DULCE);
+        lista_productos.agregarComidaAJson(nuevo);
+
+        Bebida nueva = new Bebida();
+        nueva.setPrecio(55.10F);
+        nueva.setNombre("COCACOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        nueva.setDescripcion("una coquita fresca");
+        nueva.setTipoBebida(TipoBebida.BEBIDA_FRIA);
+        lista_productos.agregarBebidaAJson(nueva);
+
     }
 
 
