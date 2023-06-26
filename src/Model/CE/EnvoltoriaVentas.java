@@ -90,13 +90,15 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
     @Override
     public boolean eliminar(int numTicket) throws ElementNotFoundException {
         boolean rta = false;
+        listaDeVentas = GrabadoraYLectoraArchivos.leerVentas();
 
         try {
             Venta aux = buscar(numTicket);
 
-            if ((aux.getNumTicket() == numTicket) && (aux != null)) {
+            if (aux != null) {
                 listaDeVentas.remove(aux);
                 rta = true;
+
             } else {
                 throw new ElementNotFoundException("\nERROR - El producto no fue encontrado o ya fue eliminado.\n");
             }
@@ -104,6 +106,8 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
         } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
         }
+
+        GrabadoraYLectoraArchivos.persistirVentas(listaDeVentas);
 
         return rta;
     }
@@ -127,6 +131,8 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
         } else {
             throw new ElementUnmodifiedException("\nERROR - El elemento no pudo ser modificado.\n");
         }
+
+        GrabadoraYLectoraArchivos.persistirVentas(listaDeVentas);
     }
 
     /**
@@ -157,14 +163,15 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
     @Override
     public Venta buscar(int nroTicket) throws ElementNotFoundException {
 
+        listaDeVentas = GrabadoraYLectoraArchivos.leerVentas();
         int i = 0, indice = -1;
         Venta aux = null;
 
-        while (i < (listaDeVentas.size() - 1) && listaDeVentas.get(i).getNumTicket() != nroTicket) {
+        while (i < listaDeVentas.size() && listaDeVentas.get(i).getNumTicket() != nroTicket) {
             i++;
         }
 
-        if (i < (listaDeVentas.size() - 1) && listaDeVentas.get(i).getNumTicket() == nroTicket) {
+        if (i < listaDeVentas.size() && listaDeVentas.get(i).getNumTicket() == nroTicket) {
             indice = i;
             aux = listaDeVentas.get(i);
         } else {

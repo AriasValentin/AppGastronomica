@@ -6,6 +6,7 @@ import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
+
 import java.util.Scanner;
 
 public class Menu {
@@ -28,6 +29,9 @@ public class Menu {
         int opcion = 0;
 
         do {
+
+            clScreen();
+
             System.out.println("\nBIENVENIDO.");
             System.out.println("\nINGRESE FORMA DE OPERAR: \n");
 
@@ -54,11 +58,12 @@ public class Menu {
                 }
 
                 default: {
-                    System.out.println("\nERROR - Opcion no valida, presione Enter para intentar nuevamente.\n");
-                    enter.nextLine();
-                    enter.nextLine();
+                    if (opcion != 0) {
+                        System.out.println("\nERROR - Opcion no valida, presione Enter para intentar nuevamente.\n");
+                        enter.nextLine();
+                        enter.nextLine();
+                    }
                 }
-
             }
         } while (opcion != 0);
     }
@@ -108,6 +113,16 @@ public class Menu {
                     enter.nextLine();
                     break;
                 }
+
+                default: {
+                    if (opcion != 0) {
+                        System.out.println("\nERROR - Opcion no valida, presione Enter para intentar nuevamente.\n");
+                        enter.nextLine();
+                        enter.nextLine();
+                        opcion = -1;
+                        rta = 's';
+                    }
+                }
             }
 
             if ((opcion != 0) && (opcion != -1)) {
@@ -128,31 +143,29 @@ public class Menu {
         do {
             System.out.println("\n\n---OPCIONES PARA CLIENTES---");
 
-            System.out.println("1. AGREGAR CLIENTE "); //Echo
-            System.out.println("2. ELIMINAR CLIENTE"); //Echo
-            System.out.println("3. MODIFICAR CLIENTE"); //Echo
-            System.out.println("4. MOSTRAR TODOS LOS CLIENTES EN SISTEMA");
-            System.out.println("5. BUSCAR CLIENTE ");
-
+            System.out.println("1 - AGREGAR CLIENTE "); //Echo
+            System.out.println("2 - ELIMINAR CLIENTE"); //Echo
+            System.out.println("3 - MODIFICAR CLIENTE"); //Echo
+            System.out.println("4 - MOSTRAR TODOS LOS CLIENTES EN SISTEMA"); //Echo
+            System.out.println("5 - BUSCAR CLIENTE "); //Echo
 
             System.out.println("\n---OPCIONES PARA VENTAS---\n");
 
-            System.out.println("6. VENDER"); //Echo
-            System.out.println("7. ELIMINAR VENTA");
-            System.out.println("8. MODIFICAR VENTA");
-            System.out.println("9. LISTAR VENTAS"); //Echo
-            System.out.println("10. MOSTRAR VENTAS DEL SISTEMA");
-            System.out.println("11. BUSCAR VENTA");
+            System.out.println("6 - VENDER"); //Echo
+            System.out.println("7 - ELIMINAR VENTA"); //Echo
+            System.out.println("8 - MODIFICAR VENTA"); //Echo
+            System.out.println("9 - MOSTRAR VENTAS DEL SISTEMA");//Echo
+            System.out.println("10 - BUSCAR VENTA"); //Echo
 
             System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
 
-            System.out.println("12. AGREGAR PRODUCTO");
-            System.out.println("13. ELIMINAR PRODUCTO");
-            System.out.println("14. MODIFICAR PRODUCTO");
-            System.out.println("15. BUSCAR PRODUCTO");
-            System.out.println("16. MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA"); //Echo
+            System.out.println("11 - AGREGAR PRODUCTO"); /////////// SE ESTAN UTILIZANDO DENTRO DE LA CLASE.
+            System.out.println("12 - ELIMINAR PRODUCTO");///////////
+            System.out.println("13 - MODIFICAR PRODUCTO");//////////
+            System.out.println("14 - BUSCAR PRODUCTO"); //////////// INNECESARIO HACERLO EN EL MENU, MENOS COMPLICACIONES.
+            System.out.println("15 - MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA"); //Echo
             System.out.println("\n-------------------------------------------------------------------------\n");
-            System.out.println("0 SALIR");
+            System.out.println("0 - ATRAS");
 
             System.out.printf("\nOpcion: ");
             opcion = enter.nextInt();
@@ -160,11 +173,13 @@ public class Menu {
             switch (opcion) {
 
                 case 1: {
+                    clScreen();
                     enter.nextLine();
                     crearCliente();
                     break;
                 }
                 case 2: {
+                    clScreen();
                     eliminarCliente();
                     enter.nextLine();
                     break;
@@ -176,20 +191,58 @@ public class Menu {
                     break;
                 }
 
+                case 4: {
+                    clScreen();
+                    System.out.println(negocioEnvoltorio.listarClientes());
+                    enter.nextLine();
+                    break;
+                }
+
+                case 5: {
+                    clScreen();
+                    buscarCliente();
+                    enter.nextLine();
+                    break;
+                }
+
                 case 6: {
+                    clScreen();
                     generarVenta();
                     enter.nextLine();
 
                     break;
                 }
 
+                case 7: {
+                    clScreen();
+                    eliminarVenta();
+                    enter.nextLine();
+                    break;
+                }
+
+                case 8: {
+                    clScreen();
+                    modificarVenta();
+                    enter.nextLine();
+                    break;
+                }
+
                 case 9: {
+                    clScreen();
                     System.out.println(negocioEnvoltorio.listarVentas());
                     enter.nextLine();
                     break;
                 }
 
-                case 16: {
+                case 10: {
+                    clScreen();
+                    buscarUnaVenta();
+                    enter.nextLine();
+                    break;
+                }
+
+                case 15: {
+                    clScreen();
                     int retornoOpcion = mostrarProductos();
 
                     if (retornoOpcion == 0) {
@@ -199,10 +252,21 @@ public class Menu {
                     enter.nextLine();
                     break;
                 }
+
+                default: {
+                    if (opcion != 0) {
+                        clScreen();
+                        System.out.println("\nERROR - Opcion no valida, presione Enter para intentar nuevamente.\n");
+                        enter.nextLine();
+                        enter.nextLine();
+                        opcion = -1;
+                        rta = 's';
+                    }
+                }
             }
 
             if ((opcion != 0) && (opcion != -1)) {
-                System.out.printf("Desea volver al menu? (s/n): ");
+                System.out.printf("\nDesea volver al menu? (s/n): ");
                 rta = enter.nextLine().charAt(0);
             }
 
@@ -252,7 +316,7 @@ public class Menu {
         do {
             System.out.println(negocioEnvoltorio.cartaProductos(5));
 
-            System.out.println("\n\nIngrese el ID del producto a agregar: ");
+            System.out.println("Ingrese el ID del producto a agregar: ");
             IDproducto = enter.nextInt();
 
             try {
@@ -291,7 +355,10 @@ public class Menu {
 
         unaVenta.setNumTicket(negocioEnvoltorio.numeroTicket());
 
+        clScreen();
+
         System.out.println(unaVenta.listarVentaSinTicket());
+
         System.out.println("Precio total: " + unaVenta.PrecioFinalVenta() + "\n");
         try {
             negocioEnvoltorio.guardarVentas(unaVenta);
@@ -300,6 +367,93 @@ public class Menu {
         }
 
         return unaVenta;
+    }
+
+    public void buscarUnaVenta() {
+        int nroTicket = 0;
+
+        System.out.println(negocioEnvoltorio.listarVentas());
+
+        System.out.printf("\nIngrese numero de ticket a buscar: ");
+        nroTicket = enter.nextInt();
+
+        clScreen();
+
+        try {
+            Venta aux = negocioEnvoltorio.buscarVenta(nroTicket);
+
+            if (aux != null){
+                System.out.println(aux.listarVentaConCliente());
+            }
+
+        }catch (ElementNotFoundException e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public void eliminarVenta() {
+        int nroTicket = 0;
+
+        System.out.println(negocioEnvoltorio.listarVentas());
+
+        System.out.printf("\nIngrese numero de ticket a eliminar: ");
+        nroTicket = enter.nextInt();
+
+        try {
+            boolean rta = negocioEnvoltorio.eliminarUnaVenta(nroTicket);
+
+            clScreen();
+
+            if (rta == true) {
+                System.out.println("\nVenta eliminada correctamente.\n");
+            } else {
+                System.out.println("La venta no se pudo eliminar.");
+            }
+        } catch (ElementNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void modificarVenta() {
+        int nroTicket = 0;
+        float nuevoTotal = 0;
+        boolean rta = false;
+
+        System.out.println(negocioEnvoltorio.listarVentas());
+
+        System.out.printf("\nIngrese numero de ticket a modificar: ");
+        nroTicket = enter.nextInt();
+
+        clScreen();
+
+        try {
+            Venta aux = negocioEnvoltorio.buscarVenta(nroTicket);
+
+            System.out.println(aux.listarVentaConCliente());
+
+            if (aux != null) {
+
+                System.out.printf("\nIngrese el nuevo total a modificar: ");
+                nuevoTotal = enter.nextFloat();
+
+                rta = negocioEnvoltorio.modificarUnaVenta(aux, nuevoTotal);
+
+                clScreen();
+            }
+
+            if (rta == true) {
+                System.out.println("\nVenta modificada correctamente.\n");
+            } else {
+                System.out.println("La venta no se pudo modificar.");
+            }
+        } catch (ElementNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (ElementUnmodifiedException e) {
+            System.out.println(e.getMessage());
+        } catch (ElementNotLoadedException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public int mostrarProductos() {
@@ -319,6 +473,8 @@ public class Menu {
 
             System.out.printf("Opcion: ");
             subOpcion = enter.nextInt();
+
+            clScreen();
 
             System.out.println(negocioEnvoltorio.cartaProductos(subOpcion));
 
@@ -347,6 +503,22 @@ public class Menu {
         } while ((subRta == 's') || (subOpcion != 0));
 
         return subOpcion;
+    }
+
+    public void buscarCliente() {
+
+        System.out.println("\nIngrese DNI de cliente a buscar: ");
+        int dni = enter.nextInt();
+        try {
+            clScreen();
+            Cliente aux = negocioEnvoltorio.buscarClienteExistente(dni);
+            if (aux != null) {
+                System.out.println(aux.toString());
+            }
+        } catch (ElementNotFoundException e) {
+            clScreen();
+            System.out.println(e.getMessage());
+        }
     }
 
     public void modificarCliente() {
@@ -397,7 +569,6 @@ public class Menu {
     }
 
     public void eliminarCliente() {
-        boolean respuesta;
         int dni = 0;
         System.out.println("CLIENTES: ");
         System.out.println(negocioEnvoltorio.listarClientes());
@@ -406,11 +577,14 @@ public class Menu {
         dni = enter.nextInt();
         try {
             if (dni != 0) {
-                respuesta = negocioEnvoltorio.eliminarUnCliente(dni);
+                boolean respuesta = negocioEnvoltorio.eliminarUnCliente(dni);
+
+                clScreen();
+
                 if (respuesta == true) {
-                    System.out.println("\nCliente eliminado correctamente.");
+                    System.out.println("\nCliente eliminado correctamente.\n");
                 } else {
-                    System.out.println("\nCliente no se pudo eliminar.");
+                    System.out.println("\nEl cliente no se pudo eliminar.\n");
                 }
             } else {
                 System.out.println("\nERROR - No se puede eliminar el cliente Default.\n");
@@ -420,8 +594,6 @@ public class Menu {
         } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
         }
-
-        enter.nextLine();
     }
 
     /**

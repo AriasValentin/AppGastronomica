@@ -96,7 +96,7 @@ public class Venta implements Serializable {
         for (int i = 0; i < carrito.size(); i++) {
             productos = productos + "\n" + carrito.get(i).toStringSimple(); //acumula los nombres de los productos comprados
         }
-        return "Venta: " + "\nnumTicket: " + numTicket + "\nProductos : "+"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + productos + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+        return "Venta: " + "\nnumTicket: " + numTicket + "\nProductos: "+"\n-------------------------------------------------------------------------------------------" + productos + "\nPrecio total: " + total + "\n-------------------------------------------------------------------------------------------\n";
     }
 
     public String listarVentaSinTicket() {
@@ -104,7 +104,15 @@ public class Venta implements Serializable {
         for (int i = 0; i < carrito.size(); i++) {
             productos = productos + "\n" + carrito.get(i).toStringSimple(); //acumula los nombres de los productos comprados
         }
-        return "Venta: " + "\nProductos : "+"\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" + productos + "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n";
+        return "Venta: " + "\nProductos: "+"\n-------------------------------------------------------------------------------------------" + productos + "-------------------------------------------------------------------------------------------\n";
+    }
+
+    public String listarVentaConCliente(){
+        String productos = "";
+        for (int i = 0; i < carrito.size(); i++) {
+            productos = productos + "\n" + carrito.get(i).toStringSimple(); //acumula los nombres de los productos comprados
+        }
+        return "Venta: " + "\n---------------------------------" + "\nnumTicket: " + numTicket + "\n---------------------------------" + "\n\nCliente: " + UnCliente.toString() + "\n\nProductos: "+"\n-------------------------------------------------------------------------------------------" + productos + "\nPrecio total: " + total + "\n-------------------------------------------------------------------------------------------\n" + "\n---------------------------------" + "\nLugar de consumo: " + lugarConsumo + "\n---------------------------------\n";
     }
 
     /**

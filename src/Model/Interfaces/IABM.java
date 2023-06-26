@@ -10,5 +10,4 @@ public interface IABM <T>{
     void modificar(T elemento, float numero) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException;
     String listar();
     T buscar(int elemento) throws ElementNotFoundException ;
-
 }
