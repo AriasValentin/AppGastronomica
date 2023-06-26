@@ -1,7 +1,7 @@
 package Model.Clases;
 
 import java.io.Serializable;
-import java.util.Objects;
+
 
 /**
  * Clase que representa las personas clientes en el sistema.

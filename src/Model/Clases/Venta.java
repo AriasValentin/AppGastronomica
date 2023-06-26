@@ -3,7 +3,6 @@ package Model.Clases;
 import Model.Clases.Producto.Producto;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

@@ -5,6 +5,6 @@ package Model.ExcepcionesPersonalizadas;
  */
 public class ElementNotLoadedException extends Exception{
     public ElementNotLoadedException(String message){
-        super("SE CARGO MAL EL CLIENTE.."+message);
+        super("SE CARGO MAL EL ELEMENTO.."+message);
     }
 }

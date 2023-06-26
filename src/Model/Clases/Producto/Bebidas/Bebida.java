@@ -2,7 +2,6 @@ package Model.Clases.Producto.Bebidas;
 
 import Model.Clases.Producto.Producto;
 
-import java.util.ArrayList;
 
 public  class Bebida extends Producto {
 

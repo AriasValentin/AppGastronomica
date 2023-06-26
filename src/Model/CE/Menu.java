@@ -1,17 +1,11 @@
 package Model.CE;
 
 import Model.Clases.Cliente;
-import Model.Clases.GrabadoraYLectoraArchivos;
 import Model.Clases.Producto.Producto;
-
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
-
-
-import java.io.Serializable;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class Menu {

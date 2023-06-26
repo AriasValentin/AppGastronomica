@@ -1,20 +1,12 @@
 package Model.CE;
 
 import Model.Clases.Cliente;
-import Model.Clases.GrabadoraYLectoraArchivos;
 import Model.Clases.LugarConsumo;
 import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
-
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Scanner;
-
 
 public class NegocioEnvoltorio  {
 

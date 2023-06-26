@@ -1,20 +1,14 @@
 package Model.CE;
 
 import Model.Clases.GrabadoraYLectoraArchivos;
-import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import Model.Interfaces.IABM;
-import jdk.jfr.EventType;
-
 import java.io.Serializable;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Scanner;
+
 
 /**
  * Clase que envuelve todas los objetos de tipo Venta almacenados en una ArrayList manipulada por la interfaz implementada IABM.

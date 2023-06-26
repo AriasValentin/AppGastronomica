@@ -13,10 +13,9 @@ import Model.Clases.JsonUtiles;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.Scanner;
+
 
 /**
  * Clase que envuelve todos los objetos de tipo Productos almacenados en una coleccion de tipo HashSet. Dicha coleecion es manipulada por la interfaz implementada IABM.
