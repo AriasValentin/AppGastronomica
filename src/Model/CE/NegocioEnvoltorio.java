@@ -225,14 +225,14 @@ public class NegocioEnvoltorio {
         nuevo.setNombre("CARAMELO XXXXXXXXXXXXXXXX");
         nuevo.setDescripcion("Un caramelo dulceeee");
         nuevo.setTipoComida(TipoComida.COMIDA_DULCE);
-        lista_productos.eliminarComidaJson(nuevo);
+        lista_productos.eliminarComidaAJson(nuevo);
 
         Bebida nueva = new Bebida();
         nueva.setPrecio(55.10F);
         nueva.setNombre("COCACOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         nueva.setDescripcion("una coquita fresca");
         nueva.setTipoBebida(TipoBebida.BEBIDA_FRIA);
-        lista_productos.eliminarBebidaJson(nueva);
+        lista_productos.eliminarBebidaAJson(nueva);
 
         //vuelvo a leer los archivos actualizados
         lista_productos.consumoJSON();

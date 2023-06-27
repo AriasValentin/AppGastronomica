@@ -460,7 +460,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }
     }
 
-    public void eliminarComidaJson(Comida unaComida) throws JSONException {
+    public void eliminarComidaAJson(Comida unaComida) throws JSONException {
 
         HashSet<Producto> listaComida = new HashSet<>();
 
@@ -543,7 +543,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
 
-    public void eliminarBebidaJson(Bebida unaBebida) throws JSONException {
+    public void eliminarBebidaAJson(Bebida unaBebida) throws JSONException {
 
         HashSet<Producto> listaBebida = new HashSet<>();
         if (unaBebida != null) {
