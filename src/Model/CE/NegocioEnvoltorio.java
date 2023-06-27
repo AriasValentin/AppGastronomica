@@ -76,12 +76,30 @@ public class NegocioEnvoltorio {
         return lista_ventas.eliminar(nroTicket);
     }
 
-    public Producto buscarProducto(int id) throws ElementNotFoundException {
-        return lista_productos.buscar(id);
+    public boolean modificarUnaVenta(Venta unaVenta, float nuevoTotal) throws ElementNotFoundException, ElementUnmodifiedException, ElementNotLoadedException {
+
+        boolean retorno = false;
+
+        if (unaVenta != null){
+            lista_ventas.modificar(unaVenta, nuevoTotal);
+            retorno = true;
+        }
+
+        return retorno;
+    }
+
+    public Venta buscarVenta(int nroTicket) throws ElementNotFoundException {
+        return lista_ventas.buscar(nroTicket);
     }
 
     public int numeroTicket() {
         return lista_ventas.getIndexNroTicket();
+    }
+
+    //METODOS PRODUCTOS.
+
+    public Producto buscarProducto(int id) throws ElementNotFoundException {
+        return lista_productos.buscar(id);
     }
 
     public String cartaProductos(int opcion) {
@@ -117,22 +135,6 @@ public class NegocioEnvoltorio {
         return aux;
     }
 
-    public boolean modificarUnaVenta(Venta unaVenta, float nuevoTotal) throws ElementNotFoundException, ElementUnmodifiedException, ElementNotLoadedException {
-
-        boolean retorno = false;
-
-        if (unaVenta != null){
-            lista_ventas.modificar(unaVenta, nuevoTotal);
-            retorno = true;
-        }
-
-        return retorno;
-    }
-
-    public Venta buscarVenta(int nroTicket) throws ElementNotFoundException {
-        return lista_ventas.buscar(nroTicket);
-    }
-
     public String listarProductosNombreID(){
         String aux = "";
 
@@ -141,7 +143,41 @@ public class NegocioEnvoltorio {
         return aux;
     }
 
+    public void agregarProducto(Producto unProducto) throws JSONException {
+        if (unProducto != null){
+            if (unProducto instanceof Comida){
+                lista_productos.agregarComidaAJson((Comida) unProducto);
+            }
+
+            if (unProducto instanceof Bebida){
+                lista_productos.agregarBebidaAJson((Bebida) unProducto);
+            }
+        }
+
+        //vuelvo a leer los archivos actualizados
+        lista_productos.vaciarListaProductos();
+        lista_productos.consumoJSON();
+    }
+
+    public void eliminarProducto(Producto unProducto) throws JSONException {
+
+        if (unProducto != null){
+            if (unProducto instanceof Comida){
+                lista_productos.eliminarComidaAJson((Comida) unProducto);
+            }
+
+            if (unProducto instanceof Bebida){
+                lista_productos.eliminarBebidaAJson((Bebida) unProducto);
+            }
+        }
+
+        //vuelvo a leer los archivos actualizados
+        lista_productos.vaciarListaProductos();
+        lista_productos.consumoJSON();
+    }
+
     //METODOS CLIENTE
+
     public String guardarCliente(Cliente unCliente) {
 
         String aux = "";
@@ -197,49 +233,6 @@ public class NegocioEnvoltorio {
     public void modificarUnCliente(Cliente unCliente, int opcion) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException {
         lista_clientes.modificar(unCliente, opcion);
     }
-
-    public void agregarProductoNuevo() throws JSONException {
-        Comida nuevo = new Comida();
-        nuevo.setPrecio(55.5F);
-        nuevo.setNombre("CARAMELO XXXXXXXXXXXXXXXX");
-        nuevo.setDescripcion("Un caramelo dulceeee");
-        nuevo.setTipoComida(TipoComida.COMIDA_DULCE);
-        lista_productos.agregarComidaAJson(nuevo);
-
-        Bebida nueva = new Bebida();
-        nueva.setPrecio(55.10F);
-        nueva.setNombre("COCACOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        nueva.setDescripcion("una coquita fresca");
-        nueva.setTipoBebida(TipoBebida.BEBIDA_FRIA);
-        lista_productos.agregarBebidaAJson(nueva);
-
-        //vuelvo a leer los archivos actualizados
-        lista_productos.consumoJSON();
-
-    }
-
-    public void eliminarProducto() throws JSONException {
-
-        Comida nuevo = new Comida();
-        nuevo.setPrecio(55.5F);
-        nuevo.setNombre("CARAMELO XXXXXXXXXXXXXXXX");
-        nuevo.setDescripcion("Un caramelo dulceeee");
-        nuevo.setTipoComida(TipoComida.COMIDA_DULCE);
-        lista_productos.eliminarComidaAJson(nuevo);
-
-        Bebida nueva = new Bebida();
-        nueva.setPrecio(55.10F);
-        nueva.setNombre("COCACOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        nueva.setDescripcion("una coquita fresca");
-        nueva.setTipoBebida(TipoBebida.BEBIDA_FRIA);
-        lista_productos.eliminarBebidaAJson(nueva);
-
-        //vuelvo a leer los archivos actualizados
-        lista_productos.consumoJSON();
-
-    }
-
-
 }
 
 

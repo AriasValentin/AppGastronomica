@@ -5,6 +5,7 @@ import java.util.*;
 
 public class GrabadoraYLectoraArchivos {
 
+    //Metodos de persistencia.
     public static void persistirVentas(ArrayList<Venta> listaVenta) {
 
         FileOutputStream fileOutputStream = null;
@@ -72,6 +73,7 @@ public class GrabadoraYLectoraArchivos {
         }
     }
 
+    //Metodos de lectura.
     public static ArrayList<Venta> leerVentas() {
         ArrayList<Venta> arrayList = new ArrayList<>();
         FileInputStream fileInputStream = null;

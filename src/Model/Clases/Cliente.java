@@ -7,18 +7,14 @@ import java.io.Serializable;
  * Clase que representa las personas clientes en el sistema.
  */
 public class Cliente implements Comparable, Serializable {
+
+    //Atributos.
     private String nombre;
     private String apellido;
     private int dni;
     private boolean esVip;
 
-    public Cliente(String nombre, String apellido, int dni, boolean esVip) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.dni = dni;
-        this.esVip = esVip;
-    }
-
+    //Constructor.
     public Cliente() {
         this.nombre = "";
         this.apellido = "";
@@ -26,16 +22,9 @@ public class Cliente implements Comparable, Serializable {
         this.esVip = false;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
+    //Getters && Setters.
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
     }
 
     public void setApellido(String apellido) {
@@ -58,6 +47,7 @@ public class Cliente implements Comparable, Serializable {
         this.esVip = esVip;
     }
 
+    //Metodos.
     /**
      * verifica si los dni de los clientes a comparar son iguales.
      * @param o Objeto a comparar con cliente.

@@ -7,22 +7,22 @@ import java.io.Serializable;
  */
 
 public abstract class Producto implements Comparable, Serializable {
+
+    //Atributos.
     private String nombre;
     private float precio;
     private int id;
     private String descripcion;
 
-    public Producto(String nombre, float precio, int id, String descripcion) {
-        this.nombre = nombre;
-        this.precio = precio;
-        this.id = id;
-        this.descripcion = descripcion;
-    }
-
+    //Constructor.
     public Producto() {
-
+        this.nombre = "";
+        this.precio = 0;
+        this.id = 0;
+        this.descripcion = "";
     }
 
+    //Getters && Setters.
     public String getNombre() {
         return nombre;
     }
@@ -55,6 +55,7 @@ public abstract class Producto implements Comparable, Serializable {
         this.descripcion = descripcion;
     }
 
+    //Metodos.
     /**
      * compara el producto con un objeto
      *

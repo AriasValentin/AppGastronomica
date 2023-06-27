@@ -1,6 +1,10 @@
 package Model.CE;
 
 import Model.Clases.Cliente;
+import Model.Clases.Producto.Bebidas.Bebida;
+import Model.Clases.Producto.Bebidas.TipoBebida;
+import Model.Clases.Producto.Comidas.Comida;
+import Model.Clases.Producto.Comidas.TipoComida;
 import Model.Clases.Producto.Producto;
 import Model.Clases.Venta;
 import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
@@ -22,9 +26,9 @@ public class Menu {
     public Menu() {
         this.negocioEnvoltorio = new NegocioEnvoltorio();
         this.clienteDefault = negocioEnvoltorio.ClienteDefault(); //cliente seteado en 0 nullo
-
     }
 
+    //Metodos.
     public void menuAplicacion() {
 
         int opcion = 0;
@@ -160,8 +164,8 @@ public class Menu {
 
             System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
 
-            System.out.println("11 - AGREGAR PRODUCTO");
-            System.out.println("12 - ELIMINAR PRODUCTO");
+            System.out.println("11 - AGREGAR PRODUCTO"); //Echo
+            System.out.println("12 - ELIMINAR PRODUCTO"); //Echo
             System.out.println("13 - MODIFICAR PRODUCTO");
             System.out.println("14 - BUSCAR PRODUCTO"); //Echo
             System.out.println("15 - MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA"); //Echo
@@ -244,15 +248,24 @@ public class Menu {
 
                 case 11: {
                     clScreen();
-                    //agregarProducto();
-                    enter.nextLine();
+                    int retornoOpcion = agregarProducto();
+
+                    if (retornoOpcion == 0) {
+                        opcion = -1;
+                        rta = 's';
+                    }
                     break;
                 }
 
                 case 12: {
                     clScreen();
-                    //eliminarProducto();
-                    enter.nextLine();
+                    eliminarProducto();
+                    break;
+                }
+
+                case 13: {
+                    clScreen();
+                    modificarProducto();
                     break;
                 }
 
@@ -404,11 +417,11 @@ public class Menu {
         try {
             Venta aux = negocioEnvoltorio.buscarVenta(nroTicket);
 
-            if (aux != null){
+            if (aux != null) {
                 System.out.println(aux.listarVentaConCliente());
             }
 
-        }catch (ElementNotFoundException e){
+        } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
         }
 
@@ -649,7 +662,7 @@ public class Menu {
         return unCliente;
     }
 
-    public void buscarProducto(){
+    public void buscarProducto() {
         int id = 0;
 
         System.out.println(negocioEnvoltorio.listarProductosNombreID());
@@ -662,7 +675,7 @@ public class Menu {
         try {
             Producto aux = negocioEnvoltorio.buscarProducto(id);
 
-            if (aux != null){
+            if (aux != null) {
                 System.out.println(aux.toString());
             }
 
@@ -671,24 +684,251 @@ public class Menu {
         }
     }
 
-    public void agregarProducto()
-    {
-        //HACER MENU PARA AGREGAR COMIDA(DULCE-SALADA) O BEBIDA(FRIA-CALIENTE)
-        try {
-            negocioEnvoltorio.agregarProductoNuevo();
-        } catch (JSONException e) {
-            System.out.println(e.getMessage());
-        }
+    public int agregarProducto() {
+        int opcion = 0;
+        char rta = 0;
+
+        do {
+
+            System.out.println("\nIngrese que producto desea agregar: ");
+
+            System.out.println("\n1 - Comida.");
+            System.out.println("2 - Bebida.");
+
+            System.out.println("\n0 - Atras.");
+
+            System.out.printf("\nOpcion: ");
+            opcion = enter.nextInt();
+
+            clScreen();
+
+            switch (opcion) {
+                case 1: {
+                    Comida nuevaComida = new Comida();
+                    int opcionComida = 0;
+
+                    do {
+
+                        System.out.println("\nQue tipo de comida desea agregar: ");
+
+                        System.out.println("\n1 - Comida dulce.");
+                        System.out.println("2 - Comida salada.");
+
+                        System.out.println("\n0 - Atras.");
+
+                        System.out.printf("\nOpcion: ");
+                        opcionComida = enter.nextInt();
+
+                        clScreen();
+
+                        switch (opcionComida) {
+                            case 1: {
+                                nuevaComida.setTipoComida(TipoComida.COMIDA_DULCE);
+                                break;
+                            }
+
+                            case 2: {
+                                nuevaComida.setTipoComida(TipoComida.COMIDA_SALADA);
+                                break;
+                            }
+
+                            default: {
+                                if (opcionComida != 0) {
+                                    clScreen();
+                                    System.out.println("\nERROR - Opcion no valida, presione Enter para intentar nuevamente.\n");
+                                    enter.nextLine();
+                                    enter.nextLine();
+                                    opcionComida = -1;
+                                }
+                            }
+                        }
+
+                        clScreen();
+
+                        if (opcionComida != 0) {
+                            setearProducto(nuevaComida);
+
+                            try {
+                                negocioEnvoltorio.agregarProducto(nuevaComida);
+                            } catch (JSONException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+
+                        if (opcionComida == 0) {
+                            rta = 's';
+                            opcion = -1;
+                        }
+
+                    } while ((opcionComida != 0) && (opcionComida == -1));
+
+                    break;
+                }
+
+                case 2: {
+                    Bebida nuevaBebida = new Bebida();
+                    int opcionBebida = 0;
+
+                    do {
+                        System.out.println("\nQue tipo de comida desea agregar: ");
+
+                        System.out.println("1 - Bebida fria.");
+                        System.out.println("2 - Bebida caliente.");
+
+                        System.out.println("\n0 - Atras.");
+
+                        System.out.printf("\nOpcion: ");
+                        opcionBebida = enter.nextInt();
+
+                        clScreen();
+
+                        switch (opcionBebida) {
+                            case 1: {
+                                nuevaBebida.setTipoBebida(TipoBebida.BEBIDA_FRIA);
+                                break;
+                            }
+
+                            case 2: {
+                                nuevaBebida.setTipoBebida(TipoBebida.BEBIDA_CALIENTE);
+                                break;
+                            }
+
+                            default: {
+                                if (opcionBebida != 0) {
+                                    clScreen();
+                                    System.out.println("\nERROR - Opcion no valida, presione Enter para intentar nuevamente.\n");
+                                    enter.nextLine();
+                                    enter.nextLine();
+                                    opcionBebida = -1;
+                                }
+                            }
+                        }
+
+                        clScreen();
+
+                        if (opcionBebida != 0) {
+                            setearProducto(nuevaBebida);
+
+                            try {
+                                negocioEnvoltorio.agregarProducto(nuevaBebida);
+                            } catch (JSONException e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+
+                        if (opcionBebida == 0) {
+                            rta = 's';
+                            opcion = -1;
+                        }
+
+                    } while ((opcionBebida != 0) && (opcionBebida == -1));
+                    break;
+                }
+            }
+
+            if ((opcion != 0) && (opcion != -1)) {
+                System.out.println("\nDesea agregar otro producto? (s/n): ");
+                enter.nextLine();
+                rta = enter.nextLine().charAt(0);
+
+                clScreen();
+            }
+
+
+        } while ((rta == 's') && (opcion != 0));
+
+        return opcion;
     }
 
-    public void eliminarProducto()
-    {
-        //HACER MENU PARA ELIMINAR COMIDA(DULCE-SALADA) O BEBIDA(FRIA-CALIENTE)
-        try {
-            negocioEnvoltorio.eliminarProducto();
-        } catch (JSONException e) {
-            System.out.println(e.getMessage());
-        }
+    public void setearProducto(Producto nuevoProducto) {
+        String dato = "";
+        float precio = 0;
+
+        System.out.println("\nIngrese nombre del producto: ");
+        enter.nextLine();
+        dato = enter.nextLine();
+        nuevoProducto.setNombre(dato);
+
+        System.out.println("\nIngrese descripcion a su producto: ");
+        dato = enter.nextLine();
+        nuevoProducto.setDescripcion(dato);
+
+        System.out.println("\nIngrese precio de su producto: ");
+        precio = enter.nextFloat();
+        nuevoProducto.setPrecio(precio);
+    }
+
+    public void eliminarProducto() {
+
+        char rta = 0;
+
+        do {
+            System.out.println(negocioEnvoltorio.listarProductosNombreID());
+
+            System.out.printf("\nIngrese ID del producto a eliminar: ");
+            int id = enter.nextInt();
+
+            try {
+                Producto aux = negocioEnvoltorio.buscarProducto(id);
+                negocioEnvoltorio.eliminarProducto(aux);
+
+                clScreen();
+
+                System.out.println("\nProducto eliminado satisfactoriamente.\n");
+
+            } catch (ElementNotFoundException e) {
+                System.out.println(e.getMessage());
+            } catch (JSONException e) {
+                System.out.println(e.getMessage());
+            }
+
+            System.out.printf("\nDesea eliminar otro producto del sistema? (s/n): ");
+            enter.nextLine();
+            rta = enter.nextLine().charAt(0);
+
+            clScreen();
+
+        } while (rta == 's');
+    }
+
+    public void modificarProducto() {
+        char rta = 0;
+
+        do {
+            System.out.println(negocioEnvoltorio.listarProductosNombreID());
+
+            System.out.printf("\nIngrese ID del producto a modificar valor: ");
+            int id = enter.nextInt();
+
+            clScreen();
+
+            try {
+                Producto aux = negocioEnvoltorio.buscarProducto(id);
+
+                if (aux != null){
+                    System.out.println(aux.toString());
+
+                    System.out.printf("\nIngrese el nuevo precio del producto: ");
+                    aux.setPrecio(enter.nextFloat());
+
+                    negocioEnvoltorio.eliminarProducto(aux);
+                    negocioEnvoltorio.agregarProducto(aux);
+
+                    System.out.println("\nProducto modificado satisfactoriamente.\n");
+                }
+            } catch (ElementNotFoundException e) {
+                System.out.println(e.getMessage());
+            } catch (JSONException e) {
+                System.out.println(e.getMessage());
+            }
+
+            System.out.printf("\nDesea modificar otro producto del sistema? (s/n): ");
+            enter.nextLine();
+            rta = enter.nextLine().charAt(0);
+
+            clScreen();
+
+        }while (rta == 's');
     }
 
     /**

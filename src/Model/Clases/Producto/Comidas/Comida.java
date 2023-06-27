@@ -4,18 +4,16 @@ import Model.Clases.Producto.Producto;
 
 public class Comida extends Producto {
 
+    //Atributos.
     private TipoComida tipoComida;
 
+    //Constructor.
     public Comida() {
         super();
         this.tipoComida = null;
     }
 
-    public Comida(String nombre, float precio, int id, String descripcion, TipoComida tipoComida) {
-        super(nombre, precio, id, descripcion);
-        this.tipoComida = tipoComida;
-    }
-
+    //Getters && Setters.
     public TipoComida getTipoComida() {
         return tipoComida;
     }
@@ -24,6 +22,7 @@ public class Comida extends Producto {
         this.tipoComida = tipoComida;
     }
 
+    //Metodos.
     @Override
     public String toString() {
         return super.toString();

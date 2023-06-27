@@ -11,6 +11,7 @@ import java.util.ArrayList;
  */
 public class Venta implements Serializable {
 
+    //Atributos.
     private ArrayList<Producto> carrito;
     private float total;
     private float descuento;
@@ -18,7 +19,7 @@ public class Venta implements Serializable {
     private Cliente UnCliente;
     private int numTicket;
 
-
+    //Constructor.
     public Venta()
     {
         this.carrito = new ArrayList<>();
@@ -36,20 +37,13 @@ public class Venta implements Serializable {
 
     }
 
-    public float getTotal() {
-        return total;
-    }
-
+    //Getters && Setters.
     public void setTotal(float total) {
         this.total = total;
     }
 
     public int getNumTicket() {
         return numTicket;
-    }
-
-    public float getDescuento() {
-        return descuento;
     }
 
     public void setUnCliente(Cliente unCliente) {
@@ -66,13 +60,11 @@ public class Venta implements Serializable {
         this.numTicket = numTicket;
     }
 
-    public LugarConsumo getLugarConsumo() {
-        return lugarConsumo;
-    }
-
     public void setLugarConsumo(LugarConsumo lugarConsumo) {
         this.lugarConsumo = lugarConsumo;
     }
+
+    //Metodos.
 
     /**
      * calcula el precio final de la venta.
@@ -125,20 +117,6 @@ public class Venta implements Serializable {
             carrito.add(aux);
         } else {
             throw new ElementNotLoadedException("\nERROR - El producto no pudo agregarse a su carrito.\n");
-        }
-    }
-
-    /**
-     * elimina por medio de un indice un producto de la lista carrito
-     *
-     * @param index int.
-     */
-    public void eliminarProductoDelcarrito(int index) throws ElementNotFoundException {
-
-        if(index >= 0){
-            carrito.remove(index);
-        }else {
-            throw new ElementNotFoundException("\nERROR - El producto no fue encontrado o ya fue eliminado.\n");
         }
     }
 }

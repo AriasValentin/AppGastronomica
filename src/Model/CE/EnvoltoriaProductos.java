@@ -26,15 +26,18 @@ import java.util.Iterator;
  */
 public class EnvoltoriaProductos implements IABM<Producto> {
 
+    //Atributos.
     private HashSet<Producto> listaDeProductos;
     private int contadorId;
 
+    //Constructor.
     public EnvoltoriaProductos() {
 
         this.listaDeProductos = new HashSet<>();
         this.contadorId = 0;
     }
 
+    //Metodos
     /**
      * Añade un objeto de tipo producto al HashSet.
      * Lanza una excepcion de tipo ElementNotLoadedException si el producto no pudo cargarse.
@@ -372,7 +375,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                     jsonArray_ComidasDulces.put(jo_comidaDulce);
                 }
 
-                JsonUtiles.grabar(jsonArray_ComidasDulces, "ComidasDulces");
+                JsonUtiles.grabar(jsonArray_ComidasDulces, "ComidasSaladas");
             }
         }
 
@@ -674,6 +677,10 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             }
         }
         return aux;
+    }
+
+    public void vaciarListaProductos(){
+        listaDeProductos.clear();
     }
 
 }

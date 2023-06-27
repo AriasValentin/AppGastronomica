@@ -5,26 +5,26 @@ import Model.Clases.Producto.Producto;
 
 public  class Bebida extends Producto {
 
+    //Atributos
     private TipoBebida tipoBebida;
+
+    //Constructor
     public Bebida()
     {
         super();
         this.tipoBebida = null;
     }
-    public Bebida(String nombre, float precio, int id, String descripcion) {
-        super(nombre, precio, id, descripcion);
-    }
 
+    //Getters && Setters
     public TipoBebida getTipoBebida() {
         return tipoBebida;
     }
-
 
     public void setTipoBebida(TipoBebida tipoBebida) {
         this.tipoBebida = tipoBebida;
     }
 
-
+    //Metodos
     @Override
     public String toString() {
         return super.toString();

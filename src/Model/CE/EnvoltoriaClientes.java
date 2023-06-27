@@ -17,12 +17,15 @@ import java.util.*;
 
 public class EnvoltoriaClientes implements IABM<Cliente> {
 
+    //Atributos.
     private HashMap<Integer,Cliente> listaDeClientes;
 
+    //Constructor.
     public EnvoltoriaClientes() {
         this.listaDeClientes = new HashMap<>();
     }
 
+    //Metodos.
     /**
      * Añade un objeto de tipo Cliente a la LinkedHashSet.
      *

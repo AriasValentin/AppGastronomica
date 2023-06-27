@@ -19,11 +19,11 @@ import java.util.ArrayList;
 
 public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
 
-    //atributos
+    //Atributos
     private ArrayList<Venta> listaDeVentas;
     private int indexNroTicket;
 
-    //constructor
+    //Constructor
     public EnvoltoriaVentas() {
         this.listaDeVentas = new ArrayList<>();
         this.indexNroTicket = 0;
