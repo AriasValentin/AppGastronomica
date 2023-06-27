@@ -213,6 +213,30 @@ public class NegocioEnvoltorio {
         nueva.setTipoBebida(TipoBebida.BEBIDA_FRIA);
         lista_productos.agregarBebidaAJson(nueva);
 
+        //vuelvo a leer los archivos actualizados
+        lista_productos.consumoJSON();
+
+    }
+
+    public void eliminarProducto() throws JSONException {
+
+        Comida nuevo = new Comida();
+        nuevo.setPrecio(55.5F);
+        nuevo.setNombre("CARAMELO XXXXXXXXXXXXXXXX");
+        nuevo.setDescripcion("Un caramelo dulceeee");
+        nuevo.setTipoComida(TipoComida.COMIDA_DULCE);
+        lista_productos.eliminarComidaJson(nuevo);
+
+        Bebida nueva = new Bebida();
+        nueva.setPrecio(55.10F);
+        nueva.setNombre("COCACOLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        nueva.setDescripcion("una coquita fresca");
+        nueva.setTipoBebida(TipoBebida.BEBIDA_FRIA);
+        lista_productos.eliminarBebidaJson(nueva);
+
+        //vuelvo a leer los archivos actualizados
+        lista_productos.consumoJSON();
+
     }
 
 

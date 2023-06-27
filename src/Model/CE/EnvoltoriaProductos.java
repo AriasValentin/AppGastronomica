@@ -232,7 +232,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      * @see JSONArray
      * @see JSONObject
      */
-    public void consumoBebidasFriasPERSONAL() {
+    public void consumoBebidasFriasPersonal() {
         String jsonResponse = JsonUtiles.leer("BebidasFrias");
         try {
             JSONArray jsonArray = new JSONArray(jsonResponse);
@@ -290,7 +290,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     public void consumoJSON() {
         consumoComidasDulces();
         consumoComidasSaladas();
-        consumoBebidasFriasPERSONAL();
+        consumoBebidasFriasPersonal();
         consumoBebidasCalientesPersonal();
     }
 
@@ -325,8 +325,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 JSONArray jsonArray_ComidasDulces = new JSONArray();
 
 
-                for(Producto aux : listaComida)
-                {
+                for (Producto aux : listaComida) {
                     JSONObject jo_comidaDulce = new JSONObject();
                     jo_comidaDulce.put("tittle", aux.getNombre());
                     jo_comidaDulce.put("description", aux.getDescripcion());
@@ -363,14 +362,12 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 JSONArray jsonArray_ComidasDulces = new JSONArray();
 
 
-                Iterator<Producto> it = listaComida.iterator();
-                while(it.hasNext())
-                {
-
+                for (Producto aux : listaComida) {
                     JSONObject jo_comidaDulce = new JSONObject();
-                    jo_comidaDulce.put("tittle", it.next().getNombre());
-                    jo_comidaDulce.put("description", it.next().getDescripcion());
-                    jo_comidaDulce.put("price", it.next().getPrecio());
+
+                    jo_comidaDulce.put("tittle", aux.getNombre());
+                    jo_comidaDulce.put("description", aux.getDescripcion());
+                    jo_comidaDulce.put("price", aux.getPrecio());
 
                     jsonArray_ComidasDulces.put(jo_comidaDulce);
                 }
@@ -380,6 +377,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }
 
     }
+
     public void agregarBebidaAJson(Bebida nueva) throws JSONException {
 
         HashSet<Producto> listaBebida = new HashSet<>();
@@ -410,8 +408,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 //paso la lista al json para que se actualize
                 JSONArray jsonArray_BebidasFrias = new JSONArray();
 
-                for(Producto aux : listaBebida)
-                {
+                for (Producto aux : listaBebida) {
                     JSONObject jo_bebidaFria = new JSONObject();
                     jo_bebidaFria.put("tittle", aux.getNombre());
                     jo_bebidaFria.put("description", aux.getDescripcion());
@@ -448,14 +445,12 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 JSONArray jsonArray_BebidasCalientes = new JSONArray();
 
 
-                Iterator<Producto> it = listaBebida.iterator();
-                while(it.hasNext())
-                {
-
+                for (Producto aux : listaBebida) {
                     JSONObject jo_bebidaCaliente = new JSONObject();
-                    jo_bebidaCaliente.put("tittle", it.next().getNombre());
-                    jo_bebidaCaliente.put("description", it.next().getDescripcion());
-                    jo_bebidaCaliente.put("price", it.next().getPrecio());
+
+                    jo_bebidaCaliente.put("tittle", aux.getNombre());
+                    jo_bebidaCaliente.put("description", aux.getDescripcion());
+                    jo_bebidaCaliente.put("price", aux.getPrecio());
 
                     jsonArray_BebidasCalientes.put(jo_bebidaCaliente);
                 }
@@ -463,8 +458,167 @@ public class EnvoltoriaProductos implements IABM<Producto> {
                 JsonUtiles.grabar(jsonArray_BebidasCalientes, "BebidasCalientes");
             }
         }
-
     }
+
+    public void eliminarComidaJson(Comida unaComida) throws JSONException {
+
+        HashSet<Producto> listaComida = new HashSet<>();
+
+        if (unaComida != null) {
+            if (unaComida.getTipoComida() == TipoComida.COMIDA_DULCE) {
+                //traigo el json
+                String jsonResponse = JsonUtiles.leer("ComidasDulces");
+
+                JSONArray ja_comidas = new JSONArray(jsonResponse);
+                for (int i = 0; i < ja_comidas.length(); i++) {
+                    JSONObject jsonObject = ja_comidas.getJSONObject(i);
+
+                    Comida aux = new Comida();
+                    aux.setNombre(jsonObject.getString("tittle"));
+                    aux.setDescripcion(jsonObject.getString("description"));
+                    aux.setPrecio(jsonObject.getInt("price"));
+                    aux.setTipoComida(TipoComida.COMIDA_DULCE);
+                    aux.setId(contadorId);
+                    contadorId++;
+
+                    //si es distinto el nombre y descripcion a la comida que me llega por parametro, la agrego a mi lista local...
+                    if (!aux.getNombre().equals(unaComida.getNombre()) && !aux.getDescripcion().equals(unaComida.getDescripcion())) {
+                        listaComida.add(aux);
+                    }
+
+                }
+                //sobreescribo el json
+                JSONArray ja_actualizada = new JSONArray();
+
+                for (Producto aux : listaComida) {
+                    JSONObject jo_comidaDulce = new JSONObject();
+
+                    jo_comidaDulce.put("tittle", aux.getNombre());
+                    jo_comidaDulce.put("description", aux.getDescripcion());
+                    jo_comidaDulce.put("price", aux.getPrecio());
+
+                    ja_actualizada.put(jo_comidaDulce);
+                }
+
+                JsonUtiles.grabar(ja_actualizada, "ComidasDulces");
+
+            } else if (unaComida.getTipoComida() == TipoComida.COMIDA_SALADA) {
+                //traigo el json
+                String JsonResponse = JsonUtiles.leer("ComidasSaladas");
+
+                JSONArray ja_comidas = new JSONArray(JsonResponse);
+                for (int i = 0; i < ja_comidas.length(); i++) {
+                    JSONObject jsonObject = ja_comidas.getJSONObject(i);
+
+                    Comida aux = new Comida();
+                    aux.setNombre(jsonObject.getString("tittle"));
+                    aux.setDescripcion(jsonObject.getString("description"));
+                    aux.setPrecio(jsonObject.getInt("price"));
+                    aux.setTipoComida(TipoComida.COMIDA_SALADA);
+                    aux.setId(contadorId);
+                    contadorId++;
+
+                    //si es distinto el nombre y descripcion a la comida que me llega por parametro, la agrego a mi lista local...
+                    if (!aux.getNombre().equals(unaComida.getNombre()) && !aux.getDescripcion().equals(unaComida.getDescripcion())) {
+                        listaComida.add(aux);
+                    }
+                }
+                //sobreescribo el json
+                JSONArray ja_actualizada = new JSONArray();
+
+                for (Producto aux2 : listaComida) {
+                    JSONObject jo_comidaDulce = new JSONObject();
+
+                    jo_comidaDulce.put("tittle", aux2.getNombre());
+                    jo_comidaDulce.put("description", aux2.getDescripcion());
+                    jo_comidaDulce.put("price", aux2.getPrecio());
+
+                    ja_actualizada.put(jo_comidaDulce);
+                }
+
+                JsonUtiles.grabar(ja_actualizada, "ComidasSaladas");
+
+            }
+        }
+    }
+
+
+    public void eliminarBebidaJson(Bebida unaBebida) throws JSONException {
+
+        HashSet<Producto> listaBebida = new HashSet<>();
+        if (unaBebida != null) {
+            if (unaBebida.getTipoBebida() == TipoBebida.BEBIDA_FRIA) {
+                String JsonResponse = JsonUtiles.leer("BebidasFrias");
+
+                JSONArray ja_bebidasFrias = new JSONArray(JsonResponse);
+
+                for (int i = 0; i < ja_bebidasFrias.length(); i++) {
+                    JSONObject jo_bebidas = ja_bebidasFrias.getJSONObject(i);
+
+                    Bebida aux = new Bebida();
+                    aux.setNombre(jo_bebidas.getString("tittle"));
+                    aux.setDescripcion(jo_bebidas.getString("description"));
+                    aux.setPrecio(jo_bebidas.getInt("price"));
+                    aux.setTipoBebida(TipoBebida.BEBIDA_FRIA);
+                    aux.setId(contadorId);
+                    contadorId++;
+
+                    //si es distinto el nombre y descripcion a la comida que me llega por parametro, la agrego a mi lista local...
+                    if (!aux.getNombre().equals(unaBebida.getNombre()) && !aux.getDescripcion().equals(unaBebida.getDescripcion())) {
+                        listaBebida.add(aux);
+                    }
+                }
+                JSONArray ja_actualizada = new JSONArray();
+
+                for (Producto aux2 : listaBebida) {
+                    JSONObject jo_bebidaFria = new JSONObject();
+
+                    jo_bebidaFria.put("tittle", aux2.getNombre());
+                    jo_bebidaFria.put("description", aux2.getDescripcion());
+                    jo_bebidaFria.put("price", aux2.getPrecio());
+
+                    ja_actualizada.put(jo_bebidaFria);
+                }
+
+                JsonUtiles.grabar(ja_actualizada, "BebidasFrias");
+            } else if (unaBebida.getTipoBebida() == TipoBebida.BEBIDA_CALIENTE) {
+                String JsonResponse = JsonUtiles.leer("BebidasCalientes");
+
+                JSONArray ja_BebidasCalientes = new JSONArray(JsonResponse);
+
+                for (int i = 0; i < ja_BebidasCalientes.length(); i++) {
+                    JSONObject jo_bebidas = ja_BebidasCalientes.getJSONObject(i);
+
+                    Bebida aux = new Bebida();
+                    aux.setNombre(jo_bebidas.getString("tittle"));
+                    aux.setDescripcion(jo_bebidas.getString("description"));
+                    aux.setPrecio(jo_bebidas.getInt("price"));
+                    aux.setTipoBebida(TipoBebida.BEBIDA_CALIENTE);
+                    aux.setId(contadorId);
+                    contadorId++;
+
+                    //si es distinto el nombre y descripcion a la comida que me llega por parametro, la agrego a mi lista local...
+                    if (!aux.getNombre().equals(unaBebida.getNombre()) && !aux.getDescripcion().equals(unaBebida.getDescripcion())) {
+                        listaBebida.add(aux);
+                    }
+                }
+                JSONArray ja_actualizada = new JSONArray();
+
+                for (Producto aux2 : listaBebida) {
+                    JSONObject jo_bebidaCaliente = new JSONObject();
+
+                    jo_bebidaCaliente.put("tittle", aux2.getNombre());
+                    jo_bebidaCaliente.put("description", aux2.getDescripcion());
+                    jo_bebidaCaliente.put("price", aux2.getPrecio());
+
+                    ja_actualizada.put(jo_bebidaCaliente);
+                }
+
+                JsonUtiles.grabar(ja_actualizada, "BebidasCalientes");
+            }
+        }
+    }
+
 
     public String listarBebidasFrias() {
         String aux = "BEBIDAS FRIAS : \n";
@@ -474,9 +628,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             if (nuevo instanceof Bebida) {
                 if (((Bebida) nuevo).getTipoBebida().equals(TipoBebida.BEBIDA_FRIA)) {
                     aux += nuevo.toString() + "\n";
-
                 }
-
             }
         }
         return aux;
@@ -490,9 +642,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             if (nuevo instanceof Bebida) {
                 if (((Bebida) nuevo).getTipoBebida().equals(TipoBebida.BEBIDA_CALIENTE)) {
                     aux += nuevo.toString() + "\n";
-
                 }
-
             }
         }
         return aux;
@@ -506,9 +656,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             if (nuevo instanceof Comida) {
                 if (((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_SALADA)) {
                     aux += nuevo.toString() + "\n";
-
                 }
-
             }
         }
         return aux;
@@ -522,7 +670,6 @@ public class EnvoltoriaProductos implements IABM<Producto> {
             if (nuevo instanceof Comida) {
                 if (((Comida) nuevo).getTipoComida().equals(TipoComida.COMIDA_DULCE)) {
                     aux += nuevo.toString() + "\n";
-
                 }
             }
         }

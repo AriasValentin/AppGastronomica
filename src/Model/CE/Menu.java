@@ -160,9 +160,9 @@ public class Menu {
 
             System.out.println("\n---OPCIONES PARA PRODUCTOS---\n");
 
-            System.out.println("11 - AGREGAR PRODUCTO"); /////////// SE ESTAN UTILIZANDO DENTRO DE LA CLASE.
-            System.out.println("12 - ELIMINAR PRODUCTO");///////////
-            System.out.println("13 - MODIFICAR PRODUCTO");////////// INNECESARIO HACERLO EN EL MENU, MENOS COMPLICACIONES.
+            System.out.println("11 - AGREGAR PRODUCTO");
+            System.out.println("12 - ELIMINAR PRODUCTO");
+            System.out.println("13 - MODIFICAR PRODUCTO");
             System.out.println("14 - BUSCAR PRODUCTO"); //Echo
             System.out.println("15 - MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA"); //Echo
             System.out.println("\n-------------------------------------------------------------------------\n");
@@ -245,6 +245,13 @@ public class Menu {
                 case 11: {
                     clScreen();
                     //agregarProducto();
+                    enter.nextLine();
+                    break;
+                }
+
+                case 12: {
+                    clScreen();
+                    //eliminarProducto();
                     enter.nextLine();
                     break;
                 }
@@ -669,6 +676,16 @@ public class Menu {
         //HACER MENU PARA AGREGAR COMIDA(DULCE-SALADA) O BEBIDA(FRIA-CALIENTE)
         try {
             negocioEnvoltorio.agregarProductoNuevo();
+        } catch (JSONException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void eliminarProducto()
+    {
+        //HACER MENU PARA ELIMINAR COMIDA(DULCE-SALADA) O BEBIDA(FRIA-CALIENTE)
+        try {
+            negocioEnvoltorio.eliminarProducto();
         } catch (JSONException e) {
             System.out.println(e.getMessage());
         }
