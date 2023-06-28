@@ -1,6 +1,7 @@
 package Model.CE;
 
 import Model.Clases.Cliente;
+import Model.Clases.GrabadoraYLectoraArchivos;
 import Model.Clases.Producto.Bebidas.Bebida;
 import Model.Clases.Producto.Bebidas.TipoBebida;
 import Model.Clases.Producto.Comidas.Comida;
@@ -12,6 +13,7 @@ import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import org.json.JSONException;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
@@ -20,12 +22,14 @@ public class Menu {
     private Scanner enter = new Scanner(System.in);
     private NegocioEnvoltorio negocioEnvoltorio;
     private Cliente clienteDefault;
+    private ArrayList<String> userPasswrod;
 
 
     //Constructor.
     public Menu() {
         this.negocioEnvoltorio = new NegocioEnvoltorio();
         this.clienteDefault = negocioEnvoltorio.ClienteDefault(); //cliente seteado en 0 nullo
+        this.userPasswrod = new ArrayList<>();
     }
 
     //Metodos.
@@ -58,7 +62,29 @@ public class Menu {
                 }
 
                 case 2: {
-                    menuAdministrador();
+                    userPasswrod = GrabadoraYLectoraArchivos.leerClaveAdmin();
+
+                    String user = "";
+                    String pass = "";
+
+                    clScreen();
+
+                    System.out.printf("Usuario: ");
+                    enter.nextLine();
+                    user = enter.nextLine();
+
+                    System.out.printf("Contrasenia: ");
+                    pass = enter.nextLine();
+
+                    clScreen();
+
+                    if (user.equals(userPasswrod.get(0)) && pass.equals(userPasswrod.get(1))){
+                        menuAdministrador();
+                    }else {
+                        System.out.printf("\nERROR - Usuario y contrasenia incorrectos, presione Enter para volver al menu.\n");
+                        enter.nextLine();
+                    }
+
                     break;
                 }
 
@@ -170,7 +196,9 @@ public class Menu {
             System.out.println("14 - BUSCAR PRODUCTO"); //Echo
             System.out.println("15 - MOSTRAR TODOS LOS PRODUCTOS DEL SISTEMA"); //Echo
             System.out.println("\n-------------------------------------------------------------------------\n");
-            System.out.println("0 - ATRAS");
+
+            System.out.println("16 - CAMBIAR CLAVE DE INGRESO.");
+            System.out.println("\n0 - ATRAS");
 
             System.out.printf("\nOpcion: ");
             opcion = enter.nextInt();
@@ -191,6 +219,7 @@ public class Menu {
                 }
 
                 case 3: {
+                    clScreen();
                     modificarCliente();
                     enter.nextLine();
                     break;
@@ -206,7 +235,6 @@ public class Menu {
                 case 5: {
                     clScreen();
                     buscarCliente();
-                    enter.nextLine();
                     break;
                 }
 
@@ -284,7 +312,12 @@ public class Menu {
                         opcion = -1;
                         rta = 's';
                     }
-                    enter.nextLine();
+                    break;
+                }
+
+                case 16: {
+                    clScreen();
+                    cambiarClaveAdmin();
                     break;
                 }
 
@@ -533,6 +566,10 @@ public class Menu {
                 subRta = enter.nextLine().charAt(0);
             }
 
+            if (subRta != 's'){
+                subOpcion = 0;
+            }
+
             clScreen();
 
         } while ((subRta == 's') || (subOpcion != 0));
@@ -541,18 +578,31 @@ public class Menu {
     }
 
     public void buscarCliente() {
+        Cliente aux = null;
+        char rta = 0;
 
         System.out.println("\nIngrese DNI de cliente a buscar: ");
         int dni = enter.nextInt();
         try {
             clScreen();
-            Cliente aux = negocioEnvoltorio.buscarClienteExistente(dni);
+            aux = negocioEnvoltorio.buscarClienteExistente(dni);
             if (aux != null) {
                 System.out.println(aux.toString());
             }
         } catch (ElementNotFoundException e) {
             clScreen();
             System.out.println(e.getMessage());
+        } finally {
+            if (aux == null) {
+                System.out.println("Desea registrar al cliente? (s/n): ");
+                enter.nextLine();
+                rta = enter.nextLine().charAt(0);
+                clScreen();
+
+                if (rta == 's') {
+                    crearCliente();
+                }
+            }
         }
     }
 
@@ -562,8 +612,10 @@ public class Menu {
         System.out.println("CLIENTES: ");
         System.out.println(negocioEnvoltorio.listarClientes());
 
-        System.out.println("\n\nIngrese DNI del cliente para modificar su estado VIP: ");
+        System.out.println("\nIngrese DNI del cliente para modificar su estado VIP: ");
         dni = enter.nextInt();
+
+        clScreen();
 
         try {
             if (dni != 0) {
@@ -571,9 +623,10 @@ public class Menu {
                 int opcionVIP = 0;
                 if (clienteAModificar != null) {
                     do {
-                        System.out.println("1.HACER VIP.");
+                        System.out.println(clienteAModificar.toString());
+                        System.out.println("\n1.HACER VIP.");
                         System.out.println("2.SACAR VIP.");
-                        System.out.println("\nOpcion: ");
+                        System.out.printf("\nOpcion: ");
                         opcionVIP = enter.nextInt();
                         switch (opcionVIP) {
                             case 1: {
@@ -588,6 +641,9 @@ public class Menu {
                                 System.out.println("\nOpcion invalida...\n");
                         }
                     } while (opcionVIP <= 0 || opcionVIP >= 3);
+
+                    System.out.println(clienteAModificar.toString());
+                    System.out.println("\nEl cliente fue modificado correctamente.");
                 }
             } else {
                 System.out.println("\nERROR - No se puede modificar el cliente Default.\n");
@@ -599,8 +655,6 @@ public class Menu {
         } catch (ElementNotLoadedException e) {
             System.out.println(e.getMessage());
         }
-
-        enter.nextLine();
     }
 
     public void eliminarCliente() {
@@ -610,6 +664,9 @@ public class Menu {
 
         System.out.println("\n\nIngrese el dni del cliente que desea eliminar: ");
         dni = enter.nextInt();
+
+        clScreen();
+
         try {
             if (dni != 0) {
                 boolean respuesta = negocioEnvoltorio.eliminarUnCliente(dni);
@@ -929,6 +986,20 @@ public class Menu {
             clScreen();
 
         }while (rta == 's');
+    }
+
+    public void cambiarClaveAdmin(){
+        String user = "";
+        String pass = "";
+
+        System.out.printf("\nIngrese su nuevo usuario: ");
+        enter.nextLine();
+        user = enter.nextLine();
+
+        System.out.printf("\nIngrese su nueva contrasenia: ");
+        pass = enter.nextLine();
+
+        GrabadoraYLectoraArchivos.persistirClaveAdmin(user,pass);
     }
 
     /**

@@ -73,6 +73,37 @@ public class GrabadoraYLectoraArchivos {
         }
     }
 
+    public static void persistirClaveAdmin(String user, String password){
+
+        FileOutputStream file = null;
+        DataOutputStream data = null;
+
+        try{
+            file = new FileOutputStream("admin.dat");
+            data = new DataOutputStream(file);
+
+            data.writeUTF(user);
+            data.writeUTF(password);
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (file != null){
+                    file.close();
+                }
+
+                if (data != null){
+                    data.close();
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     //Metodos de lectura.
     public static ArrayList<Venta> leerVentas() {
         ArrayList<Venta> arrayList = new ArrayList<>();
@@ -144,5 +175,41 @@ public class GrabadoraYLectoraArchivos {
         }
 
         return setClientes;
+    }
+
+    public static ArrayList<String> leerClaveAdmin(){
+
+        ArrayList<String> arrayList = new ArrayList<>();
+
+        FileInputStream file = null;
+        DataInputStream data = null;
+
+        try{
+            file = new FileInputStream("admin.dat");
+            data = new DataInputStream(file);
+
+            while (true){
+                arrayList.add(data.readUTF());
+            }
+
+        } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (file != null){
+                    file.close();
+                }
+
+                if (data != null){
+                    data.close();
+                }
+            } catch (IOException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        return arrayList;
     }
 }
