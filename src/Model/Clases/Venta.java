@@ -7,7 +7,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * Venta particular, con su lista de productos añadidos a su carrito.
+ * Clase que representa una venta particular, con sus productos añadidos a su carrito.
+ *
+ * @see ArrayList
+ * @see LugarConsumo
+ * @see Cliente
  */
 public class Venta implements Serializable {
 
@@ -67,9 +71,9 @@ public class Venta implements Serializable {
     //Metodos.
 
     /**
-     * calcula el precio final de la venta.
+     * Calcula el precio final de la venta, iterando sobre los productos que dispone su coleccion carrito.
      *
-     * @return El precio final.
+     * @return Total de la venta.
      */
     public float PrecioFinalVenta() {
 
@@ -82,7 +86,11 @@ public class Venta implements Serializable {
         return total;
     }
 
-    // lista todo los productos que lleva mas los atributos propios de esa venta.
+    /**
+     * Retorna la informacion el numero de ticket, los productos y el total de la venta.
+     *
+     * @return String
+     */
     public String listarVenta() {
         String productos = "";
         for (int i = 0; i < carrito.size(); i++) {
@@ -91,6 +99,11 @@ public class Venta implements Serializable {
         return "Venta: " + "\nnumTicket: " + numTicket + "\nProductos: "+"\n-------------------------------------------------------------------------------------------" + productos + "\nPrecio total: " + total + "\n-------------------------------------------------------------------------------------------\n";
     }
 
+    /**
+     * Retorna la informacion de los productos de la venta.
+     *
+     * @return String
+     */
     public String listarVentaSinTicket() {
         String productos = "";
         for (int i = 0; i < carrito.size(); i++) {
@@ -99,6 +112,10 @@ public class Venta implements Serializable {
         return "Venta: " + "\nProductos: "+"\n-------------------------------------------------------------------------------------------" + productos + "-------------------------------------------------------------------------------------------\n";
     }
 
+    /**
+     * Retorna la informacion completa de la venta.
+     * @return
+     */
     public String listarVentaConCliente(){
         String productos = "";
         for (int i = 0; i < carrito.size(); i++) {
@@ -108,9 +125,9 @@ public class Venta implements Serializable {
     }
 
     /**
-     * agrega un objeto de tipo Producto a la lista carrito
+     * Agrega un objeto de tipo Producto a la coleccion carrito.
      *
-     * @param aux Producto.
+     * @param aux Producto a agregar.
      */
     public void agregarProductosAlcarrito(Producto aux) throws ElementNotLoadedException {
         if(aux != null){

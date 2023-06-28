@@ -6,12 +6,13 @@ import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import Model.Interfaces.IABM;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
 
 /**
- * Clase que envuelve todas los objetos de tipo Venta almacenados en una ArrayList manipulada por la interfaz implementada IABM.
+ * Clase que envuelve todas los objetos de tipo Venta almacenados en una coleccion ArrayList. Dicha coleccion es manipulada por la interfaz implementada IABM.
  *
  * @see ArrayList
  * @see Venta
@@ -37,9 +38,11 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
     //Metodos.
 
     /**
-     * Añade un objeto de tipo Venta al ArrayList.
+     * Añade un objeto de tipo Venta a la coleccion.
      *
-     * @param unaVenta Objeto de tipo Venta
+     * @param unaVenta Objeto de tipo Venta.
+     * @throws ElementNotLoadedException Lanza la excepcion si la venta no pudo ser agregada.
+     * @see GrabadoraYLectoraArchivos Utilizada para leer y persistir los datos.
      */
     @Override
     public void agregar(Venta unaVenta) throws ElementNotLoadedException {
@@ -64,6 +67,12 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
         }
     }
 
+    /**
+     * Busca en la coleccion y retorna el objeto de tipo Venta que posea el numeor de ticket mayor.
+     *
+     * @return Objeto de tipo Venta.
+     * @see Venta
+     */
     public Venta buscarIndexMayor() {
 
         Venta aux = null;
@@ -82,10 +91,12 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
     }
 
     /**
-     * Elimina un objeto de tipo Venta al ArrayList. Utiliza el metodo buscarVenta para verificar si existe o no dicha venta. Si es asi, elimina de la lista.
+     * Elimina un objeto de tipo Venta de la coleccion. Utiliza el metodo buscarVenta para verificar si existe o no dicha venta. Si es asi, elimina de la lista.
      *
-     * @param numTicket numero de ticket de la venta
-     * @return true si elimina, false si no.
+     * @param numTicket numero de ticket de la venta.
+     * @return true si elimina la venta, false si no.
+     * @throws ElementNotFoundException Lanza la excepcion si no se encuentra la venta.
+     * @see GrabadoraYLectoraArchivos Utilizado para leer y persistir los datos.
      */
     @Override
     public boolean eliminar(int numTicket) throws ElementNotFoundException {
@@ -113,11 +124,14 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
     }
 
     /**
-     * Modifica el atributo valor de una venta especifica que exista.
+     * Modifica el atributo  total de un objeto de tipo Venta de la coleccion.
      *
-     * @param unaVenta
-     * @param nuevoTotal
-     * @throws ElementUnmodifiedException
+     * @param unaVenta Venta a modificar.
+     * @param nuevoTotal Valor del total que se modifica en la venta.
+     * @throws ElementUnmodifiedException Lanza la excepcion si la venta no se pudo modificar.
+     * @throws ElementNotFoundException   Si no se elimina la venta con su precio original a la coleccion.
+     * @throws ElementNotLoadedException  Si no se pudo agregar la venta modificada a la coleccion.
+     * @see GrabadoraYLectoraArchivos Utilizada para persistir los datos.
      */
 
     @Override
@@ -139,6 +153,7 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
      * Retorna la información de todos los objetos de tipo Venta que se encuentren en la lista. Recorre y concatena un String con la información.
      *
      * @return String
+     * @see GrabadoraYLectoraArchivos Utilizada para leer los datos.
      */
     @Override
     public String listar() {
@@ -154,10 +169,12 @@ public class EnvoltoriaVentas implements IABM<Venta>, Serializable {
     }
 
     /**
-     * Recorre la lista de ventas y retorna una venta en especifico por medio de un numero de ticket.
+     * Recorre la coleccion de tipo Ventas y retorna una venta en especifico por medio de un numero de ticket.
      *
-     * @param nroTicket numero de ticket de la venta
+     * @param nroTicket Valor de referencia para buscar la venta.
      * @return un objeto de tipo Venta si se encuentra, sino retorna un objeto nulo.
+     * @throws ElementNotFoundException Lanza la excepcion si no se encuentra la venta.
+     * @see GrabadoraYLectoraArchivos Utilizada para leer los datos.
      */
 
     @Override

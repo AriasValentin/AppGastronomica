@@ -13,13 +13,12 @@ import Model.Clases.JsonUtiles;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.HashSet;
 import java.util.Iterator;
 
 
 /**
- * Clase que envuelve todos los objetos de tipo Productos almacenados en una coleccion de tipo HashSet. Dicha coleecion es manipulada por la interfaz implementada IABM.
+ * Clase que envuelve todos los objetos de tipo Productos almacenados en una coleccion HashSet. Dicha coleecion es manipulada por la interfaz implementada IABM.
  *
  * @see HashSet
  * @see Producto
@@ -38,11 +37,12 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
     //Metodos
+
     /**
-     * Añade un objeto de tipo producto al HashSet.
-     * Lanza una excepcion de tipo ElementNotLoadedException si el producto no pudo cargarse.
+     * Añade un objeto de tipo producto a la coleccion.
      *
      * @param unProducto objeto de tipo Producto.
+     * @throws ElementNotFoundException Lanza la excepcion si el cliente es nulo.
      */
     @Override
     public void agregar(Producto unProducto) throws ElementNotLoadedException {
@@ -55,10 +55,11 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
     /**
-     * Elimina un objeto de tipo Producto al HashSet. Recorre con un iterador la collecion y verifica si se cumple igualdad de atributo ID para encontrar dicho producto.
+     * Elimina un objeto de tipo Producto de la coleccion. Recorre y verifica si se cumple igualdad de atributo ID para encontrar dicho producto.
      *
-     * @param id
+     * @param id Valor de referencia del producto a eliminar.
      * @return true si encuentra y elimina, false si no lo encuentra.
+     * @throws ElementNotFoundException Lanza la excepcion si no se encuentra el cliente.
      * @see Iterator
      * @see Boolean
      */
@@ -85,11 +86,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
 
 
     /**
-     * Modifica el precio de un producto.
+     * Modifica el precio de un objeto de tipo Producto de la coleccion.
      *
-     * @param nuevoPrecio
-     * @param unProducto
-     * @throws ElementUnmodifiedException
+     * @param nuevoPrecio Valor de precio a producto a modificar.
+     * @param unProducto Producto a modificar.
+     * @throws ElementUnmodifiedException Lanza la excepcion si el producto no se pudo modificar.
+     * @throws ElementNotFoundException   Si no se elimina el producto con su precio original a la coleccion.
+     * @throws ElementNotLoadedException  Si no se pudo agregar el producto modificado a la coleccion.
      */
     @Override
     public void modificar(Producto unProducto, float nuevoPrecio) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException {
@@ -106,7 +109,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
     /**
-     * Retorna la información de todos los objetos de tipo Producto que se encuentren en la colección. Recorre y concatena un String con la información.
+     * Retorna la información completa de todos los objetos de tipo Producto que se encuentren en la colección. Recorre y concatena un String con la información.
      *
      * @return String
      * @see Iterator
@@ -122,6 +125,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return aux;
     }
 
+    /**
+     * Retorna el Nombre e ID de todos los objetos de tipo Producto que se encuentren en la colección. Recorre y concatena un String con la información.
+     *
+     * @return String
+     * @see Iterator
+     */
+
     public String listarNombreID() {
         String aux = "";
         Iterator<Producto> it = listaDeProductos.iterator();
@@ -133,10 +143,11 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
     /**
-     * Recorre la coleccion para buscar si existe un determinado producto, si lo encuentra, se retorna.
+     * Recorre la coleccion para buscar si existe un determinado producto, si lo encuentra se retorna.
      *
-     * @param id numero id del producto.
+     * @param id Numero ID de referencia del producto a buscar.
      * @return Objeto Producto si fue encontrado, sino retornara un Objeto nulo.
+     * @throws ElementNotFoundException Si el producto no se encuentra en la coleccion.
      */
     public Producto buscar(int id) throws ElementNotFoundException {
 
@@ -163,6 +174,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      * Ingresa a la coleccion los productos de tipo COMIDA DULCE consumidos desde un archivo local JSON.
      *
      * @see Producto
+     * @see Comida
      * @see TipoComida
      * @see JsonUtiles
      * @see JSONArray
@@ -197,6 +209,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      * Ingresa a la coleccion los productos de tipo COMIDA SALADA consumidos desde un archivo local JSON.
      *
      * @see Producto
+     * @see Comida
      * @see TipoComida
      * @see JsonUtiles
      * @see JSONArray
@@ -230,6 +243,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      * Ingresa a la coleccion los productos de tipo BEBIDA FRIA consumidos desde un archivo local JSON.
      *
      * @see Producto
+     * @see Bebida
      * @see TipoBebida
      * @see JsonUtiles
      * @see JSONArray
@@ -261,6 +275,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      * Ingresa a la coleccion los productos de tipo BEBIDA CALIENTE consumidos desde un archivo local JSON.
      *
      * @see Producto
+     * @see Bebida
      * @see TipoBebida
      * @see JsonUtiles
      * @see JSONArray
@@ -290,6 +305,10 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }
     }
 
+    /**
+     * Actualiza la coleccion de tipo Productos invocando a las cuatro funciones que consumen los archivos locales JSON.
+     */
+
     public void consumoJSON() {
         consumoComidasDulces();
         consumoComidasSaladas();
@@ -297,6 +316,18 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         consumoBebidasCalientesPersonal();
     }
 
+    /**
+     * Agrega un objeto nuevo de tipo Comida a su respectivo JSON archivo local y actualiza la coleccion.
+     *
+     * @param nueva Comida que ingresa al archivo.
+     * @throws JSONException Lanza la excepcion si la apertura o los metodos put/get fueron incorrectos.
+     * @see Producto
+     * @see Comida
+     * @see TipoComida
+     * @see JsonUtiles
+     * @see JSONArray
+     * @see JSONObject
+     */
     public void agregarComidaAJson(Comida nueva) throws JSONException {
 
         HashSet<Producto> listaComida = new HashSet<>();
@@ -381,6 +412,18 @@ public class EnvoltoriaProductos implements IABM<Producto> {
 
     }
 
+    /**
+     * Agrega un objeto nuevo de tipo Bebida a su respectivo JSON archivo local y actualiza la coleccion.
+     *
+     * @param nueva Bebida que ingresa al archivo.
+     * @throws JSONException Lanza la excepcion si la apertura o los metodos put/get fueron incorrectos.
+     * @see Producto
+     * @see Bebida
+     * @see TipoComida
+     * @see JsonUtiles
+     * @see JSONArray
+     * @see JSONObject
+     */
     public void agregarBebidaAJson(Bebida nueva) throws JSONException {
 
         HashSet<Producto> listaBebida = new HashSet<>();
@@ -463,6 +506,18 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }
     }
 
+    /**
+     * Elimina un objeto de tipo Comida a su respectivo JSON archivo local y actualiza la coleccion.
+     *
+     * @param unaComida Comida que ingresa al archivo.
+     * @throws JSONException Lanza la excepcion si la apertura o los metodos put/get fueron incorrectos.
+     * @see Producto
+     * @see Comida
+     * @see TipoComida
+     * @see JsonUtiles
+     * @see JSONArray
+     * @see JSONObject
+     */
     public void eliminarComidaAJson(Comida unaComida) throws JSONException {
 
         HashSet<Producto> listaComida = new HashSet<>();
@@ -545,7 +600,18 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         }
     }
 
-
+    /**
+     * Elimina un objeto de tipo Bebida a su respectivo JSON archivo local y actualiza la coleccion.
+     *
+     * @param unaBebida Bebida que ingresa al archivo.
+     * @throws JSONException Lanza la excepcion si la apertura o los metodos put/get fueron incorrectos.
+     * @see Producto
+     * @see Bebida
+     * @see TipoComida
+     * @see JsonUtiles
+     * @see JSONArray
+     * @see JSONObject
+     */
     public void eliminarBebidaAJson(Bebida unaBebida) throws JSONException {
 
         HashSet<Producto> listaBebida = new HashSet<>();
@@ -623,6 +689,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
     }
 
 
+    /**
+     * Retorna la información completa de todos los productos de tipo BEBIDA FRIA que se encuentren en la colección. Recorre y concatena un String con la información.
+     *
+     * @return String
+     * @see Iterator
+     * @see TipoBebida
+     */
     public String listarBebidasFrias() {
         String aux = "BEBIDAS FRIAS : \n";
         Iterator<Producto> it = listaDeProductos.iterator();
@@ -637,6 +710,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return aux;
     }
 
+    /**
+     * Retorna la información completa de todos los productos de tipo BEBIDA CALIENTE que se encuentren en la colección. Recorre y concatena un String con la información.
+     *
+     * @return String
+     * @see Iterator
+     * @see TipoBebida
+     */
     public String listarBebidasCalientes() {
         String aux = "BEBIDAS CALIENTES : \n";
         Iterator<Producto> it = listaDeProductos.iterator();
@@ -651,6 +731,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return aux;
     }
 
+    /**
+     * Retorna la información completa de todos los productos de tipo COMIDA SALADA que se encuentren en la colección. Recorre y concatena un String con la información.
+     *
+     * @return String
+     * @see Iterator
+     * @see TipoComida
+     */
     public String listarComidasSaladas() {
         String aux = "Comidas Saladas : \n";
         Iterator<Producto> it = listaDeProductos.iterator();
@@ -665,6 +752,13 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return aux;
     }
 
+    /**
+     * Retorna la información completa de todos los productos de tipo COMIDA DULCE que se encuentren en la colección. Recorre y concatena un String con la información.
+     *
+     * @return String
+     * @see Iterator
+     * @see TipoComida
+     */
     public String listarComidasDulces() {
         String aux = "Comidas Dulces : \n";
         Iterator<Producto> it = listaDeProductos.iterator();
@@ -679,7 +773,12 @@ public class EnvoltoriaProductos implements IABM<Producto> {
         return aux;
     }
 
-    public void vaciarListaProductos(){
+    /**
+     * Vacia completamente la coleccion de productos.
+     *
+     * @see Producto
+     */
+    public void vaciarListaProductos() {
         listaDeProductos.clear();
     }
 

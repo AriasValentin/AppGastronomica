@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 /**
- * Clase que representa las personas clientes en el sistema.
+ * Clase que representa las personas clientes del sistema con sus propios atributos.
  */
 public class Cliente implements Comparable, Serializable {
 
@@ -48,10 +48,12 @@ public class Cliente implements Comparable, Serializable {
     }
 
     //Metodos.
+
     /**
-     * verifica si los dni de los clientes a comparar son iguales.
-     * @param o Objeto a comparar con cliente.
-     * @return true si es la misma persona.
+     * Compara si el cliente es igual a un objeto que llega por parametro.
+     *
+     * @param o Objeto a comparar con el cliente.
+     * @return true si es el mismo cliente, false distinto.
      */
     @Override
     public boolean equals(Object o) {
@@ -72,7 +74,8 @@ public class Cliente implements Comparable, Serializable {
     }
 
     /**
-     *Retorna la información del Cliente
+     * Retorna la información completa del cliente.
+     *
      * @return String
      */
     @Override
@@ -81,9 +84,10 @@ public class Cliente implements Comparable, Serializable {
     }
 
     /**
-     * Verifica si es distinto a null, luego si es un cliente, y finalmente si tienen el mismo dni, mayor o menor en su respectivo caso.
-     * @param o Objeto a comparar con cliente.
-     * @return  0 si son iguales, 1 si el primero es mayor, -1 si el primero es menor, 999 si es invalido.
+     * Compara si el cliente es menor, igual o mayor que un objeto que llega por parametro.
+     *
+     * @param o Objeto a comparar con el cliente.
+     * @return 0 si son iguales, 1 si el cliente es mayor, -1 si el cliente es menor.
      */
     @Override
     public int compareTo(Object o) {

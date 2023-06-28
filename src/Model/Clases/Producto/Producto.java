@@ -3,7 +3,9 @@ package Model.Clases.Producto;
 import java.io.Serializable;
 
 /**
- * Representa los productos para la venta del sistema.
+ * Clase que representa los productos para la venta del sistema con sus propios atributos.
+ *
+ * @see String
  */
 
 public abstract class Producto implements Comparable, Serializable {
@@ -56,11 +58,12 @@ public abstract class Producto implements Comparable, Serializable {
     }
 
     //Metodos.
+
     /**
-     * compara el producto con un objeto
+     * Compara si el producto es igual a un objeto que llega por parametro.
      *
-     * @param o Objeto a comparar con Producto.
-     * @return true si son el mismo objeto, false distinto.
+     * @param o Objeto a comparar con el producto.
+     * @return true si son el mismo producto, false distinto.
      */
     @Override
     public boolean equals(Object o) {
@@ -81,6 +84,11 @@ public abstract class Producto implements Comparable, Serializable {
         return 1;
     }
 
+    /**
+     * Retorna la informacion completa del producto.
+     *
+     * @return String
+     */
     @Override
     public String toString() {
         return "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------\n" +
@@ -91,23 +99,33 @@ public abstract class Producto implements Comparable, Serializable {
                 "\n--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------";
     }
 
+    /**
+     * Retorna la informacion de nombre y precio del producto.
+     *
+     * @return String
+     */
     public String toStringSimple() {
         return "Nombre del producto: " + this.nombre +
                 "\nPrecio: " + this.precio + "\n";
     }
 
+    /**
+     * Retorna la informacion del nombre e ID del producto
+     *
+     * @return String
+     */
     public String toStringNombreID() {
-        return  "----------------------------------------------------------------" +
+        return "----------------------------------------------------------------" +
                 "\nNombre del producto: " + this.nombre +
                 "\nID : " + this.id +
                 "\n----------------------------------------------------------------";
     }
 
     /**
-     * Compara si un objeto es mayor menor o igual al otro objeto.
+     * Compara si el producto es menor, igual o mayor que un objeto que llega por parametro.
      *
-     * @param o Produto
-     * @return 0 si son el mismo id, -1 si el primero es menor, 1 si el primero es mayor.
+     * @param o Objeto a comparar con el producto.
+     * @return 0 si son iguales, 1 si el producto es mayor, -1 si el producto es menor.
      */
     @Override
     public int compareTo(Object o) {

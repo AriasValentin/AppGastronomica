@@ -1,7 +1,7 @@
 package Model.ExcepcionesPersonalizadas;
 
 /**
- * Excepcion personalizada para avisar de un error de modificacion de un cliente particular.
+ * Excepcion personalizada para avisar de un error de carga de un determinado dato.
  */
 public class ElementUnmodifiedException extends Exception{
     public ElementUnmodifiedException(String message){

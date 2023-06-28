@@ -1,11 +1,23 @@
 package Model.Clases;
 
 import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
+/**
+ * Clase que lee y persiste archivos de colecciones de distinto tipos.
+ */
 public class GrabadoraYLectoraArchivos {
 
     //Metodos de persistencia.
+
+    /**
+     * Persiste la coleccion de tipo Venta en un archivo.
+     *
+     * @param listaVenta Coleccion de tipo Venta.
+     */
     public static void persistirVentas(ArrayList<Venta> listaVenta) {
 
         FileOutputStream fileOutputStream = null;
@@ -37,7 +49,12 @@ public class GrabadoraYLectoraArchivos {
         }
     }
 
-    public static void persistirClientes(HashMap<Integer,Cliente> mapaCliente){
+    /**
+     * Persiste la coleccion de tipo Cliente en un archivo.
+     *
+     * @param mapaCliente Coleccion de tipo Venta.
+     */
+    public static void persistirClientes(HashMap<Integer, Cliente> mapaCliente) {
         FileOutputStream file = null;
         ObjectOutputStream object = null;
 
@@ -46,10 +63,9 @@ public class GrabadoraYLectoraArchivos {
             object = new ObjectOutputStream(file);
 
 
-            Iterator<Map.Entry<Integer,Cliente>> it = mapaCliente.entrySet().iterator();
-            while(it.hasNext())
-            {
-                Map.Entry<Integer,Cliente> entrada = it.next();
+            Iterator<Map.Entry<Integer, Cliente>> it = mapaCliente.entrySet().iterator();
+            while (it.hasNext()) {
+                Map.Entry<Integer, Cliente> entrada = it.next();
 
                 object.writeObject(entrada.getValue());
             }
@@ -60,11 +76,11 @@ public class GrabadoraYLectoraArchivos {
             e.getMessage();
         } finally {
             try {
-                if (file != null){
+                if (file != null) {
                     file.close();
                 }
 
-                if (object != null){
+                if (object != null) {
                     object.close();
                 }
             } catch (IOException e) {
@@ -73,12 +89,18 @@ public class GrabadoraYLectoraArchivos {
         }
     }
 
-    public static void persistirClaveAdmin(String user, String password){
+    /**
+     * Persiste las claves usuario y password del administrador en un archivo.
+     *
+     * @param user     String que almacena el usuaria.
+     * @param password String que almacena la constraseña.
+     */
+    public static void persistirClaveAdmin(String user, String password) {
 
         FileOutputStream file = null;
         DataOutputStream data = null;
 
-        try{
+        try {
             file = new FileOutputStream("admin.dat");
             data = new DataOutputStream(file);
 
@@ -91,11 +113,11 @@ public class GrabadoraYLectoraArchivos {
             System.out.println(e.getMessage());
         } finally {
             try {
-                if (file != null){
+                if (file != null) {
                     file.close();
                 }
 
-                if (data != null){
+                if (data != null) {
                     data.close();
                 }
             } catch (IOException e) {
@@ -105,6 +127,12 @@ public class GrabadoraYLectoraArchivos {
     }
 
     //Metodos de lectura.
+
+    /**
+     * Lee los datos de un archivo y los agrega a una coleccion del mismo tipo que envoltoriaVenta.
+     *
+     * @return ArrayList de tipo Venta.
+     */
     public static ArrayList<Venta> leerVentas() {
         ArrayList<Venta> arrayList = new ArrayList<>();
         FileInputStream fileInputStream = null;
@@ -140,8 +168,13 @@ public class GrabadoraYLectoraArchivos {
         return arrayList;
     }
 
-    public static HashMap<Integer,Cliente> leerClientes(){
-        HashMap<Integer,Cliente> setClientes = new HashMap<>();
+    /**
+     * Lee los datos de un archivo y los agrega a una coleccion del mismo tipo que envoltoriaCliente.
+     *
+     * @return HashMap de tipo Integer,Cliente.
+     */
+    public static HashMap<Integer, Cliente> leerClientes() {
+        HashMap<Integer, Cliente> setClientes = new HashMap<>();
         FileInputStream file = null;
         ObjectInputStream object = null;
 
@@ -149,7 +182,7 @@ public class GrabadoraYLectoraArchivos {
             file = new FileInputStream("clientes.dat");
             object = new ObjectInputStream(file);
 
-            while (true){
+            while (true) {
                 Cliente unCliente = (Cliente) object.readObject();
                 setClientes.put(unCliente.getDni(), unCliente);
             }
@@ -162,11 +195,11 @@ public class GrabadoraYLectoraArchivos {
             e.getMessage();
         } finally {
             try {
-                if (file != null){
+                if (file != null) {
                     file.close();
                 }
 
-                if (object != null){
+                if (object != null) {
                     object.close();
                 }
             } catch (IOException e) {
@@ -177,18 +210,23 @@ public class GrabadoraYLectoraArchivos {
         return setClientes;
     }
 
-    public static ArrayList<String> leerClaveAdmin(){
+    /**
+     * Lee los datos de un archivo y los agrega a una coleccion del mismo tipo que userPassword.
+     *
+     * @return ArrayList de tipo String.
+     */
+    public static ArrayList<String> leerClaveAdmin() {
 
         ArrayList<String> arrayList = new ArrayList<>();
 
         FileInputStream file = null;
         DataInputStream data = null;
 
-        try{
+        try {
             file = new FileInputStream("admin.dat");
             data = new DataInputStream(file);
 
-            while (true){
+            while (true) {
                 arrayList.add(data.readUTF());
             }
 
@@ -198,18 +236,18 @@ public class GrabadoraYLectoraArchivos {
             System.out.println(e.getMessage());
         } finally {
             try {
-                if (file != null){
+                if (file != null) {
                     file.close();
                 }
 
-                if (data != null){
+                if (data != null) {
                     data.close();
                 }
             } catch (IOException e) {
                 System.out.println(e.getMessage());
             }
         }
-
+        
         return arrayList;
     }
 }

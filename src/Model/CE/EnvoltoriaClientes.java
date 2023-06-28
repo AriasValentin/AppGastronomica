@@ -6,19 +6,19 @@ import Model.ExcepcionesPersonalizadas.ElementNotFoundException;
 import Model.ExcepcionesPersonalizadas.ElementNotLoadedException;
 import Model.ExcepcionesPersonalizadas.ElementUnmodifiedException;
 import Model.Interfaces.IABM;
+
 import java.util.*;
 
 /**
- * Clase que envuelve todas los objetos de tipo Cliente almacenados en una coleccion de tipo LinkedHashSet. Dicha coleecion es manipulada por la interfaz implementada IABM.
+ * Clase que envuelve todas los objetos de tipo Cliente almacenados en una coleccion HashMap. Dicha coleccion es manipulada por la interfaz IABM.
  *
- * @see LinkedHashSet
+ * @see HashMap
  * @see Cliente
  */
-
 public class EnvoltoriaClientes implements IABM<Cliente> {
 
     //Atributos.
-    private HashMap<Integer,Cliente> listaDeClientes;
+    private HashMap<Integer, Cliente> listaDeClientes;
 
     //Constructor.
     public EnvoltoriaClientes() {
@@ -26,17 +26,19 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     }
 
     //Metodos.
+
     /**
-     * Añade un objeto de tipo Cliente a la LinkedHashSet.
+     * Añade un objeto de tipo Cliente a la colección.
      *
      * @param unCliente Objeto de tipo cliente.
-     *                  Lanza una excepcion si el cliente es nulo.
+     * @throws ElementNotLoadedException Lanza la excepcion si el cliente es nulo.
+     * @see GrabadoraYLectoraArchivos Utilizado para leer y persistir los datos.
      */
     @Override
     public void agregar(Cliente unCliente) throws ElementNotLoadedException {
         if (unCliente != null) {
             listaDeClientes = GrabadoraYLectoraArchivos.leerClientes();
-            listaDeClientes.put(unCliente.getDni(),unCliente);
+            listaDeClientes.put(unCliente.getDni(), unCliente);
             GrabadoraYLectoraArchivos.persistirClientes(listaDeClientes);
         } else {
             throw new ElementNotLoadedException("\nERROR - El cliente no tiene datos, o no existe.\n");
@@ -44,11 +46,12 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     }
 
     /**
-     * Elimina un objeto de tipo Cliente a la LinkedHashSet. Recorre con un iterador la collecion y verifica si se cumple igualdad de atributo DNI para encontrar dicho cliente.
+     * Elimina un objeto de tipo Cliente de la colección . Recorre y verifica si se cumple igualdad de atributo DNI para encontrar dicho cliente.
      *
-     * @param dni
+     * @param dni Valor de referencia del cliente a eliminar.
      * @return true si encuentra y elimina, false si no lo encuentra.
-     * Lanza una excepcion personalizada si no encuentra al cliente.
+     * @throws ElementNotFoundException Lanza la excepcion si no encuentra al cliente.
+     * @see GrabadoraYLectoraArchivos Utilizado para leer y persistir los datos.
      * @see Iterator
      * @see Boolean
      */
@@ -56,10 +59,10 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     public boolean eliminar(int dni) throws ElementNotFoundException {
         boolean rta = false;
         listaDeClientes = GrabadoraYLectoraArchivos.leerClientes();
-        Iterator<Map.Entry<Integer,Cliente>> it = listaDeClientes.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Cliente>> it = listaDeClientes.entrySet().iterator();
         int flag = 0;
         while (it.hasNext() && flag == 0) {
-            Map.Entry<Integer,Cliente> entrada = it.next();
+            Map.Entry<Integer, Cliente> entrada = it.next();
             Cliente aux = entrada.getValue();
             if (aux.getDni() == dni) {
                 it.remove();
@@ -78,17 +81,18 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     }
 
     /**
-     * Modifica la membresia del cliente.
+     * Modifica la membresia VIP de un objeto de tipo Cliente de la colección.
      *
-     * @param unCliente
-     * @param opcion
-     * @throws ElementUnmodifiedException
+     * @param unCliente Cliente a modificar.
+     * @param opcion    Valor para condicionar modificacion.
+     * @throws ElementUnmodifiedException Lanza la excepcion si el cliente no pudo ser modificado.
+     * @see Iterator
      */
     @Override
     public void modificar(Cliente unCliente, float opcion) throws ElementUnmodifiedException, ElementNotFoundException, ElementNotLoadedException {
 
         int opcionInt = (int) opcion;
-        Iterator<Map.Entry<Integer,Cliente>> it = listaDeClientes.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Cliente>> it = listaDeClientes.entrySet().iterator();
         if (unCliente != null) {
             Cliente aux = unCliente;
             eliminar(unCliente.getDni());
@@ -107,7 +111,7 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     }
 
     /**
-     * Retorna la información de todos los objetos de tipo Cliente que se encuentren en la colección. Recorre y concatena un String con la información.
+     * Retorna la información de todos los objetos de tipo Cliente que se encuentren en la colección. Recorre y concatena un String con la información de cada uno.
      *
      * @return String
      * @see Iterator
@@ -115,9 +119,9 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
     @Override
     public String listar() {
         String aux = "";
-        Iterator<Map.Entry<Integer,Cliente>> it = listaDeClientes.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Cliente>> it = listaDeClientes.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry<Integer,Cliente> entrada = it.next();
+            Map.Entry<Integer, Cliente> entrada = it.next();
             Cliente nuevoCliente = entrada.getValue();
             aux = aux + "\n" + nuevoCliente.toString();
         }
@@ -126,18 +130,18 @@ public class EnvoltoriaClientes implements IABM<Cliente> {
 
     /**
      * Recorre la coleccion para buscar si existe un determinado Cliente, si existe lo retorna.
-     * Lanza una excepcion personalizada si no encuentra al cliente.
      *
      * @param dni numero dni del Cliente.
      * @return Objeto Cliente si fue encontrado, sino retornara un Objeto nulo.
+     * @throws ElementNotFoundException Lanza la excepcion si no encuentra al cliente.
      */
     public Cliente buscar(int dni) throws ElementNotFoundException {
-        
+
         int flag = 0;
         Cliente aux = null;
-        Iterator<Map.Entry<Integer,Cliente>> it = listaDeClientes.entrySet().iterator();
+        Iterator<Map.Entry<Integer, Cliente>> it = listaDeClientes.entrySet().iterator();
         while (it.hasNext() && flag == 0) {
-            Map.Entry<Integer,Cliente> entrada = it.next();
+            Map.Entry<Integer, Cliente> entrada = it.next();
             Cliente nuevo = entrada.getValue();
             if (nuevo.getDni() == dni) {
                 flag = 1;

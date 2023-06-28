@@ -16,23 +16,39 @@ import org.json.JSONException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Clase menu donde se selecciona, por medio de sentencias switch, las diferentes funciones invocadas que tiene a fin la aplicacion.
+ * Permite la utilizacion de la clase Scanner y "Souts" para ingresar e informar la entrada y salida de datos.
+ *
+ * @see Scanner
+ * @see NegocioEnvoltorio
+ * @see Cliente
+ * @see ArrayList
+ */
 public class Menu {
 
     //Atributos.
     private Scanner enter = new Scanner(System.in);
     private NegocioEnvoltorio negocioEnvoltorio;
     private Cliente clienteDefault;
-    private ArrayList<String> userPasswrod;
+    private ArrayList<String> userPassword;
 
 
     //Constructor.
     public Menu() {
         this.negocioEnvoltorio = new NegocioEnvoltorio();
         this.clienteDefault = negocioEnvoltorio.ClienteDefault(); //cliente seteado en 0 nullo
-        this.userPasswrod = new ArrayList<>();
+        this.userPassword = new ArrayList<>();
     }
 
     //Metodos.
+
+    /**
+     * SubMenu que por medio de un switch se podra acceder a funciones de tipo Empleado o Administrador.
+     * Para acceder al subMenu administrador es necesario username y contraseña.
+     *
+     * @see GrabadoraYLectoraArchivos Utilizada para leer datos del usuario.
+     */
     public void menuAplicacion() {
 
         int opcion = 0;
@@ -62,7 +78,7 @@ public class Menu {
                 }
 
                 case 2: {
-                    userPasswrod = GrabadoraYLectoraArchivos.leerClaveAdmin();
+                    userPassword = GrabadoraYLectoraArchivos.leerClaveAdmin();
 
                     String user = "";
                     String pass = "";
@@ -78,9 +94,9 @@ public class Menu {
 
                     clScreen();
 
-                    if (user.equals(userPasswrod.get(0)) && pass.equals(userPasswrod.get(1))){
+                    if (user.equals(userPassword.get(0)) && pass.equals(userPassword.get(1))) {
                         menuAdministrador();
-                    }else {
+                    } else {
                         System.out.printf("\nERROR - Usuario y contrasenia incorrectos, presione Enter para volver al menu.\n");
                         enter.nextLine();
                     }
@@ -99,6 +115,9 @@ public class Menu {
         } while (opcion != 0);
     }
 
+    /**
+     * SubMenu que por medio de un switch el empleado puede seleccionar funciones limitadas.
+     */
     public void menuEmpleado() {
 
         int opcion = 0;
@@ -166,6 +185,10 @@ public class Menu {
         } while ((rta == 's') && (opcion != 0));
     }
 
+    /**
+     * SubMenu que por medio de un switch solo el administrador puede seleccionar funciones completas, Tanto operaciones de tipo Cliente, Ventas y Productos.
+     * Tambien posee una opcion para modificar su clave de ingreso.
+     */
     public void menuAdministrador() {
 
         int opcion = 0;
@@ -344,7 +367,14 @@ public class Menu {
     }
 
     /**
-     * @return
+     * Genera, retorna, ingresa y persiste una objeto de tipo Venta a su respectiva coleccion.
+     * Si no existe el cliente para la venta, da la opcion de registrarlo o usar un cliente Default.
+     * Selecciona los productos a llevar, el lugar de consumo e imprime su total.
+     *
+     * @return Venta
+     * @see Cliente
+     * @see Producto
+     * @see Venta
      */
     public Venta generarVenta() {
 
@@ -437,6 +467,12 @@ public class Menu {
         return unaVenta;
     }
 
+    /**
+     * Buscar e imprime  objeto de tipo Venta de su respectiva coleccion, pidiendo como referencia su numero de ticket para encontrarla.
+     *
+     * @see Venta
+     */
+
     public void buscarUnaVenta() {
         int nroTicket = 0;
 
@@ -457,8 +493,13 @@ public class Menu {
         } catch (ElementNotFoundException e) {
             System.out.println(e.getMessage());
         }
-
     }
+
+    /**
+     * Elimina objeto de tipo Venta de su respectiva coleccion, pidiendo como referencia su numero de ticket para encontrarla.
+     *
+     * @see Venta
+     */
 
     public void eliminarVenta() {
         int nroTicket = 0;
@@ -483,6 +524,12 @@ public class Menu {
         }
     }
 
+    /**
+     * Modifica el precio de un objeto tipo Venta de su respectiva coleccion.
+     * Busca dicha venta pidiendo como referencia su numero de ticket para encontrarla.
+     *
+     * @see Venta
+     */
     public void modificarVenta() {
         int nroTicket = 0;
         float nuevoTotal = 0;
@@ -524,6 +571,10 @@ public class Menu {
         }
     }
 
+    /**
+     * SubMenu que imprime cada tipo de Producto por separado y/o juntos.
+     * subOpcion para correcto funcionamiento del menu donde se invoca.
+     */
     public int mostrarProductos() {
         int subOpcion = 0;
         char subRta = 0;
@@ -566,7 +617,7 @@ public class Menu {
                 subRta = enter.nextLine().charAt(0);
             }
 
-            if (subRta != 's'){
+            if (subRta != 's') {
                 subOpcion = 0;
             }
 
@@ -576,6 +627,13 @@ public class Menu {
 
         return subOpcion;
     }
+
+    /**
+     * Buscar e imprime  objeto de tipo Cliente de su respectiva coleccion, pidiendo como referencia su numero de DNI para encontrarla.
+     * Si no encuentra al cliente, da la opcion para registrarlo.
+     *
+     * @see Cliente
+     */
 
     public void buscarCliente() {
         Cliente aux = null;
@@ -606,6 +664,12 @@ public class Menu {
         }
     }
 
+    /**
+     * Modifica la membresia VIP de un objeto tipo Cliente en su respectiva coleccion.
+     * Busca dicho cliente pidiendo como referencia su numero de DNI para encontrarla.
+     *
+     * @see Cliente
+     */
     public void modificarCliente() {
         int dni = 0;
 
@@ -657,6 +721,12 @@ public class Menu {
         }
     }
 
+    /**
+     * Elimina objeto de tipo Cliente de su respectiva coleccion, pidiendo como referencia su numero de DNI para encontrarlo.
+     *
+     * @see Cliente
+     */
+
     public void eliminarCliente() {
         int dni = 0;
         System.out.println("CLIENTES: ");
@@ -689,7 +759,9 @@ public class Menu {
     }
 
     /**
-     * @return
+     * Crea, almacena en su coleccion y retorna un nuevo objeto de tipo Cliente. Se setean los atributos por medio de un Scanner.
+     *
+     * @return Cliente
      */
     public Cliente crearCliente() {
 
@@ -719,6 +791,12 @@ public class Menu {
         return unCliente;
     }
 
+    /**
+     * Buscar e imprime toda la informacion de un objeto de tipo Producto de su respectiva coleccion, pidiendo como referencia su numero de ID para encontrarla.
+     *
+     * @see Producto
+     */
+
     public void buscarProducto() {
         int id = 0;
 
@@ -741,6 +819,13 @@ public class Menu {
         }
     }
 
+
+    /**
+     * Genera, ingresa y persiste una objeto de tipo Producto a su respectiva coleccion por medio de un SubMenu.
+     *
+     * @return int opcion para correcto funcionamiento del menu donde se invoca.
+     * @see Producto
+     */
     public int agregarProducto() {
         int opcion = 0;
         char rta = 0;
@@ -897,6 +982,11 @@ public class Menu {
         return opcion;
     }
 
+    /**
+     * Setea por medio de un Scanner los atributos de un objeto de tipo Producto.
+     *
+     * @param nuevoProducto Producto a setear los valores.
+     */
     public void setearProducto(Producto nuevoProducto) {
         String dato = "";
         float precio = 0;
@@ -915,6 +1005,11 @@ public class Menu {
         nuevoProducto.setPrecio(precio);
     }
 
+    /**
+     * Busca y elimina objeto de tipo Producto de su respectiva coleccion, pidiendo como referencia su numero de ID para encontrarlo.
+     *
+     * @see Producto
+     */
     public void eliminarProducto() {
 
         char rta = 0;
@@ -948,6 +1043,12 @@ public class Menu {
         } while (rta == 's');
     }
 
+    /**
+     * Modifica el precio de un objeto tipo Producto en su respectiva coleccion.
+     * Busca dicho producto pidiendo como referencia su numero de ID para encontrarla.
+     *
+     * @see Producto
+     */
     public void modificarProducto() {
         char rta = 0;
 
@@ -962,7 +1063,7 @@ public class Menu {
             try {
                 Producto aux = negocioEnvoltorio.buscarProducto(id);
 
-                if (aux != null){
+                if (aux != null) {
                     System.out.println(aux.toString());
 
                     System.out.printf("\nIngrese el nuevo precio del producto: ");
@@ -985,10 +1086,15 @@ public class Menu {
 
             clScreen();
 
-        }while (rta == 's');
+        } while (rta == 's');
     }
 
-    public void cambiarClaveAdmin(){
+    /**
+     * Cambia utilizando un Scanner el username y contraseña con que se accede al menu Administrador.
+     *
+     * @see GrabadoraYLectoraArchivos Utilizado para persistir los datos.
+     */
+    public void cambiarClaveAdmin() {
         String user = "";
         String pass = "";
 
@@ -999,11 +1105,11 @@ public class Menu {
         System.out.printf("\nIngrese su nueva contrasenia: ");
         pass = enter.nextLine();
 
-        GrabadoraYLectoraArchivos.persistirClaveAdmin(user,pass);
+        GrabadoraYLectoraArchivos.persistirClaveAdmin(user, pass);
     }
 
     /**
-     * Limpieza de pantalla.
+     * Limpieza la pantalla.
      */
     public void clScreen() {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
