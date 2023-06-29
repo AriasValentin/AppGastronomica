@@ -340,7 +340,6 @@ public class NegocioEnvoltorio {
      *
      * @param unCliente Cliente a modificar.
      * @param opcion    Opcion para setear membresia del cliente.
-     * @return boolean - true si modifica el cliente, false si no.
      * @throws ElementNotFoundException   Lanza la excepcion si no se encontro el cliente.
      * @throws ElementUnmodifiedException Lanza la excepcion si el cliente no pudo ser modificado.
      * @throws ElementNotLoadedException  Lanza la excepcion si no se pudo agregar el cliente modificado.

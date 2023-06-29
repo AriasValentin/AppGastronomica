@@ -42,7 +42,7 @@ public class EnvoltoriaProductos implements IABM<Producto> {
      * Añade un objeto de tipo producto a la coleccion.
      *
      * @param unProducto objeto de tipo Producto.
-     * @throws ElementNotFoundException Lanza la excepcion si el cliente es nulo.
+     * @throws ElementNotLoadedException Lanza la excepcion si el producto no pudo agregarse.
      */
     @Override
     public void agregar(Producto unProducto) throws ElementNotLoadedException {

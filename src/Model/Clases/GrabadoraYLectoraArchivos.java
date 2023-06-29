@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Clase que lee y persiste archivos de colecciones de distinto tipos.
  */
-public class GrabadoraYLectoraArchivos {
+public abstract class GrabadoraYLectoraArchivos {
 
     //Metodos de persistencia.
 
