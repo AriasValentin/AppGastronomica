@@ -509,10 +509,10 @@ public class Menu {
         System.out.printf("\nIngrese numero de ticket a eliminar: ");
         nroTicket = enter.nextInt();
 
+        clScreen();
+
         try {
             boolean rta = negocioEnvoltorio.eliminarUnaVenta(nroTicket);
-
-            clScreen();
 
             if (rta == true) {
                 System.out.println("\nVenta eliminada correctamente.\n");
@@ -914,7 +914,7 @@ public class Menu {
                     do {
                         System.out.println("\nQue tipo de comida desea agregar: ");
 
-                        System.out.println("1 - Bebida fria.");
+                        System.out.println("\n1 - Bebida fria.");
                         System.out.println("2 - Bebida caliente.");
 
                         System.out.println("\n0 - Atras.");
